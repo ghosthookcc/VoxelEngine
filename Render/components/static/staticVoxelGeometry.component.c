@@ -1,0 +1,1 @@
+#include "staticVoxelGeometry.component.h"

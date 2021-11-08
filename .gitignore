@@ -1,0 +1,16 @@
+.vs
+innehållsförteckning i OneNote.onetoc2
+Build.dir
+CMakeFiles
+Debug
+**/helpers/RootDir.h
+x64
+ALL_BUILD.vcxproj
+ALL_BUILD.vcxproj.filters
+Build.sln
+Build.vcxproj
+Build.vcxproj.filters
+CMakeCache.txt
+cmake_install.cmake
+ZERO_CHECK.vcxproj
+ZERO_CHECK.vcxproj.filters
