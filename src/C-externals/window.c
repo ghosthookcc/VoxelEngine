@@ -200,8 +200,9 @@ int WINAPI WinMain()
 
   uintVector_Push(&programIDs, glCreateProgram());
 
-  GLuint vertexShader = set_Shader(programIDs->values[0], "../Resource Files/shaders/vertexShader.glsl", VERTEX);
-  GLuint fragmentShader = set_Shader(programIDs->values[0], "../Resource Files/shaders/fragmentShader.glsl", FRAGMENT);
+  GLuint vertexShader = set_Shader(programIDs->values[0], "../Resource Files/shaders/voxelVertexShader.glsl", VERTEX);
+  GLuint fragmentShader = set_Shader(programIDs->values[0], "../Resource Files/shaders/voxelFragmentShader.glsl", FRAGMENT);
+  //GLuint geometryShader = set_Shader(programIDs->values[0], "../Resource Files/shaders/voxelGeometryShader.glsl", GEOMETRY);
 
   glLinkProgram(programIDs->values[0]);
   glUseProgram(programIDs->values[0]);
@@ -243,10 +244,6 @@ int WINAPI WinMain()
     -0.5f, 0.5f, -0.5f,
     0.5f, 0.5f, -0.5f,
     0.5f, 0.5f, 0.5f,
-
-    -0.5f, -0.5f, 0.5f,
-    -0.5f, -0.5f, -0.5f,
-    0.5f, -0.5f, -0.5f,
   };
 
   float vertices2[] =
@@ -275,10 +272,6 @@ int WINAPI WinMain()
     -0.5f, 0.5f, -0.5f,
     0.5f, 0.5f, -0.5f,
     0.5f, 0.5f, 0.5f,
-
-    -0.5f, -0.5f, 0.5f,
-    -0.5f, -0.5f, -0.5f,
-    0.5f, -0.5f, -0.5f,
   };
 
   unsigned char indices[] =
@@ -293,8 +286,7 @@ int WINAPI WinMain()
     15, 13, 14,
     16, 17, 19,
     19, 17, 18,
-    20, 21, 23,
-    23, 21, 22
+    20,
   };
 
   unsigned char indices2[] =
@@ -309,15 +301,14 @@ int WINAPI WinMain()
     15, 13, 14,
     16, 17, 19,
     19, 17, 18,
-    20, 21, 23,
-    23, 21, 22
+    20,
   };
 
-  testmesh1.vertices = new_DynFloatArrayFromFloatArray(vertices, 69);
-  testmesh1.edges = new_DynUByteArrayFromUByteArray(indices, 36);
+  testmesh1.vertices = new_DynFloatArrayFromFloatArray(vertices, 60);
+  testmesh1.edges = new_DynUByteArrayFromUByteArray(indices, 31);
 
-  testmesh2.vertices = new_DynFloatArrayFromFloatArray(vertices2, 69);
-  testmesh2.edges = new_DynUByteArrayFromUByteArray(indices2, 36);
+  testmesh2.vertices = new_DynFloatArrayFromFloatArray(vertices2, 60);
+  testmesh2.edges = new_DynUByteArrayFromUByteArray(indices2, 31);
 
   loadToVAO(testmesh1);
   loadToVAO(testmesh2);

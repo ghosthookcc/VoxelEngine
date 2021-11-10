@@ -6,7 +6,8 @@
 typedef struct Voxel
 {
   vec3 position;
-  vec3 color;
+  unsigned int packedColor;
+  unsigned char enabledFaces;
 } Voxel;
 
 #endif
