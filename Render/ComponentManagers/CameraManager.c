@@ -8,6 +8,5 @@ void UpdateCamera(LONGLONG DeltaTime)
   {
     UpdateCameraVars();
     m4_projViewMatrix = make_projViewMatrix();
-    load_projViewMatrix();
   }
 }

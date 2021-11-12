@@ -25,8 +25,8 @@ float fArray_projViewArray[16];
 mat4x4 m4_translationMatrix;
 mat4x4 m4_rotationMatrix;
 mat4x4 m4_scaleMatrix;
-mat4x4 m4_transformationMatrix;
-float fArray_transformationArray[16];
+mat4x4 m4_MVPMatrix;
+float fArray_MVPArray[16];
 
 // end glob variables definition
 
@@ -41,8 +41,9 @@ void hookCameraToEntity();
 mat4x4 make_projMatrix();
 mat4x4 make_viewMatrix();
 mat4x4 make_projViewMatrix();
+mat4x4 make_MVPMatrix();
 
-void load_projViewMatrix();
+void load_MVPMatrix();
 
 // end CameraManager funcs
 

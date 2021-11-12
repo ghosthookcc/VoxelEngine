@@ -76,10 +76,28 @@ mat4x4 make_projViewMatrix()
   return(new_Mat4);
 }
 
-void load_projViewMatrix()
+mat4x4 make_MVPMatrix()
 {
-  storeMat4InFloatArray(m4_projViewMatrix, fArray_projViewArray);
-  set_UniformMatrix4fv(programIDs->values[0], "projViewMatrix", GL_FALSE, fArray_projViewArray);
+  mat4x4 new_TranslationMatrix = m4_translationMatrix;
+  mat4x4 new_RotationMatrix = m4_rotationMatrix;
+  mat4x4 new_ScaleMatrix = m4_scaleMatrix;
+
+  mat4x4 scaleXrotationMatrix = Empty_mat4x4();
+  scaleXrotationMatrix = multiplyMat4ByMat4(new_ScaleMatrix, new_RotationMatrix);
+
+  mat4x4 new_TransformationMatrix = Empty_mat4x4();
+  new_TransformationMatrix = multiplyMat4ByMat4(scaleXrotationMatrix, new_TranslationMatrix);
+
+  mat4x4 new_MVPMatrix = Empty_mat4x4();
+  new_MVPMatrix = multiplyMat4ByMat4(new_TransformationMatrix, m4_projViewMatrix);
+
+  return(new_MVPMatrix);
+}
+
+void load_MVPMatrix()
+{
+  storeMat4InFloatArray(m4_MVPMatrix, fArray_MVPArray);
+  set_UniformMatrix4fv(programIDs->values[0], "MVP", GL_FALSE, fArray_MVPArray);
 }
 
 mat4x4 getViewMatrix()

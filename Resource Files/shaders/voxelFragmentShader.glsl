@@ -1,8 +1,10 @@
 #version 400
 
-uniform lowp vec3 in_Color;
+in vec4 out_f_Color;
+
+out vec4 frag_color;
 
 void main()
 {
-	gl_FragColor = vec4(in_Color, 1.0f);
-}
+	frag_color = out_f_Color;
+};

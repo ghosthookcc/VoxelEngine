@@ -117,6 +117,16 @@ void ResetVec3(vec3* vec3A)
   vec3A->z = 0.0f;
 }
 
+vec4 divideVec4(vec4 vec4A, float divideValue)
+{
+  vec4A.x /= divideValue;
+  vec4A.y /= divideValue;
+  vec4A.z /= divideValue;
+  vec4A.w /= divideValue;
+
+  return(vec4A);
+}
+
 void multiplyVec3ByMat4(vec3 vec3A, struct mat4x4* mat4A)
 {
   mat4A->matrix[0][0] = mat4A->matrix[0][0] * vec3A.x;

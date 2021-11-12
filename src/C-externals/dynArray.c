@@ -1,4 +1,6 @@
+#include "ghostymath.h"
 #include "dynArray.h"
+
 
 // start dynFloatArray
 
@@ -198,3 +200,38 @@ void dynHandleArray_Add(dynHandleArray** dynHandleArray, HANDLE item)
 }
 
 // end dynHandleArray
+
+// start dynVec4Array
+
+dynVec4Array* new_dynVec4Array()
+{
+  dynVec4Array* new_DynVec4Array = malloc(sizeof(struct dynVec4Array));
+  new_DynVec4Array->items = calloc(0, 0);
+  new_DynVec4Array->elemsSize = 0;
+  new_DynVec4Array->size = 0;
+  return(new_DynVec4Array);
+}
+
+void dynVec4Array_Add(dynVec4Array** dynVec4Array, vec4 item)
+{
+  (*dynVec4Array)->elemsSize++;
+  if((*dynVec4Array)->elemsSize == (*dynVec4Array)->size)
+  {
+    (*dynVec4Array)->size += 1;
+    (*dynVec4Array) = realloc((*dynVec4Array), sizeof(struct dynVec4Array) + sizeof(item) * (*dynVec4Array)->size);
+    (*dynVec4Array)->items = realloc((*dynVec4Array)->items, sizeof(item) * (*dynVec4Array)->size);
+
+    if((*dynVec4Array)->items == NULL)
+    {
+      free((*dynVec4Array));
+    }
+
+    (*dynVec4Array)->items[(*dynVec4Array)->size - 1] = item;
+  }
+  else
+  {
+    (*dynVec4Array)->items[(*dynVec4Array)->size - (*dynVec4Array)->elemsSize];
+  }
+}
+
+// end dynVec4Array

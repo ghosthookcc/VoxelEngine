@@ -18,8 +18,6 @@
 HGLRC hRC; // Permanent Rendering Context
 HDC hDC; // Private GDI Device Context
 
-void FORCED_STATE_UPDATE();
-
 LRESULT CALLBACK WndProc(HWND hwnd,
                          unsigned int message,
                          WPARAM wParam, LPARAM lParam);

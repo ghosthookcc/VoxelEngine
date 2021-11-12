@@ -72,6 +72,9 @@ vec3 subtractVec4ByVec3(vec4 vec4B, vec3 vec3A);
 vec3 divideVec3(vec3 vec3A, float divideValue);
 
 void ResetVec3(vec3* vec3A);
+
+vec4 divideVec4(vec4 vec4A, float divideValue);
+
 void multiplyVec3ByMat4(vec3 vec3A, struct mat4x4* mat4A);
 vec3 multiplyMat4ByVec3(struct mat4x4 mat4A, vec3 vec3A);
 

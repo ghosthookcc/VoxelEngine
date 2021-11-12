@@ -5,10 +5,14 @@
 
 #include "config.h"
 
-#include "CameraManager.h"
-#include "ControlsManager.h"
-#include "EntityManager.h"
-#include "WorldManager.h"
+#include "staticRenderingVars.component.h"
+#include "staticVoxelGeometry.component.h"
+
+#include "cameraManager.component.h"
+#include "controlsManager.component.h"
+#include "entityManager.component.h"
+#include "mesh.component.h"
+#include "worldManager.component.h"
 
 #include "window.h"
 #include "dynArray.h"

@@ -1,10 +1,25 @@
 #include "entityManager.component.h"
 
+#include <stdio.h>
+
 void loadToVAO(Mesh new_EntityMesh)
 {
   unsigned int vaoID = createVAO();
   bindIndices(new_EntityMesh.edges);
+
+  dynFloatArray* VerticesColors = new_dynFloatArray();
+
+  vec4 rgba = new_vec4(1.0f, 0.0f, 0.0f, 1.0f);
+  for(int i = 0; i < new_EntityMesh.vertices->size / 3; i++)
+  {
+    dynFloatArray_Add(&VerticesColors, rgba.x);
+    dynFloatArray_Add(&VerticesColors, rgba.y);
+    dynFloatArray_Add(&VerticesColors, rgba.z);
+    dynFloatArray_Add(&VerticesColors, rgba.w);
+  }
+
   storeDataInAttributeList(0, 3, new_EntityMesh.vertices);
+  storeDataInAttributeList(1, 4, VerticesColors);
 
   Entity* entity = malloc(sizeof(struct Entity));
 
@@ -46,7 +61,7 @@ void storeDataInAttributeList(int attribute, int coordinateSize, dynFloatArray* 
 
   uintVector_Push(&vbosIDs, vboID);
   glBindBuffer(GL_ARRAY_BUFFER, vboID);
-  glBufferData(GL_ARRAY_BUFFER, (*fbuffer).size * sizeof(float), (*fbuffer).items, GL_DYNAMIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, (*fbuffer).size * sizeof(float), (*fbuffer).items, GL_STATIC_DRAW);
   glVertexAttribPointer(attribute, coordinateSize, GL_FLOAT, GL_FALSE, 0, 0);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
@@ -93,31 +108,6 @@ void transformation_SetScale(Entity* entity)
   new_ScaleMatrix.matrix[3][3] = 1.0f;
 
   m4_scaleMatrix = new_ScaleMatrix;
-}
-
-mat4x4 make_TransformationMatrix()
-{
-  mat4x4 new_TranslationMatrix;
-  mat4x4 new_RotationMatrix;
-  mat4x4 new_ScaleMatrix;
-
-  new_TranslationMatrix = m4_scaleMatrix;
-  new_RotationMatrix = m4_rotationMatrix;
-  new_ScaleMatrix = m4_scaleMatrix;
-
-  mat4x4 scaleXrotationMatrix = Empty_mat4x4();
-  scaleXrotationMatrix = multiplyMat4ByMat4(new_ScaleMatrix, new_RotationMatrix);
-
-  mat4x4 new_TransformationMatrix = Empty_mat4x4();
-  new_TransformationMatrix = multiplyMat4ByMat4(scaleXrotationMatrix, new_TranslationMatrix);
-
-  return(new_TransformationMatrix);
-}
-
-void load_TransformationMatrix()
-{
-  storeMat4InFloatArray(m4_transformationMatrix, fArray_transformationArray);
-  set_UniformMatrix4fv(programIDs->values[0], "transformationMatrix", GL_FALSE, fArray_transformationArray);
 }
 
 void cleanUpEntities()

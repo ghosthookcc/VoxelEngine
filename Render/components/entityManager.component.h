@@ -27,15 +27,12 @@ void loadToVAO(Mesh new_EntityMesh);
 unsigned int createVAO();
 
 void bindIndices(dynUByteArray* indicesBuffer);
+
 void storeDataInAttributeList(int attribute, int coordinateSize, dynFloatArray* fbuffer);
 
 void transformation_SetPosition(Entity* entity);
 void transformation_SetRotation(Entity* entity);
 void transformation_SetScale(Entity* entity);
-
-mat4x4 make_TransformationMatrix();
-
-void load_TransformationMatrix();
 
 void cleanUpEntities();
 

@@ -1,18 +1,5 @@
 #include "window.h"
 
-void FORCED_STATE_UPDATE()
-{
-  /*
-  dynFuncptrArray_Add(&funcs, Update);
-  dynFuncptrArray_Add(&funcs, Render);
-  dynFuncptrArray_Add(&funcs, SwapBuffers);
-
-  funcs->func_ptrs[0]();
-  funcs->func_ptrs[1]();
-  funcs->func_ptrs[2](hDC);
-  */
-}
-
 LRESULT CALLBACK WndProc(HWND hwnd,
                          unsigned int message,
                          WPARAM wParam, LPARAM lParam)
@@ -201,14 +188,15 @@ int WINAPI WinMain()
   uintVector_Push(&programIDs, glCreateProgram());
 
   GLuint vertexShader = set_Shader(programIDs->values[0], "../Resource Files/shaders/voxelVertexShader.glsl", VERTEX);
-  GLuint fragmentShader = set_Shader(programIDs->values[0], "../Resource Files/shaders/voxelFragmentShader.glsl", FRAGMENT);
   //GLuint geometryShader = set_Shader(programIDs->values[0], "../Resource Files/shaders/voxelGeometryShader.glsl", GEOMETRY);
+  GLuint fragmentShader = set_Shader(programIDs->values[0], "../Resource Files/shaders/voxelFragmentShader.glsl", FRAGMENT);
 
   glLinkProgram(programIDs->values[0]);
   glUseProgram(programIDs->values[0]);
 
   m4_projViewMatrix = make_projViewMatrix();
-  load_projViewMatrix();
+  m4_MVPMatrix = make_MVPMatrix();
+  load_MVPMatrix();
 
   LARGE_INTEGER timeNow, timePrev;
   LARGE_INTEGER Frequency;

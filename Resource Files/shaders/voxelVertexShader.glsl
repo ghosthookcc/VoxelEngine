@@ -1,21 +1,18 @@
 #version 400
 
-in vec3 in_Color;
-in vec3 in_Position;
-in int in_FaceIndex;
+layout (location = 0) in vec3 in_v_Position;
+layout (location = 1) in vec4 in_v_Color;
+layout (location = 2) in int in_v_EnabledFaces;
 
-flat out int out_FaceIndex;
-flat out lowp vec3 out_Color;
+out vec4 out_f_Color;
 
-uniform mat4 projViewMatrix;
-uniform mat4 transformationMatrix;
+uniform vec3 offset = vec3(0.0f, 0.0f, 0.0f);
 
-uniform float voxelSize = 0.25;
-uniform vec3 offset = vec3(0.0, 0.0, 0.0);
+uniform mat4 MVP;
 
 void main()
 {
-    gl_Position = projViewMatrix * transformationMatrix * vec4(in_Position * voxelSize + offset, 1.0f);
-    out_FaceIndex = in_FaceIndex;
-    out_Color = in_Color;
-}
+	gl_Position = MVP * vec4(in_v_Position + offset, 1.0f);
+
+  out_f_Color = in_v_Color;
+};

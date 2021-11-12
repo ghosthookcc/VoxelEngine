@@ -28,6 +28,7 @@ void initGLFuncs()
   glVertexAttribIPointer = (PFNGLVERTEXATTRIBIPOINTERPROC)wglGetProcAddress("glVertexAttribIPointer");
 
   glGetUniformLocation = (PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation");
+  glGetAttribLocation = (PFNGLGETATTRIBLOCATIONPROC)wglGetProcAddress("glGetAttribLocation");
   glGetUniformfv = (PFNGLGETUNIFORMFVPROC)wglGetProcAddress("glGetUniformfv");
   glUniform3f = (PFNGLUNIFORM3FPROC)wglGetProcAddress("glUniform3f");
   glUniform4f = (PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f");

@@ -10,6 +10,11 @@
 #include "staticRenderingVars.component.h"
 #include "staticShaderManager.component.h"
 
+#include "CameraManager.h"
+#include "ControlsManager.h"
+#include "EntityManager.h"
+#include "WorldManager.h"
+
 #include "initGLFuncs.h"
 #include "ComponentSystem.h"
 #include "matrix.h"

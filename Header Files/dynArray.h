@@ -4,6 +4,7 @@
 #include <windows.h>
 
 #include "vec3.h"
+#include "vec4.h"
 
 // start definition of dynFloatArray
 
@@ -89,5 +90,19 @@ dynHandleArray* new_dynHandleArray();
 void dynHandleArray_Add(dynHandleArray** dynHandleArray, HANDLE item);
 
 // end definition of dynHandleArray
+
+// start definition of dynVec4Array
+
+typedef struct dynVec4Array
+{
+  int size;
+  int elemsSize;
+  vec4* items;
+} dynVec4Array;
+
+dynVec4Array* new_dynVec4Array();
+void dynVec4Array_Add(dynVec4Array** dynVec4Array, vec4 item);
+
+// end definition of dynVec4Array
 
 #endif
