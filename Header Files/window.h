@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 #include "ComponentSystem.h"
+#include "ModuleSystem.h"
 
 #include "staticRenderingVars.component.h"
 

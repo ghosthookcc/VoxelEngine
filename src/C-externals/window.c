@@ -188,7 +188,7 @@ int WINAPI WinMain()
   uintVector_Push(&programIDs, glCreateProgram());
 
   GLuint vertexShader = set_Shader(programIDs->values[0], "../Resource Files/shaders/voxelVertexShader.glsl", VERTEX);
-  //GLuint geometryShader = set_Shader(programIDs->values[0], "../Resource Files/shaders/voxelGeometryShader.glsl", GEOMETRY);
+  GLuint geometryShader = set_Shader(programIDs->values[0], "../Resource Files/shaders/voxelGeometryShader.glsl", GEOMETRY);
   GLuint fragmentShader = set_Shader(programIDs->values[0], "../Resource Files/shaders/voxelFragmentShader.glsl", FRAGMENT);
 
   glLinkProgram(programIDs->values[0]);
@@ -366,6 +366,7 @@ void GH_InitWindow(void (*EntryPoint)())
     );
 
     init_ComponentSystem();
+    init_ModuleSystem();
 
     WindowStatus = RUNNING;
 

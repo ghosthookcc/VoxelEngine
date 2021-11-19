@@ -5,6 +5,8 @@
 
 #include "config.h"
 
+#include "ModuleSystem.h"
+
 #include "staticRenderingVars.component.h"
 #include "staticVoxelGeometry.component.h"
 

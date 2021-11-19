@@ -1,5 +1,11 @@
 cmake_minimum_required (VERSION 3.1.0)
-project (Build)
+project (Build LANGUAGES C)
+
+set(CMAKE_SYSTEM_NAME WindowsStore)
+set(CMAKE_SYSTEM_VERSION 10.0)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 file(GLOB_RECURSE SOURCE_FILES
     ${CMAKE_SOURCE_DIR}/src/*.c
@@ -7,20 +13,23 @@ file(GLOB_RECURSE SOURCE_FILES
     ${CMAKE_SOURCE_DIR}/Render/components/*.c
     ${CMAKE_SOURCE_DIR}/Render/components/static/*.c
     ${CMAKE_SOURCE_DIR}/Render/ComponentManagers/*.c
-    ${CMAKE_SOURCE_DIR}/GH/*.c)
+    ${CMAKE_SOURCE_DIR}/GH/*.c
+    ${CMAKE_SOURCE_DIR}/GHEnvironment/*.c)
 
 file(GLOB_RECURSE HEADER_FILES
-    ${CMAKE_SOURCE_DIR}/Header Files/*.h
+    ${CMAKE_SOURCE_DIR}/src/*.h
     ${CMAKE_SOURCE_DIR}/Render/*.h
     ${CMAKE_SOURCE_DIR}/Render/components/*.h
     ${CMAKE_SOURCE_DIR}/Render/components/static/*.h
     ${CMAKE_SOURCE_DIR}/Render/ComponentManagers/*.h
-    ${CMAKE_SOURCE_DIR}/Resource Files/*.h
-    ${CMAKE_SOURCE_DIR}/GH/*.h)
+    ${CMAKE_SOURCE_DIR}/GH/*.h
+    ${CMAKE_SOURCE_DIR}/GHEnvironment/*.h
 
-link_directories(${CMAKE_SOURCE_DIR}/Dependencies/libs)
+    ${CMAKE_SOURCE_DIR}/Header Files/*.h
+    ${CMAKE_SOURCE_DIR}/Resource Files/*.h)
 
 include_directories(
+    "${CMAKE_SOURCE_DIR}"
     "${CMAKE_SOURCE_DIR}/src"
     "${CMAKE_SOURCE_DIR}/Dependencies/includes"
     "${CMAKE_SOURCE_DIR}/Resource Files"
@@ -30,13 +39,28 @@ include_directories(
     "${CMAKE_SOURCE_DIR}/Render/components/static"
     "${CMAKE_SOURCE_DIR}/Render/ComponentManagers"
     "${CMAKE_SOURCE_DIR}/GH"
+    "${CMAKE_SOURCE_DIR}/GHEnvironment"
 )
 configure_file(src/helpers/RootDir.h.in src/helpers/RootDir.h)
+link_directories(${CMAKE_SOURCE_DIR}/Dependencies/libs LIBS)
 
 find_package(OpenGL REQUIRED)
 
+include(GenerateExportHeader)
+
+set(DLLS_PATH ${CMAKE_SOURCE_DIR}/Dependencies/dlls)
+
+file(GLOB EXTERNALDLLS
+    ${CMAKE_SOURCE_DIR}/GHEnvironment/GH_*.c
+    ${CMAKE_SOURCE_DIR}/GHEnvironment/GH_.*h)
+
+add_library(modules SHARED GHEnvironment/GH_TestFile.c
+                           GHEnvironment/GH_TestFile.h)
+
+target_include_directories(modules PUBLIC ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR})
+
 set(LIBS opengl32)
 
-ADD_EXECUTABLE(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
+add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 
-target_link_libraries(${PROJECT_NAME} ${LIBS})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${LIBS})

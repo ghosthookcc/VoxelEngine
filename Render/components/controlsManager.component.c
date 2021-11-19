@@ -58,7 +58,7 @@ unsigned int check_RequestRotate(Entity* player, mat4x4* viewMatrix, LONGLONG De
 
     player->position.x = 0.0f;
     player->position.y = 0.0f;
-    player->position.z = 1.5f;
+    player->position.z = 2.5f;
     return(1);
   }
 

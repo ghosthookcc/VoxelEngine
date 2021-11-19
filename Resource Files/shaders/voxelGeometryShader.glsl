@@ -2,19 +2,18 @@
 
 layout(triangles) in;
 layout(triangle_strip, max_vertices = 3) out;
-in vec3 out_f_Color[];
-flat out vec3 colors[3];
-out vec3 coord;
 
-for (int i = 0; i < 3; i++)
-{
-    colors[i] = out_f_Color[i];
-}
+in vec4 out_g_Color[];
 
-for (int i = 0; i < 3; i++)
+out vec4 out_f_Color;
+
+void main()
 {
-    coord = vec3(0.0f);
-    coord[i] = 1.0;
+  for(int i = 0; i < gl_in.length(); i++)
+  {
+    out_f_Color = out_g_Color[i];
     gl_Position = gl_in[i].gl_Position;
     EmitVertex();
+  }
+  EndPrimitive();
 }
