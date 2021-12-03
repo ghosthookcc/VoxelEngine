@@ -38,6 +38,7 @@ typedef struct Entity
   vec3 velocity;
   Mesh mesh;
   int vertexCount;
+  int enabledFaces;
 } Entity;
 
 typedef struct EntityStack

@@ -1,7 +1,5 @@
 #include "entityManager.component.h"
 
-#include <stdio.h>
-
 void loadToVAO(Mesh new_EntityMesh)
 {
   unsigned int vaoID = createVAO();
@@ -9,13 +7,13 @@ void loadToVAO(Mesh new_EntityMesh)
 
   dynFloatArray* VerticesColors = new_dynFloatArray();
 
-  vec4 rgba = new_vec4(1.0f, 1.0f, 0.0f, 1.0f);
+  vec4 rgba = new_vec4(0.6f, 0.8f, 1.0f, 1.0f);
   for(int i = 0; i < new_EntityMesh.vertices->size / 3; i++)
   {
-    dynFloatArray_Add(&VerticesColors, rgba.x - (0.05f * i));
-    dynFloatArray_Add(&VerticesColors, rgba.y - (0.05f * i));
-    dynFloatArray_Add(&VerticesColors, rgba.z - (0.05f * i));
-    dynFloatArray_Add(&VerticesColors, rgba.w);
+    dynFloatArray_AddBack(&VerticesColors, rgba.x - (0.05f * i));
+    dynFloatArray_AddBack(&VerticesColors, rgba.y - (0.05f * i));
+    dynFloatArray_AddBack(&VerticesColors, rgba.z - (0.05f * i));
+    dynFloatArray_AddBack(&VerticesColors, rgba.w);
   }
 
   storeDataInAttributeList(0, 3, new_EntityMesh.vertices);

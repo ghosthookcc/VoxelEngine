@@ -6,6 +6,8 @@
 #include "vec3.h"
 #include "vec4.h"
 
+void fillArray(void** array, void* values);
+
 // start definition of dynFloatArray
 
 typedef struct dynFloatArray
@@ -19,6 +21,8 @@ dynFloatArray* new_dynFloatArray();
 dynFloatArray* new_DynFloatArrayFromFloatArray(float fillData[], int size);
 
 void dynFloatArray_Add(dynFloatArray** dynFloatArray, float item);
+
+void dynFloatArray_AddBack(dynFloatArray** dynFloatArray, float item);
 
 void dynFloatArray_AddVec3Values(dynFloatArray** dynFloatArray, vec3 item);
 
@@ -36,7 +40,7 @@ dynUByteArray* new_dynUByteArray();
 
 dynUByteArray* new_DynUByteArrayFromUByteArray(unsigned char fillData[], int size);
 
-void dynUByteArray_Add(dynUByteArray** dynUByteArray, unsigned char item);
+void dynUByteArray_AddBack(dynUByteArray** dynUByteArray, unsigned char item);
 
 void dynUByteArray_AddVec3Values(dynUByteArray** dynUByteArray, UByteVec3 item);
 
@@ -52,7 +56,7 @@ typedef struct dynFuncptrArray
 } dynFuncptrArray;
 
 dynFuncptrArray* new_dynFuncptrArray();
-void dynFuncptrArray_Add(dynFuncptrArray** dynFuncptrArray, void (*func_ptr)());
+void dynFuncptrArray_AddBack(dynFuncptrArray** dynFuncptrArray, void (*func_ptr)());
 
 // end dynFuncptrArray
 
@@ -74,7 +78,7 @@ typedef struct dynFuncstateArray
 } dynFuncstateArray;
 
 dynFuncstateArray* new_dynFuncstateArray();
-void dynFuncstateArray_Add(dynFuncstateArray** dynFuncstateArray, enum state state, void (*func_ptr)());
+void dynFuncstateArray_AddBack(dynFuncstateArray** dynFuncstateArray, enum state state, void (*func_ptr)());
 
 // end definition of dynFuncstateArray
 
@@ -87,7 +91,7 @@ typedef struct dynHandleArray
 } dynHandleArray;
 
 dynHandleArray* new_dynHandleArray();
-void dynHandleArray_Add(dynHandleArray** dynHandleArray, HANDLE item);
+void dynHandleArray_AddBack(dynHandleArray** dynHandleArray, HANDLE item);
 
 // end definition of dynHandleArray
 
@@ -101,7 +105,7 @@ typedef struct dynVec4Array
 } dynVec4Array;
 
 dynVec4Array* new_dynVec4Array();
-void dynVec4Array_Add(dynVec4Array** dynVec4Array, vec4 item);
+void dynVec4Array_AddBack(dynVec4Array** dynVec4Array, vec4 item);
 
 // end definition of dynVec4Array
 

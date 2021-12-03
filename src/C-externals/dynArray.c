@@ -1,6 +1,10 @@
 #include "ghostymath.h"
 #include "dynArray.h"
 
+void fillArray(void** array, void* values)
+{
+  (*array) = values;
+}
 
 // start dynFloatArray
 
@@ -31,7 +35,7 @@ dynFloatArray* new_DynFloatArrayFromFloatArray(float fillData[], int size)
   return(new_DynFloatArray);
 }
 
-void dynFloatArray_Add(dynFloatArray** dynFloatArray, float item)
+void dynFloatArray_AddBack(dynFloatArray** dynFloatArray, float item)
 {
   (*dynFloatArray)->size += 1;
   (*dynFloatArray) = realloc((*dynFloatArray), sizeof(struct dynFloatArray) + sizeof(float) * (*dynFloatArray)->size);
@@ -90,7 +94,7 @@ dynUByteArray* new_DynUByteArrayFromUByteArray(unsigned char fillData[], int siz
   return(new_DynUByteArray);
 }
 
-void dynUByteArray_Add(dynUByteArray** dynUByteArray, unsigned char item)
+void dynUByteArray_AddBack(dynUByteArray** dynUByteArray, unsigned char item)
 {
   (*dynUByteArray)->size += 1;
   (*dynUByteArray) = realloc((*dynUByteArray), sizeof(struct dynUByteArray) + sizeof(unsigned char) * (*dynUByteArray)->size);
@@ -130,7 +134,7 @@ dynFuncptrArray* new_dynFuncptrArray()
   return(new_DynFuncptrArray);
 }
 
-void dynFuncptrArray_Add(dynFuncptrArray** dynFuncptrArray, void (*func_ptr)())
+void dynFuncptrArray_AddBack(dynFuncptrArray** dynFuncptrArray, void (*func_ptr)())
 {
   (*dynFuncptrArray)->size += 1;
   (*dynFuncptrArray) = realloc((*dynFuncptrArray), sizeof(struct dynFuncptrArray) + sizeof(func_ptr) * (*dynFuncptrArray)->size);
@@ -156,7 +160,7 @@ dynFuncstateArray* new_dynFuncstateArray()
   return(new_DynFuncstateArray);
 }
 
-void dynFuncstateArray_Add(dynFuncstateArray** dynFuncstateArray, enum state new_state, void (*func_ptr)())
+void dynFuncstateArray_AddBack(dynFuncstateArray** dynFuncstateArray, enum state new_state, void (*func_ptr)())
 {
   (*dynFuncstateArray)->size += 1;
 
@@ -186,7 +190,7 @@ dynHandleArray* new_dynHandleArray()
   return(new_DynHandleArray);
 }
 
-void dynHandleArray_Add(dynHandleArray** dynHandleArray, HANDLE item)
+void dynHandleArray_AddBack(dynHandleArray** dynHandleArray, HANDLE item)
 {
   (*dynHandleArray)->size += 1;
   (*dynHandleArray) = realloc((*dynHandleArray), sizeof(struct dynHandleArray) + sizeof(item) * (*dynHandleArray)->size);
@@ -212,7 +216,7 @@ dynVec4Array* new_dynVec4Array()
   return(new_DynVec4Array);
 }
 
-void dynVec4Array_Add(dynVec4Array** dynVec4Array, vec4 item)
+void dynVec4Array_AddBack(dynVec4Array** dynVec4Array, vec4 item)
 {
   (*dynVec4Array)->elemsSize++;
   if((*dynVec4Array)->elemsSize == (*dynVec4Array)->size)

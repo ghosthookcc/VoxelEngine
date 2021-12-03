@@ -4,8 +4,12 @@ layout(triangles) in;
 layout(triangle_strip, max_vertices = 3) out;
 
 in vec4 out_g_Color[];
+in int out_g_Enabled[];
 
 out vec4 out_f_Color;
+
+uniform mat4 projViewMatrix;
+uniform mat4 transformationMatrix;
 
 void main()
 {

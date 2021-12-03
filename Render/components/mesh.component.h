@@ -1,6 +1,7 @@
 #ifndef MESH_COMPONENT_H
 #define MESH_COMPONENT_H
 
+#include "staticChunkManager.component.h"
 #include "staticVoxelGeometry.component.h"
 
 #include "dynArray.h"
@@ -13,5 +14,9 @@ typedef struct Mesh
 } Mesh;
 
 Mesh new_Mesh();
+
+Mesh getMeshFace(BlockFace face);
+
+void updateMesh();
 
 #endif
