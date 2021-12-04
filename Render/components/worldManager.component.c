@@ -26,9 +26,6 @@ void setup_world()
         temp_face = getMeshFace(BLOCK_BACK);
         temp_mesh.updateMesh(&temp_mesh, temp_face, x, y, (int)(z - 0.5f));
 
-        temp_face = getMeshFace(BLOCK_BOTTOM);
-        temp_mesh.updateMesh(&temp_mesh, temp_face, x, (int)(y - 0.5f), z);
-
         temp_face = getMeshFace(BLOCK_LEFT);
         temp_mesh.updateMesh(&temp_mesh, temp_face, (int)(x - 0.5f), y, z);
 
@@ -40,6 +37,9 @@ void setup_world()
 
         temp_face = getMeshFace(BLOCK_RIGHT);
         temp_mesh.updateMesh(&temp_mesh, temp_face, (int)(x + 0.5f), y, z);
+
+        temp_face = getMeshFace(BLOCK_BOTTOM);
+        temp_mesh.updateMesh(&temp_mesh, temp_face, x, y, z);
       }
     }
   }

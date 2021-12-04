@@ -7,6 +7,7 @@ Mesh new_Mesh()
   Mesh new_Mesh;
   new_Mesh.vertices = new_dynFloatArray();
   new_Mesh.edges    = new_dynUByteArray();
+  new_Mesh.normals  = new_dynUByteArray();
   new_Mesh.updateMesh = updateMesh;
   new_Mesh.getTriangleCount = getTriangleCount;
   return(new_Mesh);
@@ -18,6 +19,7 @@ Mesh getMeshFace(BlockFace face)
 
   float* faceVertices = malloc(sizeof(float) * 18);
   unsigned char faceEdges[6] = { 0, 1, 2, 3, 4, 5 };
+  float* faceNormals = malloc(sizeof(float) * 3);
 
   switch(face)
   {
@@ -32,6 +34,11 @@ Mesh getMeshFace(BlockFace face)
         -0.5f,  0.5f,  0.5f,
         -0.5f,  0.5f, -0.5f
       });
+      fillArray(&faceNormals,
+      (float[])
+      {
+        0.0f, 1.0f, 0.0f
+      });
       break;
     case(BLOCK_BOTTOM):
       fillArray(&faceVertices,
@@ -43,6 +50,11 @@ Mesh getMeshFace(BlockFace face)
         0.5f, -0.5f,  0.5f,
         -0.5f, -0.5f,  0.5f,
         -0.5f, -0.5f, -0.5f
+      });
+      fillArray(&faceNormals,
+      (float[])
+      {
+        0.0f, -1.0f, 0.0f
       });
       break;
     case(BLOCK_FRONT):
@@ -56,6 +68,11 @@ Mesh getMeshFace(BlockFace face)
         -0.5f,  0.5f,  0.5f,
         -0.5f, -0.5f,  0.5f
       });
+      fillArray(&faceNormals,
+      (float[])
+      {
+        0.0f, 0.0f, 1.0f
+      });
       break;
     case(BLOCK_BACK):
       fillArray(&faceVertices,
@@ -67,6 +84,11 @@ Mesh getMeshFace(BlockFace face)
          0.5f,  0.5f, -0.5f,
         -0.5f,  0.5f, -0.5f,
         -0.5f, -0.5f, -0.5f
+      });
+      fillArray(&faceNormals,
+      (float[])
+      {
+        0.0f, 0.0f, -1.0f
       });
       break;
     case(BLOCK_RIGHT):
@@ -80,6 +102,11 @@ Mesh getMeshFace(BlockFace face)
         0.5f, -0.5f,  0.5f,
         0.5f,  0.5f,  0.5f
       });
+      fillArray(&faceNormals,
+      (float[])
+      {
+        1.0f, 0.0f, 0.0f
+      });
       break;
     case(BLOCK_LEFT):
       fillArray(&faceVertices,
@@ -91,6 +118,11 @@ Mesh getMeshFace(BlockFace face)
         -0.5f, -0.5f, -0.5f,
         -0.5f, -0.5f,  0.5f,
         -0.5f,  0.5f,  0.5f
+      });
+      fillArray(&faceNormals,
+      (float[])
+      {
+        -1.0f, 0.0f, 0.0f
       });
       break;
   }
@@ -108,6 +140,11 @@ void updateMesh(Mesh* self, Mesh other, int x, int y, int z)
     dynFloatArray_AddBack(&self->vertices, other.vertices->items[    i * 3] + x);
     dynFloatArray_AddBack(&self->vertices, other.vertices->items[1 + i * 3] + y);
     dynFloatArray_AddBack(&self->vertices, other.vertices->items[2 + i * 3] + z);
+  }
+
+  for(int i = 0; i < other.normals->size; i++)
+  {
+    dynFloatArray_AddBack(&self->vertices, other.normals->items[i]);  
   }
 }
 

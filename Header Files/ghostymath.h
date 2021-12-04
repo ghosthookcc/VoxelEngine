@@ -29,12 +29,6 @@ typedef struct
 
 typedef struct Camera
 {
-  vec3 target;
-
-  vec3 FORWARD;
-  vec3 RIGHT;
-  vec3 UP;
-
   vec3 EYE;
   cameraOrientations ROTATION;
 } Camera;

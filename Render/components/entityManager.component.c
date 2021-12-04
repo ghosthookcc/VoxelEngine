@@ -7,12 +7,17 @@ void loadToVAO(Mesh new_EntityMesh)
 
   dynFloatArray* VerticesColors = new_dynFloatArray();
 
-  vec4 rgba = new_vec4(0.6f, 0.8f, 1.0f, 1.0f);
-  for(int i = 0; i < new_EntityMesh.vertices->size / 3; i++)
+  vec4 rgba = new_vec4(1.0f, 1.0f, 1.0f, 1.0f);
+
+  float rDecVal = (rgba.x / new_EntityMesh.vertices->size) * 2.0f;
+  float gDecVal = (rgba.y / new_EntityMesh.vertices->size) * 7.0f;
+  float bDecVal = (rgba.z / new_EntityMesh.vertices->size) * 15.0f;
+
+  for(int i = 0; i < new_EntityMesh.getTriangleCount(new_EntityMesh); i++)
   {
-    dynFloatArray_AddBack(&VerticesColors, rgba.x - (0.0001f * i));
-    dynFloatArray_AddBack(&VerticesColors, rgba.y - (0.00001f * i));
-    dynFloatArray_AddBack(&VerticesColors, rgba.z - (0.00005f * i));
+    dynFloatArray_AddBack(&VerticesColors, rgba.x - (rDecVal * i));
+    dynFloatArray_AddBack(&VerticesColors, rgba.y - (gDecVal * i));
+    dynFloatArray_AddBack(&VerticesColors, rgba.z - (bDecVal * i));
     dynFloatArray_AddBack(&VerticesColors, rgba.w);
   }
 

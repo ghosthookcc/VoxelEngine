@@ -11,12 +11,6 @@ void setup_Camera(vec3 start_position)
   p_Entity.rotation.y = 0.0f;
   p_Entity.rotation.z = 0.0f;
 
-  camera.target = new_vec3(0.0f, 0.0f, 0.0f);
-
-  camera.FORWARD = new_vec3(0.0f, 0.0f, -1.0f);
-  camera.RIGHT = new_vec3(1.0f, 0.0f, 0.0f);
-  camera.UP = new_vec3(0.0f, 1.0f, 0.0f);
-
   UpdateCameraVars();
 }
 

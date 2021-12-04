@@ -1,4 +1,5 @@
 #include "controlsManager.component.h"
+#include <stdio.h>
 
 vec3 getMovementVec3(mat4x4 viewMatrix, LONGLONG DeltaTime)
 {
