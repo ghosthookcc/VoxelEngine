@@ -1,17 +1,51 @@
 #include "worldManager.component.h"
+#include <stdio.h>
 
 void setup_world()
 {
-  Mesh testmesh = new_Mesh();
-  dynFloatArray_AddVec3Values(&testmesh.vertices, new_vec3(0.0f, 0.5f, -0.5f));
-  dynFloatArray_AddVec3Values(&testmesh.vertices, new_vec3(-0.5f, 0.0f, -0.5f));
-  dynFloatArray_AddVec3Values(&testmesh.vertices, new_vec3(0.5f, 0.0f, -0.5f));
+  Mesh temp_face;
+  Mesh temp_mesh = new_Mesh();
 
-  dynFloatArray_AddVec3Values(&testmesh.vertices, new_vec3(0.0f, 1.5f, -0.5f));
-  dynFloatArray_AddVec3Values(&testmesh.vertices, new_vec3(-1.5f, 0.0f, -0.5f));
-  dynFloatArray_AddVec3Values(&testmesh.vertices, new_vec3(1.5f, 0.0f, -0.5f));
+  TOF_Flag blocks[CHUNK_XYZ_SIZE][CHUNK_XYZ_SIZE][CHUNK_XYZ_SIZE];
+  for(unsigned int x = 0; x < CHUNK_XYZ_SIZE; x++)
+  {
+    for(unsigned int y = 0; y < CHUNK_XYZ_SIZE; y++)
+    {
+      for(unsigned int z = 0; z < CHUNK_XYZ_SIZE; z++)
+      {
+        if (y == 0)
+        {
+          blocks[x][y][z].exists = 1;
+        }
+        else
+        {
+          blocks[x][y][z].exists = 0;
+        }
 
-  dynUByteArray_AddVec3Values(&testmesh.edges, new_UByteVec3(0, 1, 2));
-  dynUByteArray_AddVec3Values(&testmesh.edges, new_UByteVec3(3, 4, 5));
-  loadToVAO(testmesh);
+        if(!blocks[x][y][z].exists) continue;
+        temp_face = getMeshFace(BLOCK_BACK);
+        temp_mesh.updateMesh(&temp_mesh, temp_face, x, y, (int)(z - 0.5f));
+
+        temp_face = getMeshFace(BLOCK_BOTTOM);
+        temp_mesh.updateMesh(&temp_mesh, temp_face, x, (int)(y - 0.5f), z);
+
+        temp_face = getMeshFace(BLOCK_LEFT);
+        temp_mesh.updateMesh(&temp_mesh, temp_face, (int)(x - 0.5f), y, z);
+
+        temp_face = getMeshFace(BLOCK_FRONT);
+        temp_mesh.updateMesh(&temp_mesh, temp_face, x, y, (int)(z + 0.5f));
+
+        temp_face = getMeshFace(BLOCK_TOP);
+        temp_mesh.updateMesh(&temp_mesh, temp_face, x, (int)(y + 0.5f), z);
+
+        temp_face = getMeshFace(BLOCK_RIGHT);
+        temp_mesh.updateMesh(&temp_mesh, temp_face, (int)(x + 0.5f), y, z);
+      }
+    }
+  }
+
+  printf("%i vertices loaded to VAO\n", temp_mesh.vertices->size);
+  printf("%i triangles loaded to VAO\n\n", temp_mesh.getTriangleCount(temp_mesh));
+
+  loadToVAO(temp_mesh);
 }

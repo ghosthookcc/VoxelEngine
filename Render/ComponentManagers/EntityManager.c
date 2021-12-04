@@ -30,7 +30,7 @@ void RenderEntities(LONGLONG DeltaTime)
      m4_MVPMatrix = make_MVPMatrix();
      load_MVPMatrix();
 
-    glDrawArrays(GL_TRIANGLES, 0, Entities->entities[i].vertexCount);
+    glDrawArrays(GL_TRIANGLES, 0, Entities->entities[i].triangleCount);
    }
 
    glDisableVertexAttribArray(0);

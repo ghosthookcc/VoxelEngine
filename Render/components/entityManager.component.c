@@ -10,9 +10,9 @@ void loadToVAO(Mesh new_EntityMesh)
   vec4 rgba = new_vec4(0.6f, 0.8f, 1.0f, 1.0f);
   for(int i = 0; i < new_EntityMesh.vertices->size / 3; i++)
   {
-    dynFloatArray_AddBack(&VerticesColors, rgba.x - (0.05f * i));
-    dynFloatArray_AddBack(&VerticesColors, rgba.y - (0.05f * i));
-    dynFloatArray_AddBack(&VerticesColors, rgba.z - (0.05f * i));
+    dynFloatArray_AddBack(&VerticesColors, rgba.x - (0.0001f * i));
+    dynFloatArray_AddBack(&VerticesColors, rgba.y - (0.00001f * i));
+    dynFloatArray_AddBack(&VerticesColors, rgba.z - (0.00005f * i));
     dynFloatArray_AddBack(&VerticesColors, rgba.w);
   }
 
@@ -26,7 +26,7 @@ void loadToVAO(Mesh new_EntityMesh)
   entity->rotation = new_vec3(0.0f, 0.0f, 0.0f);
   entity->scale    = new_vec3(1.0f, 1.0f, 1.0f);
   entity->mesh     = new_EntityMesh;
-  entity->vertexCount =  (*new_EntityMesh.edges).size;
+  entity->triangleCount = new_EntityMesh.getTriangleCount(new_EntityMesh);
 
   entityStack_Push(&Entities, entity);
 }

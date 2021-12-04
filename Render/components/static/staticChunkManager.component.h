@@ -3,6 +3,11 @@
 
 #define CHUNK_XYZ_SIZE 16
 
+typedef struct TOF_Flag
+{
+  unsigned char exists : 1;
+} TOF_Flag;
+
 typedef enum BlockFace
 {
   BLOCK_TOP,
@@ -17,7 +22,5 @@ static const int CHUNK_AREA = CHUNK_XYZ_SIZE * CHUNK_XYZ_SIZE;
 static const int CHUNK_VOLUME = CHUNK_XYZ_SIZE * CHUNK_XYZ_SIZE * CHUNK_XYZ_SIZE;
 
 #include "mesh.component.h"
-
-void testRenderChunk();
 
 #endif

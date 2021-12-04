@@ -9,7 +9,7 @@ GLvoid glInit(GLsizei WIDTH, GLsizei HEIGHT)
 
   Entities = init_EntityStack();
 
-  setup_Camera(new_vec3(0.0f, 0.0f, 2.5f));
+  setup_Camera(new_vec3(0.0f, 1.0f, 2.5f));
 
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   glEnable(GL_DEPTH_TEST);

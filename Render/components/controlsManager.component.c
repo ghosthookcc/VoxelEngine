@@ -15,6 +15,18 @@ unsigned int check_RequestMove(Entity* player, mat4x4* viewMatrix, LONGLONG Delt
 {
   vec3 newMovement = getMovementVec3((*viewMatrix), DeltaTime);
 
+  if (GetAsyncKeyState(VK_SHIFT) < 0 && shiftstate.exists == 0)
+  {
+    walkSpeed = 0.00003f;
+    shiftstate.exists = 1;
+  }
+
+  if (GetAsyncKeyState(VK_SHIFT) == 0 && shiftstate.exists == 1)
+  {
+    walkSpeed = 0.000003f;
+    shiftstate.exists = 0;
+  }
+
   if(GetKeyState('W') & 0x8000)
   {
     player->position.x -= newMovement.x;

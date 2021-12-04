@@ -37,7 +37,7 @@ typedef struct Entity
   vec3 scale;
   vec3 velocity;
   Mesh mesh;
-  int vertexCount;
+  int triangleCount;
   int enabledFaces;
 } Entity;
 

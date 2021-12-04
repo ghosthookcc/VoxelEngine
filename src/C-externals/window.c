@@ -203,131 +203,21 @@ int WINAPI WinMain()
 
   QueryPerformanceFrequency(&Frequency);
 
-  Mesh testmesh;
-  Mesh testmesh1;
-  Mesh testmesh2;
+  //Mesh blocktop = getMeshFace(BLOCK_TOP);
+  //Mesh blockbottom = getMeshFace(BLOCK_BOTTOM);
+  //Mesh blockfront = getMeshFace(BLOCK_FRONT);
+  //Mesh blockback = getMeshFace(BLOCK_BACK);
+  //Mesh blockright = getMeshFace(BLOCK_RIGHT);
+  //Mesh blockleft = getMeshFace(BLOCK_LEFT);
 
-  float vertices[] =
-  {
-    -0.5f
-  };
+  //loadToVAO(blocktop);
+  //loadToVAO(blockbottom);
+  //loadToVAO(blockfront);
+  //loadToVAO(blockback);
+  //loadToVAO(blockright);
+  //loadToVAO(blockleft);
 
-  unsigned char indices[] =
-  {
-    0, 1, 2
-  };
-
-  float vertices2[] =
-  {
-    -0.5f, 0.5f, -0.5f,
-    -0.5f, -0.5f, -0.5f,
-    0.5f, -0.5f, -0.5f,
-    0.5f, 0.5f, -0.5f,
-
-    -0.5f, 0.5f, 0.5f,
-    -0.5f, -0.5f, 0.5f,
-    0.5f, -0.5f, 0.5f,
-    0.5f, 0.5f, 0.5f,
-
-    0.5f, 0.5f, -0.5f,
-    0.5f, -0.5f, -0.5f,
-    0.5f, -0.5f, 0.5f,
-    0.5f, 0.5f, 0.5f,
-
-    -0.5f, 0.5f, -0.5f,
-    -0.5f, -0.5f, -0.5f,
-    -0.5f, -0.5f, 0.5f,
-    -0.5f, 0.5f, 0.5f,
-
-    -0.5f, 0.5f, 0.5f,
-    -0.5f, 0.5f, -0.5f,
-    0.5f, 0.5f, -0.5f,
-    0.5f, 0.5f, 0.5f,
-  };
-
-  float vertices3[] =
-  {
-    -0.5f, 0.5f, -0.5f,
-    -0.5f, -0.5f, -0.5f,
-    0.5f, -0.5f, -0.5f,
-    0.5f, 0.5f, -0.5f,
-
-    -0.5f, 0.5f, 0.5f,
-    -0.5f, -0.5f, 0.5f,
-    0.5f, -0.5f, 0.5f,
-    0.5f, 0.5f, 0.5f,
-
-    0.5f, 0.5f, -0.5f,
-    0.5f, -0.5f, -0.5f,
-    0.5f, -0.5f, 0.5f,
-    0.5f, 0.5f, 0.5f,
-
-    -0.5f, 0.5f, -0.5f,
-    -0.5f, -0.5f, -0.5f,
-    -0.5f, -0.5f, 0.5f,
-    -0.5f, 0.5f, 0.5f,
-
-    -0.5f, 0.5f, 0.5f,
-    -0.5f, 0.5f, -0.5f,
-    0.5f, 0.5f, -0.5f,
-    0.5f, 0.5f, 0.5f,
-  };
-
-  unsigned char indices2[] =
-  {
-    0, 1, 3,
-    3, 1, 2,
-    4, 5, 7,
-    7, 5, 6,
-    8, 9, 11,
-    11, 9, 10,
-    12, 13, 15,
-    15, 13, 14,
-    16, 17, 19,
-    19, 17, 18,
-    20,
-  };
-
-  unsigned char indices3[] =
-  {
-    0, 1, 3,
-    3, 1, 2,
-    4, 5, 7,
-    7, 5, 6,
-    8, 9, 11,
-    11, 9, 10,
-    12, 13, 15,
-    15, 13, 14,
-    16, 17, 19,
-    19, 17, 18,
-    20,
-  };
-
-  //testmesh.vertices = new_DynFloatArrayFromFloatArray(vertices, 5);
-  //testmesh.edges = new_DynUByteArrayFromUByteArray(indices, 3);
-
-  //testmesh1.vertices = new_DynFloatArrayFromFloatArray(vertices2, 60);
-  //testmesh1.edges = new_DynUByteArrayFromUByteArray(indices2, 31);
-
-  //testmesh2.vertices = new_DynFloatArrayFromFloatArray(vertices3, 60);
-  //testmesh2.edges = new_DynUByteArrayFromUByteArray(indices3, 31);
-
-  Mesh testmesh3 = getMeshFace(BLOCK_TOP);
-  Mesh testmesh4 = getMeshFace(BLOCK_BOTTOM);
-  Mesh testmesh5 = getMeshFace(BLOCK_FRONT);
-  Mesh testmesh6 = getMeshFace(BLOCK_BACK);
-  Mesh testmesh7 = getMeshFace(BLOCK_RIGHT);
-  Mesh testmesh8 = getMeshFace(BLOCK_LEFT);
-
-  //loadToVAO(testmesh);
-  //loadToVAO(testmesh1);
-  //loadToVAO(testmesh2);
-  loadToVAO(testmesh3);
-  loadToVAO(testmesh4);
-  loadToVAO(testmesh5);
-  loadToVAO(testmesh6);
-  loadToVAO(testmesh7);
-  loadToVAO(testmesh8);
+  setup_world();
 
   MSG message = {0};
   int running = 1;

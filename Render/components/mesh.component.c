@@ -7,12 +7,14 @@ Mesh new_Mesh()
   Mesh new_Mesh;
   new_Mesh.vertices = new_dynFloatArray();
   new_Mesh.edges    = new_dynUByteArray();
+  new_Mesh.updateMesh = updateMesh;
+  new_Mesh.getTriangleCount = getTriangleCount;
   return(new_Mesh);
 }
 
 Mesh getMeshFace(BlockFace face)
 {
-  Mesh new_mesh;
+  Mesh new_mesh = new_Mesh();
 
   float* faceVertices = malloc(sizeof(float) * 18);
   unsigned char faceEdges[6] = { 0, 1, 2, 3, 4, 5 };
@@ -99,7 +101,17 @@ Mesh getMeshFace(BlockFace face)
   return(new_mesh);
 }
 
-void updateMesh()
+void updateMesh(Mesh* self, Mesh other, int x, int y, int z)
 {
-  
+  for(int i = 0; i < other.getTriangleCount(other); i++)
+  {
+    dynFloatArray_AddBack(&self->vertices, other.vertices->items[    i * 3] + x);
+    dynFloatArray_AddBack(&self->vertices, other.vertices->items[1 + i * 3] + y);
+    dynFloatArray_AddBack(&self->vertices, other.vertices->items[2 + i * 3] + z);
+  }
+}
+
+int getTriangleCount(Mesh self)
+{
+    return(self.vertices->size / 3);
 }

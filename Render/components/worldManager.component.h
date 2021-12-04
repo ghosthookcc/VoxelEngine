@@ -4,6 +4,8 @@
 #include "entityManager.component.h"
 #include "staticChunkManager.component.h"
 
+#include "mesh.component.h"
+
 void setup_world();
 
 #endif
