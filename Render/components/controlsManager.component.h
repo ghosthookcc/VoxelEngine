@@ -8,6 +8,7 @@
 #include "entityManager.component.h"
 
 static float walkSpeed = 0.000003f;
+static float scaleSpeed =  0.001f;
 static TOF_Flag shiftstate = { 0 };
 static float rotSpeed = 0.005f;
 

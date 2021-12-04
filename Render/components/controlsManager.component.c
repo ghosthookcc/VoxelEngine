@@ -19,12 +19,14 @@ unsigned int check_RequestMove(Entity* player, mat4x4* viewMatrix, LONGLONG Delt
   if (GetAsyncKeyState(VK_SHIFT) < 0 && shiftstate.exists == 0)
   {
     walkSpeed = 0.00003f;
+    scaleSpeed = 0.01f;
     shiftstate.exists = 1;
   }
 
   if (GetAsyncKeyState(VK_SHIFT) == 0 && shiftstate.exists == 1)
   {
     walkSpeed = 0.000003f;
+    scaleSpeed = 0.001f;
     shiftstate.exists = 0;
   }
 
@@ -56,6 +58,27 @@ unsigned int check_RequestMove(Entity* player, mat4x4* viewMatrix, LONGLONG Delt
     player->position.x += newMovement.z;
     player->position.z -= newMovement.x;
     return(1);
+  }
+
+  if(GetKeyState('Q') & 0x8000)
+  {
+    for(int i = 0; i < entityStack_Count(Entities); i++)
+    {
+      if(Entities->entities[i].scale.x <= 0)
+      {
+        Entities->entities[i].scale.x = 0;
+        continue;
+      }
+      Entities->entities[i].scale.x -= scaleSpeed;
+    }
+  }
+
+  if(GetKeyState('E') & 0x8000)
+  {
+    for(int i = 0; i < entityStack_Count(Entities); i++)
+    {
+      Entities->entities[i].scale.x += scaleSpeed;
+    }
   }
 
   return(0);

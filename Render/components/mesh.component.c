@@ -7,7 +7,7 @@ Mesh new_Mesh()
   Mesh new_Mesh;
   new_Mesh.vertices = new_dynFloatArray();
   new_Mesh.edges    = new_dynUByteArray();
-  new_Mesh.normals  = new_dynUByteArray();
+  new_Mesh.normals  = new_dynFloatArray();
   new_Mesh.updateMesh = updateMesh;
   new_Mesh.getTriangleCount = getTriangleCount;
   return(new_Mesh);
@@ -129,6 +129,7 @@ Mesh getMeshFace(BlockFace face)
 
   new_mesh.vertices = new_DynFloatArrayFromFloatArray(faceVertices, 18);
   new_mesh.edges = new_DynUByteArrayFromUByteArray(faceEdges, 6);
+  new_mesh.normals = new_DynFloatArrayFromFloatArray(faceNormals, 3);
 
   return(new_mesh);
 }
@@ -144,7 +145,7 @@ void updateMesh(Mesh* self, Mesh other, int x, int y, int z)
 
   for(int i = 0; i < other.normals->size; i++)
   {
-    dynFloatArray_AddBack(&self->vertices, other.normals->items[i]);  
+    dynFloatArray_AddBack(&self->normals, other.normals->items[i]);
   }
 }
 
