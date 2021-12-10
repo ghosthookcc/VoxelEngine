@@ -1,8 +1,6 @@
 #ifndef VEC4_H
 #define VEC4_H
 
-#include <malloc.h>
-
 typedef struct
 {
   float x;

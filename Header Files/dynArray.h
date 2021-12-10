@@ -3,8 +3,10 @@
 
 #include <windows.h>
 
+#include "vec2.h"
 #include "vec3.h"
 #include "vec4.h"
+
 
 void fillArray(void** array, void* values);
 
@@ -25,8 +27,25 @@ void dynFloatArray_Add(dynFloatArray** dynFloatArray, float item);
 void dynFloatArray_AddBack(dynFloatArray** dynFloatArray, float item);
 
 void dynFloatArray_AddVec3Values(dynFloatArray** dynFloatArray, vec3 item);
+void dynFloatArray_AddVec2Values(dynFloatArray** dynFloatArray, vec2 item);
 
 // end definition of dynFloatArray
+
+// start definition of dynStringArray
+
+typedef struct dynStringArray
+{
+  int size;
+  char** items;
+} dynStringArray;
+
+dynStringArray* new_dynStringArray();
+
+void dynStringArray_Add(dynStringArray** dynStringArray, char* item);
+
+void dynStringArray_AddBack(dynStringArray** dynFloatArray, char* item);
+
+// end definition of dynStringArray
 
 // start definition of dynUByteArray
 

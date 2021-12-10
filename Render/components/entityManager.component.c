@@ -7,6 +7,43 @@ void loadToVAO(Mesh new_EntityMesh)
 
   dynFloatArray* VerticesColors = new_dynFloatArray();
 
+  vec4 rgba = new_vec4(0.6f, 0.8f, 1.0f, 1.0f);
+
+  float rDecVal = (rgba.x / new_EntityMesh.vertices->size) * 5.0f;
+  float gDecVal = (rgba.y / new_EntityMesh.vertices->size) / 3.0f;
+  float bDecVal = (rgba.z / new_EntityMesh.vertices->size) * 2.0f;
+
+  for(int i = 0; i < new_EntityMesh.getTriangleCount(new_EntityMesh); i++)
+  {
+    dynFloatArray_AddBack(&VerticesColors, rgba.x - (rDecVal * i));
+    dynFloatArray_AddBack(&VerticesColors, rgba.y - (gDecVal * i));
+    dynFloatArray_AddBack(&VerticesColors, rgba.z - (bDecVal * i));
+    dynFloatArray_AddBack(&VerticesColors, rgba.w);
+  }
+
+  storeDataInAttributeList(0, 3, new_EntityMesh.vertices);
+  storeDataInAttributeList(1, 4, VerticesColors);
+
+  Entity* entity = malloc(sizeof(struct Entity));
+
+  entity->vaoID = vaoID; // THE MISSILE KNOWS WHERE IT IS AT ALL TIMES, IT KNOWS THIS BECAUSE IT KNOWS WHERE IT ISNT.
+  entity->position = new_vec3(0.0f, 0.0f, 0.0f);
+  entity->rotation = new_vec3(0.0f, 0.0f, 0.0f);
+  entity->scale    = new_vec3(1.0f, 1.0f, 1.0f);
+  entity->mesh     = new_EntityMesh;
+  entity->triangleCount = new_EntityMesh.getTriangleCount(new_EntityMesh);
+
+  entityStack_Push(&Entities, entity);
+}
+
+void loadModelToVAO(char* filename)
+{
+  Mesh new_EntityMesh = readOBJFile(filename);
+  unsigned int vaoID = createVAO();
+  bindIndices(new_EntityMesh.edges);
+
+  dynFloatArray* VerticesColors = new_dynFloatArray();
+
   vec4 rgba = new_vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
   float rDecVal = (rgba.x / new_EntityMesh.vertices->size) * 2.0f;
@@ -27,7 +64,7 @@ void loadToVAO(Mesh new_EntityMesh)
   Entity* entity = malloc(sizeof(struct Entity));
 
   entity->vaoID = vaoID; // THE MISSILE KNOWS WHERE IT IS AT ALL TIMES, IT KNOWS THIS BECAUSE IT KNOWS WHERE IT ISNT.
-  entity->position = new_vec3(0.0f, 0.0f, 0.0f);
+  entity->position = new_vec3(0.0f, 0.8f, 0.0f);
   entity->rotation = new_vec3(0.0f, 0.0f, 0.0f);
   entity->scale    = new_vec3(1.0f, 1.0f, 1.0f);
   entity->mesh     = new_EntityMesh;
@@ -111,6 +148,30 @@ void transformation_SetScale(Entity* entity)
   new_ScaleMatrix.matrix[3][3] = 1.0f;
 
   m4_scaleMatrix = new_ScaleMatrix;
+}
+
+Mesh readOBJFile(char* filename)
+{
+  Mesh object_Mesh = new_Mesh();
+
+  FILE* file = fopen(filename, "r");
+
+  char line[256];
+  while (fgets(line, sizeof(line), file))
+  {
+      if(line == "" || line[0] == '#')
+        continue;
+
+      if(line[0] == 'v')
+      {
+        float vertex[3];
+        sscanf(line, "%*s %f %f %f", &vertex[0], &vertex[1], &vertex[2]);
+        dynFloatArray_AddVec3Values(&object_Mesh.vertices, new_vec3(vertex[0], vertex[1], vertex[2]));
+      }
+  }
+
+  fclose(file);
+  return(object_Mesh);
 }
 
 void cleanUpEntities()

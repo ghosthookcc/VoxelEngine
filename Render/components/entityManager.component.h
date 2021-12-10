@@ -3,6 +3,7 @@
 
 #include <windows.h>
 #include <gl/gl.h>
+#include <stdio.h>
 
 #include "staticRenderingVars.component.h"
 #include "staticShaderManager.component.h"
@@ -23,6 +24,7 @@
 EntityStack* Entities;
 
 void loadToVAO(Mesh new_EntityMesh);
+void loadModelToVAO(char* filename);
 
 unsigned int createVAO();
 
@@ -33,6 +35,8 @@ void storeDataInAttributeList(int attribute, int coordinateSize, dynFloatArray* 
 void transformation_SetPosition(Entity* entity);
 void transformation_SetRotation(Entity* entity);
 void transformation_SetScale(Entity* entity);
+
+Mesh readOBJFile(char* filename);
 
 void cleanUpEntities();
 

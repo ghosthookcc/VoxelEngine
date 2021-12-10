@@ -9,6 +9,6 @@ uniform mat4 transformationMatrix;
 
 void main()
 {
-	vec4 totalOffset = vec4(offset.x, offset.y, offset.z, 1.0f);
+	vec4 totalOffset = vec4(offset.x, offset.y, offset.z, 0.0f);
 	gl_Position = projViewMatrix * transformationMatrix * (in_Position + totalOffset);
 };

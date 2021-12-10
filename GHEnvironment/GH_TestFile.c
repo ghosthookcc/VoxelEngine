@@ -2,10 +2,10 @@
 
 inline void start()
 {
-  printf("%s", "startFUNC [WORKS]");
+  printf("\n\n%s\n", "startFUNC [WORKS]");
 }
 
 inline void update()
 {
-  printf("%s", "updateFUNC [WORKS]");
+  printf("%s\n\n", "updateFUNC [WORKS]");
 }

@@ -7,6 +7,7 @@ Mesh new_Mesh()
   Mesh new_Mesh;
   new_Mesh.vertices = new_dynFloatArray();
   new_Mesh.edges    = new_dynUByteArray();
+  new_Mesh.texcoords = new_dynFloatArray();
   new_Mesh.normals  = new_dynFloatArray();
   new_Mesh.updateMesh = updateMesh;
   new_Mesh.getTriangleCount = getTriangleCount;

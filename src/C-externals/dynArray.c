@@ -1,5 +1,6 @@
 #include "ghostymath.h"
 #include "dynArray.h"
+#include "shaderClass.h"
 
 void fillArray(void** array, void* values)
 {
@@ -63,7 +64,51 @@ void dynFloatArray_AddVec3Values(dynFloatArray** dynFloatArray, vec3 item)
   (*dynFloatArray)->items[(*dynFloatArray)->size - 1] = item.z;
 }
 
+void dynFloatArray_AddVec2Values(dynFloatArray** dynFloatArray, vec2 item)
+{
+  (*dynFloatArray)->size += 2;
+  (*dynFloatArray) = realloc((*dynFloatArray), sizeof(struct dynFloatArray) + sizeof(float) * (*dynFloatArray)->size);
+  (*dynFloatArray)->items = realloc((*dynFloatArray)->items, sizeof(float) * (*dynFloatArray)->size);
+  if((*dynFloatArray)->items == NULL)
+  {
+    free((*dynFloatArray));
+  }
+
+  (*dynFloatArray)->items[(*dynFloatArray)->size - 2] = item.x;
+  (*dynFloatArray)->items[(*dynFloatArray)->size - 1] = item.y;
+}
+
 // end dynFloatArray
+
+// start dynStringArray
+
+dynStringArray* new_dynStringArray()
+{
+  dynStringArray* new_DynStringArray = malloc(sizeof(struct dynStringArray));
+  new_DynStringArray->items = (char**)calloc(0, sizeof(char*));
+  new_DynStringArray->size = 0;
+  return(new_DynStringArray);
+}
+
+void dynStringArray_Add(dynStringArray** dynStringArray, char* item)
+{
+
+}
+
+void dynStringArray_AddBack(dynStringArray** dynStringArray, char* item)
+{
+  (*dynStringArray)->size += 1;
+  (*dynStringArray) = realloc((*dynStringArray), sizeof(struct dynStringArray) + sizeof(char) * get_strlen(item) * (*dynStringArray)->size);
+  (*dynStringArray)->items = realloc((*dynStringArray)->items, sizeof(char) * get_strlen(item) * (*dynStringArray)->size);
+  if((*dynStringArray)->items == NULL)
+  {
+    free((*dynStringArray));
+  }
+
+  (*dynStringArray)->items[(*dynStringArray)->size - 1] = item;
+}
+
+// end dynStringArray
 
 // start dynUByteArray
 

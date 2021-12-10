@@ -203,20 +203,6 @@ int WINAPI WinMain()
 
   QueryPerformanceFrequency(&Frequency);
 
-  //Mesh blocktop = getMeshFace(BLOCK_TOP);
-  //Mesh blockbottom = getMeshFace(BLOCK_BOTTOM);
-  //Mesh blockfront = getMeshFace(BLOCK_FRONT);
-  //Mesh blockback = getMeshFace(BLOCK_BACK);
-  //Mesh blockright = getMeshFace(BLOCK_RIGHT);
-  //Mesh blockleft = getMeshFace(BLOCK_LEFT);
-
-  //loadToVAO(blocktop);
-  //loadToVAO(blockbottom);
-  //loadToVAO(blockfront);
-  //loadToVAO(blockback);
-  //loadToVAO(blockright);
-  //loadToVAO(blockleft);
-
   setup_world();
 
   MSG message = {0};
