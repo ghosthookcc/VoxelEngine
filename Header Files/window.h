@@ -9,13 +9,13 @@
 
 #include "staticRenderingVars.component.h"
 
-#include "commonIncludes.inc.h"
 #include "MasterRenderer.h"
 #include "shaderClass.h"
 #include "ghostymath.h"
 #include "dynArray.h"
 #include "vector.h"
 #include "vec3.h"
+#include "start_menu.h"
 
 HGLRC hRC; // Permanent Rendering Context
 HDC hDC; // Private GDI Device Context

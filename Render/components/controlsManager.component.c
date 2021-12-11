@@ -60,27 +60,6 @@ unsigned int check_RequestMove(Entity* player, mat4x4* viewMatrix, LONGLONG Delt
     return(1);
   }
 
-  if(GetKeyState('Q') & 0x8000)
-  {
-    for(int i = 0; i < entityStack_Count(Entities); i++)
-    {
-      if(Entities->entities[i].scale.x <= 0)
-      {
-        Entities->entities[i].scale.x = 0;
-        continue;
-      }
-      Entities->entities[i].scale.x -= scaleSpeed;
-    }
-  }
-
-  if(GetKeyState('E') & 0x8000)
-  {
-    for(int i = 0; i < entityStack_Count(Entities); i++)
-    {
-      Entities->entities[i].scale.x += scaleSpeed;
-    }
-  }
-
   return(0);
 }
 
@@ -116,20 +95,89 @@ unsigned int check_RequestRotate(Entity* player, mat4x4* viewMatrix, LONGLONG De
 
 unsigned int check_RequestCommand(Entity* player, mat4x4* viewMatrix, LONGLONG DeltaTime)
 {
-  if(GetKeyState('R') & 0x8000)
+  if(GetKeyState('Y') & 0x8000)
   {
-    player->rotation.x = 0.0f;
-    player->rotation.y = 0.0f;
-    player->rotation.z = 0.0f;
+    ResetVec3(&player->rotation);
 
     player->position.x = 0.0f;
-    player->position.y = 0.0f;
+    player->position.y = 1.0f;
     player->position.z = 2.5f;
+
+    player->scale.x = 1.0f;
+    player->scale.y = 1.0f;
+    player->scale.z = 1.0f;
+
+    return(1);
+  }
+
+  if(GetKeyState(VK_F1) & 0x8000)
+  {
+    for(int i = 0; i < entityStack_Count(Entities); i++)
+    {
+      if(Entities->entities[i].scale.x < 0)
+      {
+        Entities->entities[i].scale.x = 0;
+        continue;
+      }
+      Entities->entities[i].scale.x -= scaleSpeed;
+    }
+    return(1);
+  }
+
+  if(GetKeyState(VK_F2) & 0x8000)
+  {
+    for(int i = 0; i < entityStack_Count(Entities); i++)
+    {
+      Entities->entities[i].scale.x += scaleSpeed;
+    }
+    return(1);
+  }
+
+  if(GetKeyState('R') & 0x8000)
+  {
+    ResetVec3(&Entities->entities[SelectedEntityIndex].rotation);
+    ResetVec3(&Entities->entities[SelectedEntityIndex].position);
+
+    Entities->entities[SelectedEntityIndex].scale.x = 1.0f;
+    Entities->entities[SelectedEntityIndex].scale.y = 1.0f;
+    Entities->entities[SelectedEntityIndex].scale.z = 1.0f;
+
+    return(1);
+  }
+
+  if(GetKeyState('T') & 0x8000)
+  {
+    for(int i = 0; i < Entities->size; i++)
+    {
+      ResetVec3(&Entities->entities[i].rotation);
+      ResetVec3(&Entities->entities[i].position);
+
+      Entities->entities[i].scale.x = 1.0f;
+      Entities->entities[i].scale.y = 1.0f;
+      Entities->entities[i].scale.z = 1.0f;
+    }
+    return(1);
+  }
+
+  if(GetKeyState('E') & 0x8000)
+  {
+    if(SelectedEntity.vaoID != -1)
+    {
+      Entities->entities[SelectedEntityIndex].scale.x += scaleSpeed;
+    }
     return(1);
   }
 
   if(GetKeyState('Q') & 0x8000)
   {
+    if(SelectedEntity.vaoID != -1)
+    {
+      if(Entities->entities[SelectedEntityIndex].scale.x < 0)
+      {
+        Entities->entities[SelectedEntityIndex].scale.x = 0;
+      }
+      Entities->entities[SelectedEntityIndex].scale.x -= scaleSpeed;
+    }
     return(1);
   }
 
@@ -138,26 +186,21 @@ unsigned int check_RequestCommand(Entity* player, mat4x4* viewMatrix, LONGLONG D
   {
     key2Down.exists = 1;
     int index = entityStack_GetIndex(Entities, SelectedEntity);
-    if(index >= 0 && index < Entities->size)
+    if(SelectedEntity.vaoID != -1)
     {
-      if(SelectedEntity.vaoID != -1)
+      if(index + 1 < Entities->size)
       {
-        printf("\n\nindex :: %i ;\n\n", index);
-        printf("\n\nindex + 1 = %i ;\n\n", index - 1);
-        if(index - 1 < Entities->size)
-        {
-          SelectedEntity = Entities->entities[index - 1];
-        } else { printf("\n\nerrorkey2-1\n\n"); return(0); }
-      }
-      else
-      {
-        if(Entities->size == 0) { printf("\n\nerrorkey2-2\n\n"); return(0); }
-
-        SelectedEntity = entityStack_Peek(Entities);
-      }
-      printf("\n\nSelectedEntityVAOID :: %i ;\n\n", SelectedEntity.vaoID);
-      return(1);
+        SelectedEntity = Entities->entities[index + 1];
+        SelectedEntityIndex = index + 1;
+      } else { return(0); }
     }
+    else
+    {
+      if(Entities->size == 0) { return(0); }
+
+      SelectedEntity = entityStack_Peek(Entities);
+    }
+    return(1);
   }
 
   if(GetAsyncKeyState(0x31) == 0 && key1Down.exists == 1) { key1Down.exists = 0; }
@@ -165,26 +208,21 @@ unsigned int check_RequestCommand(Entity* player, mat4x4* viewMatrix, LONGLONG D
   {
     key1Down.exists = 1;
     int index = entityStack_GetIndex(Entities, SelectedEntity);
-    if(index >= 0 && index < Entities->size)
+    if(SelectedEntity.vaoID != -1)
     {
-      if(SelectedEntity.vaoID != -1)
+      if(index - 1 >= 0)
       {
-        printf("\n\nindex :: %i ;\n\n", index);
-        printf("\n\nindex - 1 = %i ;\n\n", index + 1);
-        if(index + 1 >= 0)
-        {
-          SelectedEntity = Entities->entities[index + 1];
-        } else { printf("\n\nerrorkey1-1\n\n"); return(0); }
-      }
-      else
-      {
-        if(Entities->size == 0) { printf("\n\nerrorkey1-2\n\n"); return(0); }
-
-        SelectedEntity = entityStack_Peek(Entities);
-      }
-      printf("\n\nSelectedEntityVAOID :: %i ;\n\n", SelectedEntity.vaoID);
-      return(1);
+        SelectedEntity = Entities->entities[index - 1];
+        SelectedEntityIndex = index - 1;
+      } else { return(0); }
     }
+    else
+    {
+      if(Entities->size == 0) { return(0); }
+
+      SelectedEntity = entityStack_Peek(Entities);
+    }
+    return(1);
   }
 
   return(0);

@@ -103,7 +103,6 @@ EntityStack* init_EntityStack()
   stack->entities = (Entity*)calloc(0, sizeof(Entity*));
   stack->top;
   stack->size = 0;
-  stack->entityStack_GetIndex = entityStack_GetIndex;
 
   return(stack);
 }

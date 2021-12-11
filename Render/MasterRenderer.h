@@ -4,7 +4,6 @@
 #include <windows.h>
 #include <gl/gl.h>
 
-#include "commonIncludes.inc.h"
 #include "config.h"
 
 #include "staticRenderingVars.component.h"

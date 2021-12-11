@@ -25,6 +25,7 @@
 
 EntityStack* Entities;
 Entity SelectedEntity;
+int SelectedEntityIndex;
 
 void loadToVAO(Mesh new_EntityMesh);
 void loadModelToVAO(char* filename);

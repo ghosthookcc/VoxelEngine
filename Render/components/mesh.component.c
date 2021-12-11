@@ -6,7 +6,7 @@ Mesh new_Mesh()
 {
   Mesh new_Mesh;
   new_Mesh.vertices = new_dynFloatArray();
-  new_Mesh.edges    = new_dynUByteArray();
+  new_Mesh.edges    = new_dynUIntArray();
   new_Mesh.texcoords = new_dynFloatArray();
   new_Mesh.normals  = new_dynFloatArray();
   new_Mesh.updateMesh = updateMesh;
@@ -19,7 +19,7 @@ Mesh getMeshFace(BlockFace face)
   Mesh new_mesh = new_Mesh();
 
   float* faceVertices = malloc(sizeof(float) * 18);
-  unsigned char faceEdges[6] = { 0, 1, 2, 3, 4, 5 };
+  unsigned int faceEdges[6] = { 0, 1, 2, 3, 4, 5 };
   float* faceNormals = malloc(sizeof(float) * 3);
 
   switch(face)
@@ -129,7 +129,7 @@ Mesh getMeshFace(BlockFace face)
   }
 
   new_mesh.vertices = new_DynFloatArrayFromFloatArray(faceVertices, 18);
-  new_mesh.edges = new_DynUByteArrayFromUByteArray(faceEdges, 6);
+  new_mesh.edges = new_DynUIntArrayFromUIntArray(faceEdges, 6);
   new_mesh.normals = new_DynFloatArrayFromFloatArray(faceNormals, 3);
 
   return(new_mesh);

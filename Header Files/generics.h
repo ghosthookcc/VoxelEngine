@@ -5,7 +5,6 @@
 
 #include "staticChunkManager.component.h"
 
-#include "commonIncludes.inc.h"
 #include "ghostymath.h"
 #include "vec3.h"
 #include "vec4.h"
@@ -46,7 +45,6 @@ typedef struct EntityStack
   Entity* entities;
   Entity top;
   int size;
-  int (*entityStack_GetIndex)(void*, Entity);
 } EntityStack;
 
 EntityStack* init_EntityStack();
