@@ -1,6 +1,8 @@
 #ifndef ENTITY_MANAGER_COMPONENT_H
 #define ENTITY_MANAGER_COMPONENT_H
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <windows.h>
 #include <gl/gl.h>
 #include <stdio.h>

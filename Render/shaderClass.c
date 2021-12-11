@@ -79,17 +79,6 @@ char* read_LineFromOffset(char** filename, int offset)
   return(linecontent);
 }
 
-int get_strlen(char* ptr)
-{
-    int len = 0;
-    while(*ptr)
-    {
-        len++;
-        *ptr++;
-    }
-    return(len);
-}
-
 GLuint set_Shader(GLuint ID, char* filename, enum shadertype shadertype)
 {
   char* shaderCode = read_File((char**)&filename);

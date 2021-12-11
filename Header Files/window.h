@@ -15,7 +15,7 @@
 #include "dynArray.h"
 #include "vector.h"
 #include "vec3.h"
-#include "start_menu.h"
+#include "console.h"
 
 HGLRC hRC; // Permanent Rendering Context
 HDC hDC; // Private GDI Device Context

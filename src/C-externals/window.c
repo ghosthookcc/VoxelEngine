@@ -31,6 +31,9 @@ LRESULT CALLBACK WndProc(HWND hwnd,
   switch(message)
   {
       case WM_DESTROY:
+        CloseHandle(GET_hStdOut());
+        FreeConsole();
+        PostQuitMessage(0);
       case WM_CLOSE:
           ChangeDisplaySettings(NULL, 0);
 
@@ -185,6 +188,8 @@ int WINAPI WinMain()
   wglMakeCurrent(hDC, hRC);
   initGLFuncs();
 
+  WindowHandle = hwnd;
+
   uintVector_Push(&programIDs, glCreateProgram());
 
   GLuint vertexShader = set_Shader(programIDs->values[0], "../Resource Files/shaders/voxelVertexShader.glsl", VERTEX);
@@ -225,6 +230,7 @@ int WINAPI WinMain()
       if(message.message == WM_QUIT)
       {
           running = 0;
+          PostMessage(hwnd, WM_CLOSE, 0, 0);
       }
 
       TranslateMessage(&message);
@@ -271,6 +277,7 @@ void GH_InitWindow(void (*EntryPoint)())
 
     init_ComponentSystem();
     init_ModuleSystem();
+    init_ConsoleSystem();
 
     WindowStatus = RUNNING;
 

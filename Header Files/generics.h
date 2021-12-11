@@ -9,6 +9,11 @@
 #include "vec3.h"
 #include "vec4.h"
 
+char* concat_string(const char* str1, const char* str2);
+
+int get_strlen(char* ptr);
+int get_cstrlen(const char* ptr);
+
 typedef struct uIntStack
 {
   unsigned int* StackItems;

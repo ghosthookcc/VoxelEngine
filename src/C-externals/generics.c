@@ -1,5 +1,43 @@
 #include "generics.h"
 
+// start definition standard funcs
+
+char* concat_string(const char* str1, const char* str2)
+{
+    const int len1 = get_cstrlen(str1);
+    const int len2 = get_cstrlen(str2);
+
+    char* result = malloc(len1 + len2 + 1);
+    if(!result) return result;
+    CopyMemory(result, str1, len1);
+    CopyMemory(result + len1, str2, len2 + 1);
+    return result;
+}
+
+int get_strlen(char* ptr)
+{
+    int len = 0;
+    while(*ptr)
+    {
+        len++;
+        *ptr++;
+    }
+    return(len);
+}
+
+int get_cstrlen(const char* ptr)
+{
+    int len = 0;
+    while(*ptr)
+    {
+        len++;
+        *ptr++;
+    }
+    return(len);
+}
+
+// end definition standard funcs
+
 // start uIntStack funcs
 
 uIntStack* init_UIntStack()

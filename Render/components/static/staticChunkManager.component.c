@@ -46,8 +46,5 @@ void generateChunk()
     }
   }
 
-  printf("%i vertices loaded to VAO\n", temp_mesh.vertices->size);
-  printf("%i triangles loaded to VAO\n\n", temp_mesh.getTriangleCount(temp_mesh));
-
   loadToVAO(temp_mesh);
 }

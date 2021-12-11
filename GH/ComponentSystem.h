@@ -18,6 +18,7 @@
 
 #include "window.h"
 #include "dynArray.h"
+#include "console.h"
 
 enum status
 {
