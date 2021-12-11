@@ -14,6 +14,7 @@
 #include "shaderClass.h"
 #include "ghostymath.h"
 #include "dynArray.h"
+#include "vector.h"
 #include "vec3.h"
 
 HGLRC hRC; // Permanent Rendering Context

@@ -156,6 +156,14 @@ Mesh readOBJFile(char* filename)
 
   FILE* file = fopen(filename, "r");
 
+  dynFloatArray* vertex_position_indices = new_dynFloatArray();
+  dynFloatArray* vertex_texcoord_incides = new_dynFloatArray();
+  dynFloatArray* vertex_normal_indices = new_dynFloatArray();
+
+  dynFloatArray* vertex_positions = new_dynFloatArray();
+  dynFloatArray* vertex_texcoords = new_dynFloatArray();
+  dynFloatArray* vertex_normals = new_dynFloatArray();
+
   char line[256];
   while (fgets(line, sizeof(line), file))
   {
@@ -166,8 +174,54 @@ Mesh readOBJFile(char* filename)
       {
         float vertex[3];
         sscanf(line, "%*s %f %f %f", &vertex[0], &vertex[1], &vertex[2]);
-        dynFloatArray_AddVec3Values(&object_Mesh.vertices, new_vec3(vertex[0], vertex[1], vertex[2]));
+        dynFloatArray_AddVec3Values(&vertex_positions, new_vec3(vertex[0], vertex[1], vertex[2]));
       }
+      else if(line[0] == 'v' && line[1] == 't')
+      {
+        float texcoord[2];
+        sscanf(line, "%*s %f %f", &texcoord[0], &texcoord[1]);
+        dynFloatArray_AddVec2Values(&vertex_texcoords, new_vec2(texcoord[0], texcoord[1]));
+      }
+      else if(line[0] == 'v' && line[1] == 'n')
+      {
+        float normal[3];
+        sscanf(line, "%*s %f %f %f", &normal[0], &normal[1], &normal[2]);
+        dynFloatArray_AddVec3Values(&vertex_normals, new_vec3(normal[0], normal[1], normal[2]));
+      }
+      else if(line[0] == 'f')
+      {
+        float edge[3];
+        float texcoord[3];
+        float normal[3];
+        sscanf(line, "%*s %f/%f/%f %f/%f/%f %f/%f/%f", &edge[0], &texcoord[0], &normal[0],
+                                                       &edge[1], &texcoord[1], &normal[1],
+                                                       &edge[2], &texcoord[2], &normal[2]);
+        dynFloatArray_AddVec3Values(&vertex_position_indices, new_vec3(edge[0], edge[1], edge[2]));
+        dynFloatArray_AddVec3Values(&vertex_texcoord_incides, new_vec3(texcoord[0], texcoord[1], texcoord[2]));
+        dynFloatArray_AddVec3Values(&vertex_normal_indices, new_vec3(normal[0], normal[1], normal[2]));
+      }
+  }
+
+  const int vertice_size = vertex_position_indices->size;
+  const int texcoord_size = vertex_texcoord_incides->size;
+  const int normal_size = vertex_normal_indices->size;
+
+  floatVector* vertices = new_floatVector(vertice_size);
+  floatVector* texcoords = new_floatVector(texcoord_size);
+  floatVector* normals = new_floatVector(normal_size);
+
+  for(int i = 0; i < vertice_size; i++)
+  {
+    floatVector_EmplaceBack(&vertices, vertex_positions->items[(int)(vertex_position_indices->items[i]) - 1]);
+    floatVector_EmplaceBack(&texcoords, vertex_texcoords->items[(int)(vertex_texcoord_incides->items[i]) - 1]);
+    floatVector_EmplaceBack(&normals, vertex_normals->items[(int)(vertex_normal_indices->items[i]) - 1]);
+  }
+
+  for(int i = 0; i < vertices->size; i++)
+  {
+    dynFloatArray_AddBack(&object_Mesh.vertices, vertices->values[i]);
+    dynFloatArray_AddBack(&object_Mesh.texcoords, texcoords->values[i]);
+    dynFloatArray_AddBack(&object_Mesh.normals, normals->values[i]);
   }
 
   fclose(file);

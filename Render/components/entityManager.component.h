@@ -15,7 +15,9 @@
 #include "config.h"
 
 #include "initGLFuncs.h"
+#include "ghostymath.h"
 #include "generics.h"
+#include "vector.h"
 #include "matrix.h"
 #include "vec3.h"
 #include "vec4.h"

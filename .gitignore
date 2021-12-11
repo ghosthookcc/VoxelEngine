@@ -5,6 +5,7 @@ modules.dir
 CMakeFiles
 Debug
 **/helpers/RootDir.h
+**/Resource Files/obj/**
 x64
 ALL_BUILD.vcxproj
 ALL_BUILD.vcxproj.filters
