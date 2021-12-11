@@ -24,13 +24,14 @@
 #include "shaderClass.h"
 
 EntityStack* Entities;
+Entity SelectedEntity;
 
 void loadToVAO(Mesh new_EntityMesh);
 void loadModelToVAO(char* filename);
 
 unsigned int createVAO();
 
-void bindIndices(dynUByteArray* indicesBuffer);
+void bindIndices(dynUIntArray* indicesBuffer);
 
 void storeDataInAttributeList(int attribute, int coordinateSize, dynFloatArray* fbuffer);
 

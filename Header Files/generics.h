@@ -46,6 +46,7 @@ typedef struct EntityStack
   Entity* entities;
   Entity top;
   int size;
+  int (*entityStack_GetIndex)(void*, Entity);
 } EntityStack;
 
 EntityStack* init_EntityStack();
@@ -53,6 +54,8 @@ EntityStack* init_EntityStack();
 void entityStack_Push(EntityStack** stack, Entity* entity);
 void entityStack_Pop(EntityStack** stack);
 Entity entityStack_Peek(EntityStack* stack);
+
+int entityStack_GetIndex(EntityStack* stack, Entity entity);
 
 void entityStack_Rotate(EntityStack* stack, int rotateN);
 int entityStack_Count(EntityStack* stack);

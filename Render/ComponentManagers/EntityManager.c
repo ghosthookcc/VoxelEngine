@@ -4,13 +4,6 @@ void UpdateEntities(LONGLONG DeltaTime)
 {
   for(int i = 0; i < entityStack_Count(Entities); i++)
   {
-    /*
-    Entities->entities[0].position.x += 0.00000001f * DeltaTime;
-    Entities->entities[0].rotation.x += 0.001f * DeltaTime;
-
-    Entities->entities[1].position.x -= 0.00000001f * DeltaTime;
-    Entities->entities[1].rotation.x += 0.001f * DeltaTime;
-    */
   }
 }
 

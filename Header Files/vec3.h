@@ -17,6 +17,13 @@ typedef struct
 
 typedef struct
 {
+  unsigned int x;
+  unsigned int y;
+  unsigned int z;
+} uivec3;
+
+typedef struct
+{
   unsigned char x;
   unsigned char y;
   unsigned char z;
@@ -24,6 +31,7 @@ typedef struct
 
 vec3 new_vec3(float x, float y, float z);
 ivec3 new_ivec3(int x, int y, int z);
+uivec3 new_uivec3(unsigned int x, unsigned int y, unsigned int z);
 UByteVec3 new_UByteVec3(unsigned char x, unsigned char y, unsigned char z);
 
 #endif

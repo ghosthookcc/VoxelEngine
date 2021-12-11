@@ -10,8 +10,8 @@ typedef struct Mesh Mesh;
 struct Mesh
 {
   dynFloatArray* vertices; // a vertex is a single point
-  dynUByteArray* edges; // an edge is a straight line segment connecting two vertices
-                        // also knows as a indice
+  dynUIntArray* edges; // an edge is a straight line segment connecting two vertices
+                       // also knows as a indice
   dynFloatArray* texcoords;
   dynFloatArray* normals;
   void (*updateMesh)(Mesh*, Mesh, int, int, int);

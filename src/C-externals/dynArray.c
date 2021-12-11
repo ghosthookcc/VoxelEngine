@@ -80,6 +80,65 @@ void dynFloatArray_AddVec2Values(dynFloatArray** dynFloatArray, vec2 item)
 
 // end dynFloatArray
 
+// start dynUIntArray
+
+dynUIntArray* new_dynUIntArray()
+{
+  dynUIntArray* new_DynUIntArray = malloc(sizeof(struct dynUIntArray));
+  new_DynUIntArray->items = (unsigned int*)calloc(0, sizeof(unsigned int));
+  new_DynUIntArray->size = 0;
+  return(new_DynUIntArray);
+}
+
+dynUIntArray* new_DynUIntArrayFromUIntArray(unsigned int fillData[], int size)
+{
+  dynUIntArray* new_DynUIntArray = malloc(sizeof(struct dynUIntArray) + sizeof(unsigned int) * size);
+  new_DynUIntArray->size = size;
+  new_DynUIntArray->items = (unsigned int*)calloc(size, sizeof(unsigned int));
+
+  if(new_DynUIntArray->items == NULL)
+  {
+    free(new_DynUIntArray);
+  }
+
+  for(int i = 0; i < size; i++)
+  {
+    new_DynUIntArray->items[i] = fillData[i];
+  }
+
+  return(new_DynUIntArray);
+}
+
+void dynUIntArray_AddBack(dynUIntArray** dynUIntArray, unsigned int item)
+{
+  (*dynUIntArray)->size += 1;
+  (*dynUIntArray) = realloc((*dynUIntArray), sizeof(struct dynUIntArray) + sizeof(unsigned int) * (*dynUIntArray)->size);
+  (*dynUIntArray)->items = realloc((*dynUIntArray)->items, sizeof(unsigned int) * (*dynUIntArray)->size);
+  if((*dynUIntArray)->items == NULL)
+  {
+    free((*dynUIntArray));
+  }
+
+  (*dynUIntArray)->items[(*dynUIntArray)->size - 1] = item;
+}
+
+void dynUIntArray_AddVec3Values(dynUIntArray** dynUIntArray, uivec3 item)
+{
+  (*dynUIntArray)->size += 3;
+  (*dynUIntArray) = realloc((*dynUIntArray), sizeof(struct dynUIntArray) + sizeof(unsigned int) * (*dynUIntArray)->size);
+  (*dynUIntArray)->items = realloc((*dynUIntArray)->items, sizeof(unsigned int) * (*dynUIntArray)->size);
+  if((*dynUIntArray)->items == NULL)
+  {
+    free((*dynUIntArray));
+  }
+
+  (*dynUIntArray)->items[(*dynUIntArray)->size - 3] = item.x;
+  (*dynUIntArray)->items[(*dynUIntArray)->size - 2] = item.y;
+  (*dynUIntArray)->items[(*dynUIntArray)->size - 1] = item.z;
+}
+
+// end dynUIntArray
+
 // start dynStringArray
 
 dynStringArray* new_dynStringArray()

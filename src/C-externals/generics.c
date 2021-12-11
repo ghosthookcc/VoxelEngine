@@ -103,6 +103,7 @@ EntityStack* init_EntityStack()
   stack->entities = (Entity*)calloc(0, sizeof(Entity*));
   stack->top;
   stack->size = 0;
+  stack->entityStack_GetIndex = entityStack_GetIndex;
 
   return(stack);
 }
@@ -157,6 +158,17 @@ void entityStack_Pop(EntityStack** stack)
 Entity entityStack_Peek(EntityStack* stack)
 {
   return((*stack).top);
+}
+
+int entityStack_GetIndex(EntityStack* stack, Entity entity)
+{
+  for(int index = 0; index < stack->size; index++)
+  {
+    if(stack->entities[index].vaoID == entity.vaoID)
+      return(index);
+  }
+
+  return(-1);
 }
 
 void entityStack_Rotate(EntityStack* stack, int rotateN)

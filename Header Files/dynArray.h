@@ -31,6 +31,24 @@ void dynFloatArray_AddVec2Values(dynFloatArray** dynFloatArray, vec2 item);
 
 // end definition of dynFloatArray
 
+// start definition of dynUIntArray
+
+typedef struct dynUIntArray
+{
+  int size;
+  unsigned int* items;
+} dynUIntArray;
+
+dynUIntArray* new_dynUIntArray();
+
+dynUIntArray* new_DynUIntArrayFromUIntArray(unsigned int fillData[], int size);
+
+void dynUIntArray_AddBack(dynUIntArray** dynUIntArray, unsigned int item);
+
+void dynUIntArray_AddVec3Values(dynUIntArray** dynUIntArray, uivec3 item);
+
+// end definition of dynUIntArray
+
 // start definition of dynStringArray
 
 typedef struct dynStringArray
