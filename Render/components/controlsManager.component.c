@@ -95,6 +95,7 @@ unsigned int check_RequestRotate(Entity* player, mat4x4* viewMatrix, LONGLONG De
 
 unsigned int check_RequestCommand(Entity* player, mat4x4* viewMatrix, LONGLONG DeltaTime)
 {
+  ambience = get_Uniformfv(programIDs->values[0], "ambient");
   if(GetKeyState('Y') & 0x8000)
   {
     ResetVec3(&player->rotation);
@@ -155,6 +156,9 @@ unsigned int check_RequestCommand(Entity* player, mat4x4* viewMatrix, LONGLONG D
       Entities->entities[i].scale.x = 1.0f;
       Entities->entities[i].scale.y = 1.0f;
       Entities->entities[i].scale.z = 1.0f;
+
+      ambience = 1.0f;
+      set_Uniform1f(programIDs->values[0], "ambient", ambience);
     }
     return(1);
   }
@@ -178,6 +182,32 @@ unsigned int check_RequestCommand(Entity* player, mat4x4* viewMatrix, LONGLONG D
       }
       Entities->entities[SelectedEntityIndex].scale.x -= scaleSpeed;
     }
+    return(1);
+  }
+
+  if(GetAsyncKeyState(VK_OEM_PLUS) == 0 && keyOEMPLUS.exists == 1) { keyOEMPLUS.exists = 0; }
+  if(GetAsyncKeyState(VK_OEM_PLUS) < 0 && keyOEMPLUS.exists == 0)
+  {
+    keyOEMPLUS.exists = 1;
+    if(ambience + 0.1f <= 2.0f)
+      ambience += 0.1f;
+    else
+      ambience = 3.0f;
+
+    set_Uniform1f(programIDs->values[0], "ambient", ambience);
+    return(1);
+  }
+
+  if(GetAsyncKeyState(VK_OEM_MINUS) == 0 && keyOEMMINUS.exists == 1) { keyOEMMINUS.exists = 0; }
+  if(GetAsyncKeyState(VK_OEM_MINUS) < 0 && keyOEMMINUS.exists == 0)
+  {
+    keyOEMMINUS.exists = 1;
+    if(ambience - 0.1f >= 0.6f)
+      ambience -= 0.1f;
+    else
+      ambience = 0.6f;
+
+    set_Uniform1f(programIDs->values[0], "ambient", ambience);
     return(1);
   }
 

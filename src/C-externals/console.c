@@ -54,6 +54,9 @@ void Write_CommandLineHelpMenu()
     addToStringConstructor(&constructor, "  q = decrement x-scale of current selected entity", NEWLINE);
     addToStringConstructor(&constructor, "  e = increment x-scale of current selected entity", DOUBLENEWLINE);
 
+    addToStringConstructor(&constructor, "  - = decrement ambience of world by 0.1 (lower limit 0.6)[DEFAULT 1.0]", NEWLINE);
+    addToStringConstructor(&constructor, "  + = increment ambience of world by 0.1 (upper limit 2.0)[DEFAULT 1.0]", DOUBLENEWLINE);
+
     addToStringConstructor(&constructor, "  F1 = decrement x-scale of all worlds entities", NEWLINE);
     addToStringConstructor(&constructor, "  F2 = increment x-scale of all worlds entities", NEWLINE);
 
@@ -61,11 +64,12 @@ void Write_CommandLineHelpMenu()
     WriteToConsole("\033[0m\n");
 }
 
-DWORD WriteToConsole(const void* buffer)
+DWORD WriteToConsole(const char* buffer)
 {
   AcquireStdOutHandle();
   if (hStdOut != NULL && hStdOut != INVALID_HANDLE_VALUE)
   {
+      FlushConsoleInputBuffer(hStdOut);
       DWORD written = 0;
       WriteConsoleA(hStdOut, buffer, get_cstrlen(buffer), &written, NULL);
       return(written);

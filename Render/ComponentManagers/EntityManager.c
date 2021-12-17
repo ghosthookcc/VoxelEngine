@@ -33,5 +33,6 @@ void RenderEntities(LONGLONG DeltaTime)
 
    glDisableVertexAttribArray(0);
    glDisableVertexAttribArray(1);
+   glDisableVertexAttribArray(2);
    glBindVertexArray(0);
 }

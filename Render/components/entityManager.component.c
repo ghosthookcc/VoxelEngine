@@ -23,6 +23,7 @@ void loadToVAO(Mesh new_EntityMesh)
 
   storeDataInAttributeList(0, 3, new_EntityMesh.vertices);
   storeDataInAttributeList(1, 4, VerticesColors);
+  storeDataInAttributeList(2, 3, new_EntityMesh.normals);
 
   Entity* entity = malloc(sizeof(struct Entity));
 
@@ -60,6 +61,7 @@ void loadModelToVAO(char* filename)
 
   storeDataInAttributeList(0, 3, new_EntityMesh.vertices);
   storeDataInAttributeList(1, 4, VerticesColors);
+  storeDataInAttributeList(2, 3, new_EntityMesh.normals);
 
   Entity* entity = malloc(sizeof(struct Entity));
 
@@ -167,6 +169,12 @@ Mesh readOBJFile(char* filename)
         float vertex[3];
         sscanf(line, "%*s %f %f %f", &vertex[0], &vertex[1], &vertex[2]);
         dynFloatArray_AddVec3Values(&object_Mesh.vertices, new_vec3(vertex[0], vertex[1], vertex[2]));
+      }
+      else if(line[0] == 'v' && line[1] == 'n')
+      {
+        float normal[3];
+        sscanf(line, "%*s %f %f %f", &normal[0], &normal[1], &normal[2]);
+        dynFloatArray_AddVec3Values(&object_Mesh.normals, new_vec3(normal[0], normal[1], normal[2]));
       }
       else if(line[0] == 'f')
       {

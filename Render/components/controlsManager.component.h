@@ -12,7 +12,10 @@ static float scaleSpeed =  0.001f;
 static TOF_Flag shiftstate = { 0 };
 static TOF_Flag key1Down = { 0 };
 static TOF_Flag key2Down = { 0 };
+static TOF_Flag keyOEMPLUS = { 0 };
+static TOF_Flag keyOEMMINUS = { 0 };
 static float rotSpeed = 0.005f;
+static float ambience;
 
 vec3 p_Acceleration;
 

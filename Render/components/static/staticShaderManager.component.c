@@ -1,4 +1,17 @@
 #include "staticShaderManager.component.h"
+#include <stdio.h>
+
+float get_Uniformfv(GLuint ID, char* uniformName)
+{
+  GLfloat* params = malloc(sizeof(float));
+  glGetUniformfv(ID, glGetUniformLocation(ID, uniformName), params);
+  return(params[0]);
+}
+
+void set_Uniform1f(GLuint ID, char* uniformName, float v0)
+{
+  glUniform1f(glGetUniformLocation(ID, uniformName), v0);
+}
 
 void set_Uniform3f(GLuint ID, char* uniformName, float v0, float v1, float v2)
 {

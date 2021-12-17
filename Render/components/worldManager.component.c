@@ -3,6 +3,6 @@
 
 void setup_world()
 {
-  generateChunk();
+  generateFlatChunk();
   loadModelToVAO("../Resource Files/obj/suzanne.obj");
 }

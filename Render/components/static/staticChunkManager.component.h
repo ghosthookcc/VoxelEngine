@@ -18,15 +18,29 @@ typedef enum BlockFace
   BLOCK_LEFT
 } BlockFace;
 
+typedef enum BlockType
+{
+  BLOCK_AIR,
+  BLOCK_DEFAULT
+} BlockType;
+
+typedef struct HeightMap
+{
+  BlockType blocks[CHUNK_XYZ_SIZE][CHUNK_XYZ_SIZE][CHUNK_XYZ_SIZE];
+} HeightMap;
+
 static const int CHUNK_AREA = CHUNK_XYZ_SIZE * CHUNK_XYZ_SIZE;
 static const int CHUNK_VOLUME = CHUNK_XYZ_SIZE * CHUNK_XYZ_SIZE * CHUNK_XYZ_SIZE;
 
-#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
 
 #include "mesh.component.h"
 
 #include "vec3.h"
 
-void generateChunk();
+HeightMap generateHeightMap(int start, int max);
+
+void generateFlatChunk();
 
 #endif
