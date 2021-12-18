@@ -7,6 +7,7 @@ layout (location = 3) in int in_v_EnabledFaces;
 
 out vec4 out_g_Color;
 out int out_g_Enabled;
+out vec2 screenPos;
 
 uniform float ambient = 1.0f;
 uniform vec3 offset = vec3(0.0f, 0.0f, 0.0f);
@@ -17,7 +18,8 @@ const vec3 dir = vec3(1,2,3);
 
 void main()
 {
-	float diffuse  = 0.8f * max(dot(in_v_Normal, normalize(dir)), 0.0);
+	screenPos = in_v_Position.xy;
+	float diffuse  = 0.8f * max(dot(vec3(0.0f, 0.0f, 0.0f), normalize(dir)), 0.0);
 
 	gl_Position = MVP * vec4(in_v_Position + offset, 1.0f);
 

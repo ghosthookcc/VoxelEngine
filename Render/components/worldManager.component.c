@@ -1,5 +1,4 @@
 #include "worldManager.component.h"
-#include <stdio.h>
 
 void setup_world()
 {

@@ -14,7 +14,7 @@
 
 // start glob variables definition
 
-struct Camera camera;
+Camera camera;
 Entity p_Entity;
 
 mat4x4 m4_projMatrix;

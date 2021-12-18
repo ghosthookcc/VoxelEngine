@@ -1,3 +1,7 @@
+#ifndef STB_IMAGE_IMPLEMENTATION
+#define STB_IMAGE_IMPLEMENTATION
+#endif
+
 #include "entityManager.component.h"
 
 void loadToVAO(Mesh new_EntityMesh)

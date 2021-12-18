@@ -29,6 +29,7 @@ void hookCameraToEntity(Entity TargetEntity)
 
 mat4x4 make_projMatrix()
 {
+  /*
   m4_projMatrix.matrix[0][0] = 1.0f / (configurations.aspectRatio * configurations.tanHalfFOV);
   m4_projMatrix.matrix[1][1] = 1.0f / (configurations.tanHalfFOV);
 
@@ -36,6 +37,16 @@ mat4x4 make_projMatrix()
   m4_projMatrix.matrix[2][3] = -1.0f;
 
   m4_projMatrix.matrix[3][2] = -(2.0f * configurations.farthestZ * configurations.nearestZ) / (configurations.farthestZ - configurations.nearestZ);
+  */
+
+  m4_projMatrix.matrix[0][0] = configurations.scale;
+  m4_projMatrix.matrix[1][1] = configurations.scale;
+
+  m4_projMatrix.matrix[2][2] = -configurations.farthestZ / (configurations.farthestZ - configurations.nearestZ);
+  m4_projMatrix.matrix[2][3] = -1.0f;
+
+  m4_projMatrix.matrix[3][2] = -configurations.farthestZ * configurations.nearestZ / (configurations.farthestZ - configurations.nearestZ);
+  m4_projMatrix.matrix[3][3] = 0.0f;
   return(m4_projMatrix);
 }
 

@@ -15,7 +15,6 @@ GLvoid glInit(GLsizei WIDTH, GLsizei HEIGHT)
 
   setup_Camera(new_vec3(0.0f, 1.0f, 2.5f));
 
-  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   glEnable(GL_DEPTH_TEST);
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }

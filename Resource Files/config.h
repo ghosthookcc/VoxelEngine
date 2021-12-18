@@ -13,8 +13,7 @@ struct config
 
     float nearestZ;
     float farthestZ;
-
-    int StartFuncs;
+    float scale;
 };
 
 struct config configurations;

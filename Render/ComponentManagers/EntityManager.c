@@ -15,6 +15,7 @@ void RenderEntities(LONGLONG DeltaTime)
 
      glEnableVertexAttribArray(0);
      glEnableVertexAttribArray(1);
+     glEnableVertexAttribArray(2);
 
      transformation_SetPosition(&Entities->entities[i]);
      transformation_SetRotation(&Entities->entities[i]);

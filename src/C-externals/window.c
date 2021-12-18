@@ -127,6 +127,7 @@ int WINAPI WinMain()
 
   configurations.nearestZ = 0.1f;
   configurations.farthestZ = 1000.0f;
+  configurations.scale = 1.0f / (float)tan(configurations.fov * 0.5f * GHOSTYMATH_PI / 180.0f);
 
   LPCWSTR CLASS_NAME = L"VoxelEngine";
   LPCWSTR TITLE = L"TestWindow";

@@ -7,6 +7,8 @@
 #include <gl/gl.h>
 #include <stdio.h>
 
+#include "STD_IMAGE/stb_image.h"
+
 #include "staticRenderingVars.component.h"
 #include "staticShaderManager.component.h"
 

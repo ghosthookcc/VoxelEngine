@@ -1,7 +1,5 @@
 #include "mesh.component.h"
 
-#include <stdio.h>
-
 Mesh new_Mesh()
 {
   Mesh new_Mesh;
@@ -21,10 +19,11 @@ Mesh getMeshFace(BlockFace face)
   float* faceVertices = malloc(sizeof(float) * 18);
   unsigned int faceEdges[6] = { 0, 1, 2, 3, 4, 5 };
   float* faceNormals = malloc(sizeof(float) * 3);
+  float* faceTexs = malloc(sizeof(float) * 3);
 
   switch(face)
   {
-    case(BLOCK_TOP):
+    case(FACE_TOP):
       fillArray(&faceVertices,
       (float[])
       {
@@ -40,8 +39,13 @@ Mesh getMeshFace(BlockFace face)
       {
         0.0f, 1.0f, 0.0f
       });
+      fillArray(&faceTexs,
+      (float[])
+      {
+        0.0f,  1.0f,  0.0f
+      });
       break;
-    case(BLOCK_BOTTOM):
+    case(FACE_BOTTOM):
       fillArray(&faceVertices,
       (float[])
       {
@@ -57,8 +61,13 @@ Mesh getMeshFace(BlockFace face)
       {
         0.0f, -1.0f, 0.0f
       });
+      fillArray(&faceTexs,
+      (float[])
+      {
+        0.0f, -1.0f,  0.0f
+      });
       break;
-    case(BLOCK_FRONT):
+    case(FACE_FRONT):
       fillArray(&faceVertices,
       (float[])
       {
@@ -74,8 +83,13 @@ Mesh getMeshFace(BlockFace face)
       {
         0.0f, 0.0f, 1.0f
       });
+      fillArray(&faceTexs,
+      (float[])
+      {
+        0.0f,  0.0f,  1.0f
+      });
       break;
-    case(BLOCK_BACK):
+    case(FACE_BACK):
       fillArray(&faceVertices,
       (float[])
       {
@@ -91,8 +105,13 @@ Mesh getMeshFace(BlockFace face)
       {
         0.0f, 0.0f, -1.0f
       });
+      fillArray(&faceTexs,
+      (float[])
+      {
+        0.0f,  0.0f, -1.0f
+      });
       break;
-    case(BLOCK_RIGHT):
+    case(FACE_RIGHT):
       fillArray(&faceVertices,
       (float[])
       {
@@ -108,8 +127,13 @@ Mesh getMeshFace(BlockFace face)
       {
         1.0f, 0.0f, 0.0f
       });
+      fillArray(&faceTexs,
+      (float[])
+      {
+        1.0f,  0.0f,  0.0f
+      });
       break;
-    case(BLOCK_LEFT):
+    case(FACE_LEFT):
       fillArray(&faceVertices,
       (float[])
       {
@@ -125,12 +149,18 @@ Mesh getMeshFace(BlockFace face)
       {
         -1.0f, 0.0f, 0.0f
       });
+      fillArray(&faceTexs,
+      (float[])
+      {
+        -1.0f,  0.0f,  0.0f
+      });
       break;
   }
 
   new_mesh.vertices = new_DynFloatArrayFromFloatArray(faceVertices, 18);
   new_mesh.edges = new_DynUIntArrayFromUIntArray(faceEdges, 6);
   new_mesh.normals = new_DynFloatArrayFromFloatArray(faceNormals, 3);
+  new_mesh.texcoords = new_DynFloatArrayFromFloatArray(faceTexs, 3);
 
   return(new_mesh);
 }
@@ -147,6 +177,7 @@ void updateMesh(Mesh* self, Mesh other, int x, int y, int z)
   for(int i = 0; i < other.normals->size; i++)
   {
     dynFloatArray_AddBack(&self->normals, other.normals->items[i]);
+    dynFloatArray_AddBack(&self->texcoords, other.texcoords->items[i]);
   }
 }
 

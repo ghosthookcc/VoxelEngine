@@ -10,12 +10,12 @@ typedef struct TOF_Flag
 
 typedef enum BlockFace
 {
-  BLOCK_TOP,
-  BLOCK_BOTTOM,
-  BLOCK_FRONT,
-  BLOCK_BACK,
-  BLOCK_RIGHT,
-  BLOCK_LEFT
+  FACE_TOP,
+  FACE_BOTTOM,
+  FACE_FRONT,
+  FACE_BACK,
+  FACE_RIGHT,
+  FACE_LEFT
 } BlockFace;
 
 typedef enum BlockType
