@@ -253,6 +253,31 @@ void dynFuncptrArray_AddBack(dynFuncptrArray** dynFuncptrArray, void (*func_ptr)
 
 // end dynFuncptrArray
 
+// start dynModuleArray
+
+dynModuleArray* new_dynModuleArray()
+{
+  dynModuleArray* new_DynModuleArray = malloc(sizeof(struct dynModuleArray));
+  new_DynModuleArray->module_ptrs = calloc(0, 0);
+  new_DynModuleArray->size = 0;
+  return(new_DynModuleArray);
+}
+
+void dynModuleArray_AddBack(dynModuleArray** dynModuleArray, GHModule* module_ptr)
+{
+  (*dynModuleArray)->size += 1;
+  (*dynModuleArray) = realloc((*dynModuleArray), sizeof(struct dynModuleArray) + sizeof(module_ptr) * (*dynModuleArray)->size);
+  (*dynModuleArray)->module_ptrs = realloc((*dynModuleArray)->module_ptrs, sizeof(module_ptr) * (*dynModuleArray)->size);
+  if((*dynModuleArray)->module_ptrs == NULL)
+  {
+    free((*dynModuleArray));
+  }
+
+  (*dynModuleArray)->module_ptrs[(*dynModuleArray)->size - 1] = module_ptr;
+}
+
+// end dynModuleArray
+
 // start dynFuncstateArray
 
 dynFuncstateArray* new_dynFuncstateArray()

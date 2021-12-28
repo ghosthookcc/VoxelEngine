@@ -2,6 +2,7 @@
 #define GENERICS_H
 
 #include <malloc.h>
+#include <time.h>
 
 #include "staticChunkManager.component.h"
 

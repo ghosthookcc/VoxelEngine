@@ -54,10 +54,10 @@ file(GLOB EXTERNALDLLS
     ${CMAKE_SOURCE_DIR}/GHEnvironment/GH_*.c
     ${CMAKE_SOURCE_DIR}/GHEnvironment/GH_.*h)
 
-add_library(modules SHARED GHEnvironment/GH_TestFile.c
-                           GHEnvironment/GH_TestFile.h)
+add_library(modules SHARED ${CMAKE_SOURCE_DIR}/GHEnvironment/GH_TestFile.c
+                           ${CMAKE_SOURCE_DIR}/GHEnvironment/GH_TestFile.h)
 
-target_include_directories(modules PUBLIC ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR})
+add_definitions(-DMYLIB=1)
 
 set(LIBS opengl32)
 

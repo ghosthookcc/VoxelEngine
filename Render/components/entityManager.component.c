@@ -97,7 +97,7 @@ void bindIndices(dynUIntArray* indicesBuffer)
 
   uintVector_Push(&vbosIDs, vboID);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboID);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, (*indicesBuffer).size * sizeof(float), (*indicesBuffer).items, GL_STATIC_DRAW);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, (*indicesBuffer).size * sizeof(unsigned int), (*indicesBuffer).items, GL_STATIC_DRAW);
 }
 
 void storeDataInAttributeList(int attribute, int coordinateSize, dynFloatArray* fbuffer)
@@ -107,7 +107,7 @@ void storeDataInAttributeList(int attribute, int coordinateSize, dynFloatArray* 
 
   uintVector_Push(&vbosIDs, vboID);
   glBindBuffer(GL_ARRAY_BUFFER, vboID);
-  glBufferData(GL_ARRAY_BUFFER, (*fbuffer).size * sizeof(float), (*fbuffer).items, GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, (*fbuffer).size * sizeof(float), &(*fbuffer).items[0], GL_STATIC_DRAW);
   glVertexAttribPointer(attribute, coordinateSize, GL_FLOAT, GL_FALSE, 0, 0);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
@@ -170,21 +170,21 @@ Mesh readOBJFile(char* filename)
 
       if(line[0] == 'v')
       {
-        float vertex[3];
-        sscanf(line, "%*s %f %f %f", &vertex[0], &vertex[1], &vertex[2]);
-        dynFloatArray_AddVec3Values(&object_Mesh.vertices, new_vec3(vertex[0], vertex[1], vertex[2]));
+        vec3 vertex = new_vec3(0.0f, 0.0f, 0.0f);
+        sscanf(line, "%*s %f %f %f", &vertex.x, &vertex.y, &vertex.z);
+        dynFloatArray_AddVec3Values(&object_Mesh.vertices, vertex);
       }
       else if(line[0] == 'v' && line[1] == 'n')
       {
-        float normal[3];
-        sscanf(line, "%*s %f %f %f", &normal[0], &normal[1], &normal[2]);
-        dynFloatArray_AddVec3Values(&object_Mesh.normals, new_vec3(normal[0], normal[1], normal[2]));
+        vec3 normal = new_vec3(0.0f, 0.0f, 0.0f);
+        sscanf(line, "%*s %f %f %f", &normal.x, &normal.y, &normal.z);
+        dynFloatArray_AddVec3Values(&object_Mesh.normals, normal);
       }
       else if(line[0] == 'f')
       {
-        unsigned int edge[3];
-        sscanf(line, "%*s %u/%*f/%*f %u/%*f/%*f %u/%*f/%*f", &edge[0], &edge[1], &edge[2]);
-        dynUIntArray_AddVec3Values(&object_Mesh.edges, new_uivec3(edge[0], edge[1], edge[2]));
+        uivec3 edgeIndex = new_uivec3(0, 0, 0);
+        sscanf(line, "%*s %u/%*f/%*f %u/%*f/%*f %u/%*f/%*f", &edgeIndex.x, &edgeIndex.y, &edgeIndex.z);
+        dynUIntArray_AddVec3Values(&object_Mesh.edges, edgeIndex);
       }
   }
 

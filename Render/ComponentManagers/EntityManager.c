@@ -26,10 +26,10 @@ void RenderEntities(LONGLONG DeltaTime)
 
      if(Entities->entities[i].mesh.edges->size == 0)
      {
-       glDrawArrays(GL_TRIANGLES, 0, Entities->entities[i].triangleCount);
+       glDrawArrays(GL_TRIANGLE_STRIP, 0, Entities->entities[i].triangleCount);
        continue;
      }
-     glDrawElements(GL_TRIANGLES, Entities->entities[i].mesh.edges->size, GL_UNSIGNED_INT, 0);
+     glDrawElements(GL_TRIANGLE_STRIP, Entities->entities[i].mesh.edges->size, GL_UNSIGNED_INT, 0);
    }
 
    glDisableVertexAttribArray(0);

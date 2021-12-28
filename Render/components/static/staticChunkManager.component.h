@@ -1,7 +1,12 @@
 #ifndef STATIC_CHUNK_MANAGER_COMPONENT_H
 #define STATIC_CHUNK_MANAGER_COMPONENT_H
 
-#define CHUNK_XYZ_SIZE 16
+#include <malloc.h>
+
+#include "dynArray.h"
+#include "vec3.h"
+
+#define CHUNK_XYZ_SIZE 8
 
 typedef struct TOF_Flag
 {
@@ -27,17 +32,16 @@ typedef enum BlockType
 typedef struct HeightMap
 {
   BlockType blocks[CHUNK_XYZ_SIZE][CHUNK_XYZ_SIZE][CHUNK_XYZ_SIZE];
+  dynFloatArray* HeightMap;
 } HeightMap;
+
 
 static const int CHUNK_AREA = CHUNK_XYZ_SIZE * CHUNK_XYZ_SIZE;
 static const int CHUNK_VOLUME = CHUNK_XYZ_SIZE * CHUNK_XYZ_SIZE * CHUNK_XYZ_SIZE;
 
-#include <time.h>
-#include <stdlib.h>
-
 #include "mesh.component.h"
 
-#include "vec3.h"
+HeightMap new_HeightMap();
 
 HeightMap generateHeightMap(int start, int max);
 

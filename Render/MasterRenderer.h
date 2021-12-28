@@ -3,6 +3,7 @@
 
 #include <windows.h>
 #include <gl/gl.h>
+#include <stdio.h>
 
 #include "config.h"
 

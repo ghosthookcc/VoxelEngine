@@ -7,6 +7,7 @@ layout (location = 3) in int in_v_EnabledFaces;
 
 out vec4 out_g_Color;
 out int out_g_Enabled;
+
 out vec2 screenPos;
 
 uniform float ambient = 1.0f;

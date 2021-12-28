@@ -27,13 +27,6 @@ void glClearScene()
 
 void Update()
 {
-  for(int UpdateFuncs_iterator = 0;
-          UpdateFuncs_iterator < UpdateFuncs->size;
-          UpdateFuncs_iterator++)
-  {
-    UpdateFuncs->func_ptrs[UpdateFuncs_iterator]();
-  }
-
   UpdateEntities(DeltaTime.QuadPart);
   UpdateCamera(DeltaTime.QuadPart);
   UpdateControls(DeltaTime.QuadPart);

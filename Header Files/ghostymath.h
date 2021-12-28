@@ -99,4 +99,8 @@ quaternion normalizeQuaternion(quaternion quaternionA);
 
 quaternion getQuaternionConjugate(quaternion quaternionA);
 
+double calcArrayByDoubleDot(int g[], double x, double y);
+
+int calcFastfloor(double x);
+
 #endif

@@ -4,7 +4,7 @@
 
 void init_ModuleSystem()
 {
-  SetDllDirectoryA("Dependencies/dlls");
+  SetDllDirectoryW(L"Dependencies/dlls");
 }
 
 GHModule* Load_GHModule(LPCSTR path)

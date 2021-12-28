@@ -17,7 +17,8 @@ Mesh getMeshFace(BlockFace face)
   Mesh new_mesh = new_Mesh();
 
   float* faceVertices = malloc(sizeof(float) * 18);
-  unsigned int faceEdges[6] = { 0, 1, 2, 3, 4, 5 };
+  unsigned int faceEdges[6] = { 0, 1, 2,
+                                0, 2, 3 };
   float* faceNormals = malloc(sizeof(float) * 3);
   float* faceTexs = malloc(sizeof(float) * 3);
 
@@ -165,7 +166,7 @@ Mesh getMeshFace(BlockFace face)
   return(new_mesh);
 }
 
-void updateMesh(Mesh* self, Mesh other, int x, int y, int z)
+void updateMesh(Mesh* self, Mesh other, float x, float y, float z)
 {
   for(int i = 0; i < other.getTriangleCount(other); i++)
   {

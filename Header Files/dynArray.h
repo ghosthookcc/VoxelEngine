@@ -3,6 +3,8 @@
 
 #include <windows.h>
 
+#include "ModuleSystem.h"
+
 #include "vec2.h"
 #include "vec3.h"
 #include "vec4.h"
@@ -95,7 +97,20 @@ typedef struct dynFuncptrArray
 dynFuncptrArray* new_dynFuncptrArray();
 void dynFuncptrArray_AddBack(dynFuncptrArray** dynFuncptrArray, void (*func_ptr)());
 
-// end dynFuncptrArray
+// end definition dynFuncptrArray
+
+// start definition of dynModuleArray
+
+typedef struct dynModuleArray
+{
+  int size;
+  GHModule** module_ptrs;
+} dynModuleArray;
+
+dynModuleArray* new_dynModuleArray();
+void dynModuleArray_AddBack(dynModuleArray** dynModuleArray, GHModule* module_ptr);
+
+// end definition dynModuleArray
 
 // start definition of dynFuncstateArray
 

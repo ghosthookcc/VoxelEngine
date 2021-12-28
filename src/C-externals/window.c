@@ -112,7 +112,7 @@ LRESULT CALLBACK WndProc(HWND hwnd,
 
 int WINAPI WinMain()
 {
-  HINSTANCE hInstance = NULL;
+  HINSTANCE hInstance = GetModuleHandle(NULL);
   HINSTANCE hPrevInstance = NULL;
   LPSTR lpCmdLine = 0;
   int nCmdShow = SW_SHOW;
@@ -129,27 +129,22 @@ int WINAPI WinMain()
   configurations.farthestZ = 1000.0f;
   configurations.scale = 1.0f / (float)tan(configurations.fov * 0.5f * GHOSTYMATH_PI / 180.0f);
 
-  LPCWSTR CLASS_NAME = L"VoxelEngine";
+  init_ModuleSystem();
+  init_ComponentSystem();
+
+  const wchar_t CLASS_NAME[]  = L"VoxelEngine";
   LPCWSTR TITLE = L"TestWindow";
 
-  WNDCLASSEXW classStruct = {0};
+  WNDCLASS classStruct = { 0 };
 
-  classStruct.cbSize = sizeof(WNDCLASSEXW);
   classStruct.style =  CS_HREDRAW
-                       | CS_VREDRAW
-                       | CS_OWNDC;
-  classStruct.lpfnWndProc = (WNDPROC)WndProc;
-  classStruct.cbClsExtra = 0;
-  classStruct.cbWndExtra = 0;
+                     | CS_VREDRAW
+                     | CS_OWNDC;
+  classStruct.lpfnWndProc = WndProc;
   classStruct.hInstance = hInstance;
-  classStruct.hIcon = NULL;
-  classStruct.hCursor = NULL;
-  classStruct.hbrBackground = NULL;
-  classStruct.lpszMenuName = NULL;
   classStruct.lpszClassName = CLASS_NAME;
-  classStruct.hIconSm = NULL;
 
-  if(!RegisterClassEx(&classStruct))
+  if(!RegisterClass(&classStruct))
   {
     MessageBoxW(0,
              L"CALL TO REGISTERCLASS FAILED",
@@ -276,8 +271,6 @@ void GH_InitWindow(void (*EntryPoint)())
         TEXT("ResetSignal")  // object name
     );
 
-    init_ComponentSystem();
-    init_ModuleSystem();
     init_ConsoleSystem();
 
     WindowStatus = RUNNING;

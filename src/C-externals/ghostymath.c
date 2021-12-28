@@ -369,3 +369,13 @@ quaternion getQuaternionConjugate(quaternion quaternionA)
 
   return(new_Quaternion);
 }
+
+double calcArrayByDoubleDot(int g[], double x, double y)
+{
+  return(g[0] * x + g[1] * y);
+}
+
+int calcFastfloor(double x)
+{
+  return(x > 0 ? (int)(x) : (int)(x - 1));
+}
