@@ -57,8 +57,6 @@ file(GLOB EXTERNALDLLS
 add_library(modules SHARED ${CMAKE_SOURCE_DIR}/GHEnvironment/GH_TestFile.c
                            ${CMAKE_SOURCE_DIR}/GHEnvironment/GH_TestFile.h)
 
-add_definitions(-DMYLIB=1)
-
 set(LIBS opengl32)
 
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})

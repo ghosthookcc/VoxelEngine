@@ -17,6 +17,9 @@ GLvoid glInit(GLsizei WIDTH, GLsizei HEIGHT)
 
   glEnable(GL_DEPTH_TEST);
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+  for(int StartFuncs_iterator = 0; StartFuncs_iterator < StartFuncs->size; StartFuncs_iterator++)
+  { StartFuncs->func_ptrs[StartFuncs_iterator](); }
 }
 
 void glClearScene()
@@ -27,6 +30,8 @@ void glClearScene()
 
 void Update()
 {
+  for(int UpdateFuncs_iterator = 0; UpdateFuncs_iterator < UpdateFuncs->size; UpdateFuncs_iterator++)
+  { UpdateFuncs->func_ptrs[UpdateFuncs_iterator](); }
   UpdateEntities(DeltaTime.QuadPart);
   UpdateCamera(DeltaTime.QuadPart);
   UpdateControls(DeltaTime.QuadPart);

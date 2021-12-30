@@ -1,11 +1,11 @@
 #include "GH_TestFile.h"
 
-inline void start()
+void start()
 {
   printf("\n\n%s\n", "startFUNC [WORKS]");
 }
 
-inline void update()
+void update()
 {
-  printf("%s\n\n", "updateFUNC [WORKS]");
+  printf("\n\n%s\n", "updateFUNC [WORKS]");
 }

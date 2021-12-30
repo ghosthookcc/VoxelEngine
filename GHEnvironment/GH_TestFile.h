@@ -5,7 +5,7 @@
 
 #include "ComponentSystem.h"
 
-inline void ModuleExport start();
-inline void ModuleExport update();
+void ModuleExport start();
+void ModuleExport update();
 
 #endif

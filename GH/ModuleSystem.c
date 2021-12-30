@@ -4,7 +4,10 @@
 
 void init_ModuleSystem()
 {
-  SetDllDirectoryW(L"Dependencies/dlls");
+  SetDllDirectoryW(L"../Dependencies/dlls");
+  Modules = new_dynModuleArray();
+
+  dynModuleArray_AddBack(&Modules, Load_GHModule("../../Debug/modules.dll"));
 }
 
 GHModule* Load_GHModule(LPCSTR path)
@@ -18,6 +21,17 @@ GHModule* Load_GHModule(LPCSTR path)
       newmod->name_var = (MODULEPROC)GetProcAddress(hDLL, "var_name");
       newmod->start_proc = (MODULEPROC)GetProcAddress(hDLL, "start");
       newmod->update_proc = (MODULEPROC)GetProcAddress(hDLL, "update");
+    }
+    else
+    {
+      wchar_t warningBuffer[256];
+      FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+               NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+               warningBuffer, (sizeof(warningBuffer) / sizeof(wchar_t)), NULL);
+      MessageBoxW(0,
+                 warningBuffer,
+                 L"-=WARNING=-",
+                 MB_OK | MB_ICONWARNING);
     }
 
     return(newmod);
