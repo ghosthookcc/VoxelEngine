@@ -17,6 +17,8 @@ GLvoid glInit(GLsizei WIDTH, GLsizei HEIGHT)
   glEnable(GL_DEPTH_TEST);
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+  glCullFace(GL_BACK);
+
   for(int StartFuncs_iterator = 0; StartFuncs_iterator < StartFuncs->size; StartFuncs_iterator++)
   { StartFuncs->func_ptrs[StartFuncs_iterator](); }
 }
@@ -38,8 +40,10 @@ void Update()
 
 void Render()
 {
+  glDisable(GL_CULL_FACE);
   glClearScene();
   RenderEntities(DeltaTime.QuadPart);
+  glEnable(GL_CULL_FACE);
 }
 
 void CLEANUP()

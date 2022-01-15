@@ -8,30 +8,30 @@ void init_NoiseGenerator()
   NoisePrivates.offsetZ = 0;
 }
 
-int NoiseFloor(double x)
+int NoiseFloor(float x)
 {
   return(x >= 0 ? (int) x : (int) x - 1);
 }
 
-double NoiseFade(double x)
+float NoiseFade(float x)
 {
   return(x * x * x * (x * (x * 6 - 15) + 10));
 }
 
-double NoiseLerp(double x, double y, double z)
+float NoiseLerp(float x, float y, float z)
 {
   return(y + x * (z - y));
 }
 
-double NoiseGrad(int hash, double x, double y, double z)
+float NoiseGrad(int hash, float x, float y, float z)
 {
   hash &= 15;
-  double u = hash < 8 ? x : y;
-  double v = hash < 4 ? y : hash == 12 || hash == 14 ? x : z;
+  float u = hash < 8 ? x : y;
+  float v = hash < 4 ? y : hash == 12 || hash == 14 ? x : z;
   return(((hash & 1) == 0 ? u : -u) + ((hash & 2) == 0 ? v : -v));
 }
 
-double GenerateNoise3D(double x, double y, double z)
+float GenerateNoise3D(float x, float y, float z)
 {
   x += NoisePrivates.offsetX;
   y += NoisePrivates.offsetY;
@@ -49,9 +49,9 @@ double GenerateNoise3D(double x, double y, double z)
   y -= floorY;
   z -= floorZ;
 
-  double fX = NoiseFade(x);
-  double fY = NoiseFade(y);
-  double fZ = NoiseFade(z);
+  float fX = NoiseFade(x);
+  float fY = NoiseFade(y);
+  float fZ = NoiseFade(z);
 
   int A = NoisePrivates.perm[X] + Y;
   int AA = NoisePrivates.perm[A] + Z;
@@ -75,12 +75,12 @@ double GenerateNoise3D(double x, double y, double z)
                        NoiseGrad(NoisePrivates.perm[BB+1], x-1, y-1, z-1)))));
 }
 
-double GenerateFinalNoise3D(double x, double y, double z, int octaves, double frequency, double amplitude, unsigned int normalized)
+float GenerateFinalNoise3D(float x, float y, float z, int octaves, float frequency, float amplitude, unsigned int normalized)
 {
-  double result = 0.0;
-  double amp = 1.0;
-  double freq = 1.0;
-  double max = 0.0;
+  float result = 0.0;
+  float amp = 1.0;
+  float freq = 1.0;
+  float max = 0.0;
 
   for(int i = 0; i < octaves; i++)
   {
@@ -103,32 +103,32 @@ int** getPermPTR()
   return(&NoisePrivates.perm);
 }
 
-void setOffsetX(double new_x)
+void setOffsetX(int new_x)
 {
   NoisePrivates.offsetX = new_x;
 }
 
-double getOffsetX()
+int getOffsetX()
 {
   return(NoisePrivates.offsetX);
 }
 
-void setOffsetY(double new_y)
+void setOffsetY(int new_y)
 {
   NoisePrivates.offsetY = new_y;
 }
 
-double getOffsetY()
+int getOffsetY()
 {
   return(NoisePrivates.offsetY);
 }
 
-void setOffsetZ(double new_z)
+void setOffsetZ(int new_z)
 {
   NoisePrivates.offsetZ = new_z;
 }
 
-double getOffsetZ()
+int getOffsetZ()
 {
   return(NoisePrivates.offsetZ);
 }

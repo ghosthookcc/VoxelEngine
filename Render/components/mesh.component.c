@@ -1,6 +1,8 @@
 #include "mesh.component.h"
 
-  #include <stdio.h>
+#include "perlin.h"
+
+#include <stdio.h>
 
 Mesh new_Mesh()
 {
@@ -39,7 +41,8 @@ Mesh getMeshFace(BlockFace face)
       fillArray(&faceEdges,
       (unsigned int[])
       {
-        1, 5, 6, 2, 1, 6
+        1, 5, 6,
+        2, 1, 6
       });
       fillArray(&faceNormals,
       (float[])
@@ -174,7 +177,8 @@ Mesh getMeshFace(BlockFace face)
       fillArray(&faceEdges,
       (unsigned int[])
       {
-        0, 1, 2, 3, 0, 2
+        0, 1, 2,
+        3, 0, 2
       });
       fillArray(&faceNormals,
       (float[])
@@ -190,28 +194,35 @@ Mesh getMeshFace(BlockFace face)
   }
 
   new_mesh.vertices = new_DynFloatArrayFromFloatArray(faceVertices, 18);
-  new_mesh.edges = new_DynUIntArrayFromUIntArray(faceEdges, 6);
+  //new_mesh.edges = new_DynUIntArrayFromUIntArray(faceEdges, 6);
   new_mesh.normals = new_DynFloatArrayFromFloatArray(faceNormals, 3);
   new_mesh.texcoords = new_DynFloatArrayFromFloatArray(faceTexs, 3);
 
   return(new_mesh);
 }
 
-void updateMesh(Mesh* self, Mesh other, float x, float y, float z)
+static float noiseValue;
+void updateMesh(Mesh* self, Mesh other, int x, int y, int z)
 {
+  float tempX;
+  float tempY;
+  float tempZ;
+
   for(int i = 0; i < other.getTriangleCount(other); i++)
   {
-    dynFloatArray_AddBack(&self->vertices, other.vertices->items[    i * 3] + x);
-    dynFloatArray_AddBack(&self->vertices, other.vertices->items[1 + i * 3] + y);
-    dynFloatArray_AddBack(&self->vertices, other.vertices->items[2 + i * 3] + z);
-  }
+    tempX = x * 0.5f;
+    tempY = y * 0.5f;
+    tempZ = z * 0.5f;
 
-  /*
-  for(int i = 0; i < other.edges->size; i++)
-  {
-    dynUIntArray_AddBack(&self->edges, other.edges->items[i]);
+    noiseValue = GenerateFinalNoise3D(other.vertices->items[    i * 3] + tempX,
+                                      other.vertices->items[1 + i * 3] + tempY,
+                                      other.vertices->items[2 + i * 3] + tempZ,
+                                      8, 0.1f, 4.0f, 0);
+
+    dynFloatArray_AddBack(&self->vertices, other.vertices->items[    i * 3] + tempX);
+    dynFloatArray_AddBack(&self->vertices, other.vertices->items[1 + i * 3] + tempY + fabsf(noiseValue));
+    dynFloatArray_AddBack(&self->vertices, other.vertices->items[2 + i * 3] + tempZ);
   }
-  */
 
   for(int i = 0; i < other.normals->size; i++)
   {
@@ -223,4 +234,16 @@ void updateMesh(Mesh* self, Mesh other, float x, float y, float z)
 int getTriangleCount(Mesh self)
 {
     return(self.vertices->size / 3);
+}
+
+dynFloatArray ComputeVerticesToIndices(dynFloatArray* vertices)
+{
+  float vert1;
+  float vert2;
+  for(int i = 0; i < vertices->size; i++)
+  {
+    vert1 = vertices->items[    i * 2];
+    vert2 = vertices->items[1 + i * 2];
+  }
+  return(*vertices);
 }

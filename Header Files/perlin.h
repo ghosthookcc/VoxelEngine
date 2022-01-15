@@ -18,8 +18,8 @@ void init_PerlinGenerator();
 
 void SetPerlinNoise();
 
-double GenerateNoise2D(double x, double y);
+float GenerateNoise2D(float x, float y);
 
-double GenerateFinalNoise2D(double x, double y, int octaves, double frequency, double amplitude, unsigned int normalized);
+float GenerateFinalNoise2D(float x, float y, int octaves, float frequency, float amplitude, unsigned int normalized);
 
 #endif

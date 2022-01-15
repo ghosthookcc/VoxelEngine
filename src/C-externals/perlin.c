@@ -64,13 +64,13 @@ void SetPerlinNoise()
   }
 }
 
-double GenerateNoise2D(double x, double y)
+float GenerateNoise2D(float x, float y)
 {
   int X = NoiseFloor(x) & 255;
   int Y = NoiseFloor(y) & 255;
 
-  double xf = x - NoiseFloor(x);
-  double yf = y - NoiseFloor(y);
+  float xf = x - NoiseFloor(x);
+  float yf = y - NoiseFloor(y);
 
   vec2 topRight = new_vec2((float)xf - 1.0f, (float)yf - 1.0f);
   vec2 topLeft = new_vec2((float)xf, (float)yf - 1.0f);
@@ -87,20 +87,20 @@ double GenerateNoise2D(double x, double y)
   float dotBottomRight = calcVec2DotProduct(bottomRight, GetVec2Const(valueBottomRight));
   float dotBottomLeft = calcVec2DotProduct(bottomLeft, GetVec2Const(valueBottomLeft));
 
-  double u = NoiseFade(xf);
-  double v = NoiseFade(yf);
+  float u = NoiseFade(xf);
+  float v = NoiseFade(yf);
 
   return(NoiseLerp(u,
          NoiseLerp(v, dotBottomLeft, dotTopLeft),
          NoiseLerp(v, dotBottomRight, dotTopRight)));
 }
 
-double GenerateFinalNoise2D(double x, double y, int octaves, double frequency, double amplitude, unsigned int normalized)
+float GenerateFinalNoise2D(float x, float y, int octaves, float frequency, float amplitude, unsigned int normalized)
 {
-  double result = 0.0;
-  double amp = 1.0;
-  double freq = 1.0;
-  double max = 0.0;
+  float result = 0.0;
+  float amp = 1.0;
+  float freq = 1.0;
+  float max = 0.0;
 
   for(int i = 0; i < octaves; i++)
   {

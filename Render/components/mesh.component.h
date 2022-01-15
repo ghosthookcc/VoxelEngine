@@ -14,7 +14,7 @@ struct Mesh
                        // also knows as a indice
   dynFloatArray* texcoords;
   dynFloatArray* normals;
-  void (*updateMesh)(Mesh*, Mesh, float, float, float);
+  void (*updateMesh)(Mesh*, Mesh, int, int, int);
   int (*getTriangleCount)(Mesh);
 };
 
@@ -22,8 +22,10 @@ Mesh new_Mesh();
 
 Mesh getMeshFace(BlockFace face);
 
-void updateMesh(Mesh* self, Mesh other, float x, float y, float z);
+void updateMesh(Mesh* self, Mesh other, int x, int y, int z);
 
 int getTriangleCount(Mesh self);
+
+dynFloatArray ComputeVerticesToIndices(dynFloatArray* vertices);
 
 #endif

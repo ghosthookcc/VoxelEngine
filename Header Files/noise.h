@@ -8,39 +8,39 @@
 struct NoisePrivates
 {
   int* perm;
-  double offsetX;
-  double offsetY;
-  double offsetZ;
+  int offsetX;
+  int offsetY;
+  int offsetZ;
 };
 
 static struct NoisePrivates NoisePrivates;
 
 void init_NoiseGenerator();
 
-int NoiseFloor(double x);
+int NoiseFloor(float x);
 
-double NoiseFade(double x);
+float NoiseFade(float x);
 
-double NoiseLerp(double x, double y, double z);
+float NoiseLerp(float x, float y, float z);
 
-double NoiseGrad(int hash, double x, double y, double z);
+float NoiseGrad(int hash, float x, float y, float z);
 
-double GenerateNoise3D(double x, double y, double z);
+float GenerateNoise3D(float x, float y, float z);
 
-double GenerateFinalNoise3D(double x, double y, double z, int octaves, double frequency, double amplitude, unsigned int normalized);
+float GenerateFinalNoise3D(float x, float y, float z, int octaves, float frequency, float amplitude, unsigned int normalized);
 
 int** getPermPTR();
 
-void setOffsetX(double new_x);
+void setOffsetX(int new_x);
 
-double getOffsetX();
+int getOffsetX();
 
-void setOffsetY(double new_y);
+void setOffsetY(int new_y);
 
-double getOffsetY();
+int getOffsetY();
 
-void setOffsetZ(double new_z);
+void setOffsetZ(int new_z);
 
-double getOffsetZ();
+int getOffsetZ();
 
 #endif
