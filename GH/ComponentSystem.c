@@ -1,9 +1,13 @@
 #include "ComponentSystem.h"
+#include <stdio.h>
 
 void init_ComponentSystem()
 {
   StartFuncs = new_dynFuncptrArray();
   UpdateFuncs = new_dynFuncptrArray();
+
+  init_NoiseGenerator();
+  init_PerlinGenerator();
 
   for(int Modules_iterator = 0; Modules_iterator < Modules->size; Modules_iterator++)
   {

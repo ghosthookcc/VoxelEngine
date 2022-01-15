@@ -1,8 +1,13 @@
 #include "ghostymath.h"
 
+float calcVec2DotProduct(vec2 vec2A, vec2 vec2B)
+{
+  return(vec2A.x * vec2B.x + vec2A.y * vec2B.y);
+}
+
 float calcVec3DistanceToPoint(vec3 point, vec3 secondVec3, float distanceToOrigin)
 {
-    return calcVec3DotProduct(point, secondVec3) + distanceToOrigin;
+    return(calcVec3DotProduct(point, secondVec3) + distanceToOrigin);
 }
 
 float calcVec3DotProduct(vec3 vec3A, vec3 vec3B)
@@ -115,6 +120,27 @@ void ResetVec3(vec3* vec3A)
   vec3A->x = 0.0f;
   vec3A->y = 0.0f;
   vec3A->z = 0.0f;
+}
+
+vec2 GetVec2Const(int value)
+{
+  int h = value & 3;
+  if(h == 0)
+  {
+    return(new_vec2(1.0f, 1.0f));
+  }
+  else if (h == 1)
+  {
+    return(new_vec2(-1.0f, 1.0f));
+  }
+  else if (h == 2)
+  {
+    return(new_vec2(-1.0f, -1.0f));
+  }
+  else
+  {
+    return(new_vec2(1.0f, -1.0f));
+  }
 }
 
 vec4 divideVec4(vec4 vec4A, float divideValue)

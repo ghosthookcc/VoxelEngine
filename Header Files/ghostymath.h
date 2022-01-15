@@ -13,6 +13,7 @@
 #include "matrix.h"
 #include "vec4.h"
 #include "vec3.h"
+#include "vec2.h"
 
 #ifndef MATH_MACROS
 #define GHOSTYMATH_PI 3.14159265358979323846264338327950288
@@ -43,6 +44,8 @@ enum AllPlanes
     Bottom = 5
 };
 
+float calcVec2DotProduct(vec2 vec2A, vec2 vec2B);
+
 float calcVec3DistanceToPoint(vec3 point, vec3 secondVec3, float distanceToOrigin);
 
 float calcVec3DotProduct(vec3 vec3A, vec3 vec3B);
@@ -66,6 +69,8 @@ vec3 subtractVec4ByVec3(vec4 vec4B, vec3 vec3A);
 vec3 divideVec3(vec3 vec3A, float divideValue);
 
 void ResetVec3(vec3* vec3A);
+
+vec2 GetVec2Const(int value);
 
 vec4 divideVec4(vec4 vec4A, float divideValue);
 

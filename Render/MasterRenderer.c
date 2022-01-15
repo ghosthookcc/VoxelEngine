@@ -9,8 +9,7 @@ GLvoid glInit(GLsizei WIDTH, GLsizei HEIGHT)
 
   Entities = init_EntityStack();
 
-  Entity default_entity;
-  default_entity.vaoID = -1;
+  Entity default_entity = { .vaoID = -1 };
   SelectedEntity = default_entity;
 
   setup_Camera(new_vec3(0.0f, 1.0f, 2.5f));

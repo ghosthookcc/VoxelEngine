@@ -16,6 +16,7 @@
 #include "vector.h"
 #include "vec3.h"
 #include "console.h"
+#include "noise.h"
 #include "perlin.h"
 
 HGLRC hRC; // Permanent Rendering Context

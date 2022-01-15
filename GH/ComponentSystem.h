@@ -19,6 +19,7 @@
 #include "window.h"
 #include "dynArray.h"
 #include "console.h"
+#include "perlin.h"
 
 enum status
 {

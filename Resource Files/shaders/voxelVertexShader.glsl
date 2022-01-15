@@ -20,7 +20,7 @@ const vec3 dir = vec3(1,2,3);
 void main()
 {
 	screenPos = in_v_Position.xy;
-	float diffuse  = 0.8f * max(dot(vec3(0.0f, 0.0f, 0.0f), normalize(dir)), 0.0);
+	float diffuse  = 0.8f * max(dot(vec3(0.0f, 0.0f, 0.0f), normalize(dir * in_v_Normal)), 0.0);
 
 	gl_Position = MVP * vec4(in_v_Position + offset, 1.0f);
 

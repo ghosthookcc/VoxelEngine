@@ -1,5 +1,7 @@
 #include "mesh.component.h"
 
+  #include <stdio.h>
+
 Mesh new_Mesh()
 {
   Mesh new_Mesh;
@@ -17,8 +19,7 @@ Mesh getMeshFace(BlockFace face)
   Mesh new_mesh = new_Mesh();
 
   float* faceVertices = malloc(sizeof(float) * 18);
-  unsigned int faceEdges[6] = { 0, 1, 2,
-                                0, 2, 3 };
+  unsigned int* faceEdges = malloc(sizeof(unsigned int) * 6);
   float* faceNormals = malloc(sizeof(float) * 3);
   float* faceTexs = malloc(sizeof(float) * 3);
 
@@ -34,6 +35,11 @@ Mesh getMeshFace(BlockFace face)
         0.5f,  0.5f,  0.5f,
         -0.5f,  0.5f,  0.5f,
         -0.5f,  0.5f, -0.5f
+      });
+      fillArray(&faceEdges,
+      (unsigned int[])
+      {
+        1, 5, 6, 2, 1, 6
       });
       fillArray(&faceNormals,
       (float[])
@@ -57,6 +63,11 @@ Mesh getMeshFace(BlockFace face)
         -0.5f, -0.5f,  0.5f,
         -0.5f, -0.5f, -0.5f
       });
+      fillArray(&faceEdges,
+      (unsigned int[])
+      {
+        4, 0, 3, 7, 4, 3
+      });
       fillArray(&faceNormals,
       (float[])
       {
@@ -78,6 +89,11 @@ Mesh getMeshFace(BlockFace face)
          0.5f,  0.5f,  0.5f,
         -0.5f,  0.5f,  0.5f,
         -0.5f, -0.5f,  0.5f
+      });
+      fillArray(&faceEdges,
+      (unsigned int[])
+      {
+        0, 1, 2, 3, 0, 2
       });
       fillArray(&faceNormals,
       (float[])
@@ -101,6 +117,11 @@ Mesh getMeshFace(BlockFace face)
         -0.5f,  0.5f, -0.5f,
         -0.5f, -0.5f, -0.5f
       });
+      fillArray(&faceEdges,
+      (unsigned int[])
+      {
+        6, 5, 4, 6, 4, 7
+      });
       fillArray(&faceNormals,
       (float[])
       {
@@ -123,6 +144,11 @@ Mesh getMeshFace(BlockFace face)
         0.5f, -0.5f,  0.5f,
         0.5f,  0.5f,  0.5f
       });
+      fillArray(&faceEdges,
+      (unsigned int[])
+      {
+        3, 2, 6, 7, 3, 6
+      });
       fillArray(&faceNormals,
       (float[])
       {
@@ -144,6 +170,11 @@ Mesh getMeshFace(BlockFace face)
         -0.5f, -0.5f, -0.5f,
         -0.5f, -0.5f,  0.5f,
         -0.5f,  0.5f,  0.5f
+      });
+      fillArray(&faceEdges,
+      (unsigned int[])
+      {
+        0, 1, 2, 3, 0, 2
       });
       fillArray(&faceNormals,
       (float[])
@@ -174,6 +205,13 @@ void updateMesh(Mesh* self, Mesh other, float x, float y, float z)
     dynFloatArray_AddBack(&self->vertices, other.vertices->items[1 + i * 3] + y);
     dynFloatArray_AddBack(&self->vertices, other.vertices->items[2 + i * 3] + z);
   }
+
+  /*
+  for(int i = 0; i < other.edges->size; i++)
+  {
+    dynUIntArray_AddBack(&self->edges, other.edges->items[i]);
+  }
+  */
 
   for(int i = 0; i < other.normals->size; i++)
   {

@@ -2,6 +2,6 @@
 
 void setup_world()
 {
-  generateFlatChunk();
-  loadModelToVAO("../Resource Files/obj/suzanne.obj");
+  generateChunk();
+  // loadModelToVAO("../Resource Files/obj/suzanne.obj");
 }

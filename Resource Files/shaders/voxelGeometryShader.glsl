@@ -8,8 +8,7 @@ in int out_g_Enabled[];
 
 out vec4 out_f_Color;
 
-uniform mat4 projViewMatrix;
-uniform mat4 transformationMatrix;
+uniform mat4 MVP;
 
 void main()
 {

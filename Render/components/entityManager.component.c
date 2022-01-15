@@ -25,6 +25,7 @@ void loadToVAO(Mesh new_EntityMesh)
     dynFloatArray_AddBack(&VerticesColors, rgba.w);
   }
 
+
   storeDataInAttributeList(0, 3, new_EntityMesh.vertices);
   storeDataInAttributeList(1, 4, VerticesColors);
   storeDataInAttributeList(2, 3, new_EntityMesh.normals);

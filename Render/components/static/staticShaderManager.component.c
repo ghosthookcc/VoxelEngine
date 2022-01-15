@@ -1,5 +1,4 @@
 #include "staticShaderManager.component.h"
-#include <stdio.h>
 
 float get_Uniformfv(GLuint ID, char* uniformName)
 {
