@@ -210,25 +210,27 @@ void updateMesh(Mesh* self, Mesh other, int x, int y, int z)
 
   for(int i = 0; i < other.getTriangleCount(other); i++)
   {
-    tempX = x * 0.5f;
-    tempY = y * 0.5f;
-    tempZ = z * 0.5f;
+    tempX = x + 0.5f;
+    tempY = y + 0.5f;
+    tempZ = z + 0.5f;
 
     noiseValue = GenerateFinalNoise3D(other.vertices->items[    i * 3] + tempX,
                                       other.vertices->items[1 + i * 3] + tempY,
                                       other.vertices->items[2 + i * 3] + tempZ,
-                                      8, 0.1f, 4.0f, 0);
+                                      4, 0.1f, 5.0f, 0);
 
     dynFloatArray_AddBack(&self->vertices, other.vertices->items[    i * 3] + tempX);
-    dynFloatArray_AddBack(&self->vertices, other.vertices->items[1 + i * 3] + tempY + fabsf(noiseValue));
+    dynFloatArray_AddBack(&self->vertices, other.vertices->items[1 + i * 3] + tempY - fabsf(noiseValue));
     dynFloatArray_AddBack(&self->vertices, other.vertices->items[2 + i * 3] + tempZ);
   }
 
+  /*
   for(int i = 0; i < other.normals->size; i++)
   {
     dynFloatArray_AddBack(&self->normals, other.normals->items[i]);
     dynFloatArray_AddBack(&self->texcoords, other.texcoords->items[i]);
   }
+  */
 }
 
 int getTriangleCount(Mesh self)

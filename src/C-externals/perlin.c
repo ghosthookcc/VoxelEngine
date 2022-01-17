@@ -44,7 +44,7 @@ void init_PerlinGenerator()
 
 void SetPerlinNoise()
 {
-  srand(time(NULL));
+  srand((unsigned int)time(NULL));
 
   setOffsetX(rand() % 256);
   setOffsetY(rand() % 256);

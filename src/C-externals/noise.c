@@ -1,5 +1,15 @@
 #include "noise.h"
 
+float random_range(int min_value, int max_value)
+{
+  return((float)(rand() % max_value + min_value));
+}
+
+float random_range_step(int min_value, int max_value, float step)
+{
+  return((float)random_range((int)(min_value / step), (int)(max_value / step)) * step);
+}
+
 void init_NoiseGenerator()
 {
   NoisePrivates.perm = malloc(sizeof(int) * 512);

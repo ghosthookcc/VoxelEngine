@@ -2,6 +2,8 @@
 #define NOISE_H
 
 #include <malloc.h>
+#include <time.h>
+#include <stdlib.h>
 
 #include "ghostymath.h"
 
@@ -14,6 +16,10 @@ struct NoisePrivates
 };
 
 static struct NoisePrivates NoisePrivates;
+
+float random_range(int min_value, int max_value);
+
+float random_range_step(int min_value, int max_value, float step);
 
 void init_NoiseGenerator();
 
