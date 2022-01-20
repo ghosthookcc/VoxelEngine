@@ -14,18 +14,21 @@ struct Mesh
                        // also knows as a indice
   dynFloatArray* texcoords;
   dynFloatArray* normals;
-  void (*updateMesh)(Mesh*, Mesh, int, int, int);
+  void (*updateMesh_PerlinSmooth)(Mesh*, Mesh, int, int, int);
+  void (*updateMesh_PerlinBlock)(Mesh*, Mesh, int, int, int);
   int (*getTriangleCount)(Mesh);
 };
 
 Mesh new_Mesh();
 
+Mesh getMeshBlock();
 Mesh getMeshFace(BlockFace face);
 
-void updateMesh(Mesh* self, Mesh other, int x, int y, int z);
+void updateMesh_PerlinSmooth(Mesh* self, Mesh other, int x, int y, int z);
+void updateMesh_PerlinBlock(Mesh* self, Mesh other, int x, int y, int z);
 
 int getTriangleCount(Mesh self);
 
-dynFloatArray ComputeVerticesToIndices(dynFloatArray* vertices);
+void ComputeVerticesToIndices(dynFloatArray* vertices);
 
 #endif

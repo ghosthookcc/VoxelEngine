@@ -97,7 +97,7 @@ void bindIndices(dynUIntArray* indicesBuffer)
 
   uintVector_Push(&vbosIDs, vboID);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboID);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, (*indicesBuffer).size * sizeof(unsigned int), (*indicesBuffer).items, GL_STATIC_DRAW);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer->size * sizeof(unsigned int), indicesBuffer->items, GL_STATIC_DRAW);
 }
 
 void storeDataInAttributeList(int attribute, int coordinateSize, dynFloatArray* fbuffer)
@@ -107,7 +107,7 @@ void storeDataInAttributeList(int attribute, int coordinateSize, dynFloatArray* 
 
   uintVector_Push(&vbosIDs, vboID);
   glBindBuffer(GL_ARRAY_BUFFER, vboID);
-  glBufferData(GL_ARRAY_BUFFER, (*fbuffer).size * sizeof(float), &(*fbuffer).items[0], GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, fbuffer->size * sizeof(float), &fbuffer->items[0], GL_STATIC_DRAW);
   glVertexAttribPointer(attribute, coordinateSize, GL_FLOAT, GL_FALSE, 0, 0);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

@@ -6,7 +6,7 @@
 #include "dynArray.h"
 #include "vec3.h"
 
-#define CHUNK_XYZ_SIZE 16
+#define CHUNK_XYZ_SIZE 128
 
 typedef struct TOF_Flag
 {
@@ -45,6 +45,7 @@ HeightMap new_HeightMap();
 
 HeightMap generateHeightMap(int start, int max);
 
-void generateChunk();
+void generateSmoothChunk();
+void generateBlockChunk();
 
 #endif

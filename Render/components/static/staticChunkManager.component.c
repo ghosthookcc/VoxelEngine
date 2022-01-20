@@ -18,10 +18,10 @@ HeightMap generateHeightMap(int start, int max)
   return(new_HeightMap);
 }
 
-void generateChunk()
+void generateSmoothChunk()
 {
-  Mesh temp_face;
-  Mesh temp_mesh = new_Mesh();
+  Mesh temp_block = getMeshBlock();
+  Mesh temp_block_mesh = new_Mesh();
 
   for(int x = 0; x < CHUNK_XYZ_SIZE; x++)
   {
@@ -29,28 +29,40 @@ void generateChunk()
     {
       for(int z = 0; z < CHUNK_XYZ_SIZE; z++)
       {
-          temp_face = getMeshFace(FACE_BACK);
-          temp_mesh.updateMesh(&temp_mesh, temp_face, x, y, z);
-
-          temp_face = getMeshFace(FACE_LEFT);
-          temp_mesh.updateMesh(&temp_mesh, temp_face, x, y, z);
-
-          temp_face = getMeshFace(FACE_FRONT);
-          temp_mesh.updateMesh(&temp_mesh, temp_face, x, y, z);
-
-          temp_face = getMeshFace(FACE_TOP);
-          temp_mesh.updateMesh(&temp_mesh, temp_face, x, y, z);
-
-          temp_face = getMeshFace(FACE_RIGHT);
-          temp_mesh.updateMesh(&temp_mesh, temp_face, x, y, z);
-
-          temp_face = getMeshFace(FACE_BOTTOM);
-          temp_mesh.updateMesh(&temp_mesh, temp_face, x, y, z);
+        if(y == 0)
+        {
+          temp_block_mesh.updateMesh_PerlinSmooth(&temp_block_mesh, temp_block, x, y, z);
+        }
       }
     }
   }
 
   //ComputeVerticesAsIndices(temp_mesh.vertices);
 
-  loadToVAO(temp_mesh);
+  loadToVAO(temp_block_mesh);
+}
+
+void generateBlockChunk()
+{
+  Mesh temp_block;
+  Mesh temp_block_mesh = new_Mesh();
+
+  for(int x = 0; x < CHUNK_XYZ_SIZE; x++)
+  {
+    for(int y = 0; y < CHUNK_XYZ_SIZE; y++)
+    {
+      for(int z = 0; z < CHUNK_XYZ_SIZE; z++)
+      {
+        if(y == 0)
+        {
+          temp_block = getMeshBlock();
+          temp_block_mesh.updateMesh_PerlinBlock(&temp_block_mesh, temp_block, x, y, z);
+        }
+      }
+    }
+  }
+
+  //ComputeVerticesAsIndices(temp_mesh.vertices);
+
+  loadToVAO(temp_block_mesh);
 }
