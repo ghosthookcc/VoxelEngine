@@ -44,7 +44,6 @@ typedef struct Entity
   vec3 velocity;
   Mesh mesh;
   int triangleCount;
-  int enabledFaces;
 } Entity;
 
 typedef struct EntityStack

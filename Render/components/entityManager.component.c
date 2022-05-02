@@ -7,7 +7,7 @@ void loadToVAO(Mesh new_EntityMesh, vec3 start_pos)
 
   if(configurations.efficient_render == 0)
   {
-    dynFloatArray* VerticesColors = new_dynFloatArray(0);
+    dynFloatArray* VerticesColors = new_dynFloatArray();
     vec4 rgba = new_vec4(0.6f, 0.8f, 1.0f, 1.0f);
 
     float rDecVal = (rgba.x / new_EntityMesh.vertices->size) * 5.0f;
@@ -45,7 +45,7 @@ void loadModelToVAO(char* filename)
   unsigned int vaoID = createVAO();
   bindIndices(new_EntityMesh.edges);
 
-  dynFloatArray* VerticesColors = new_dynFloatArray(0);
+  dynFloatArray* VerticesColors = new_dynFloatArray();
 
   vec4 rgba = new_vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -165,7 +165,7 @@ void transformation_SetScale(Entity* entity)
 
 Mesh readOBJFile(char* filename)
 {
-  Mesh object_Mesh = new_Mesh(0);
+  Mesh object_Mesh = new_Mesh();
 
   FILE* file = fopen(filename, "r");
 

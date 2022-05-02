@@ -4,8 +4,8 @@
 
 char* concat_string(const char* str1, const char* str2)
 {
-    const int len1 = get_cstrlen(str1);
-    const int len2 = get_cstrlen(str2);
+    const int len1 = (const int)get_cstrlen(str1);
+    const int len2 = (const int)get_cstrlen(str2);
 
     char* result = malloc(len1 + len2 + 1);
     if(!result) return result;

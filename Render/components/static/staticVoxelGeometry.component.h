@@ -27,5 +27,6 @@ unsigned char IsSolid(ivec3 index, VoxelSet* voxelRef);
 vec4 At(ivec3 index, VoxelSet* voxelRef);
 
 struct Mesh fast_sphere(float radius, int sectorCount, int stackCount);
+struct Mesh trippy_sphere(int radius);
 
 #endif

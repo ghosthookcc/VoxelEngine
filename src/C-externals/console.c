@@ -71,7 +71,7 @@ DWORD WriteToConsole(const char* buffer)
   {
       FlushConsoleInputBuffer(hStdOut);
       DWORD written = 0;
-      WriteConsoleA(hStdOut, buffer, get_cstrlen(buffer), &written, NULL);
+      WriteConsoleA(hStdOut, buffer, (DWORD)get_cstrlen(buffer), &written, NULL);
       return(written);
   }
   return(0);
