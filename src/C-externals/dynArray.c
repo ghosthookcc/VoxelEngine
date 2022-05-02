@@ -39,7 +39,6 @@ dynFloatArray* new_DynFloatArrayFromFloatArray(float fillData[], int size)
 void dynFloatArray_AddBack(dynFloatArray** dynFloatArray, float item)
 {
   (*dynFloatArray)->size += 1;
-  (*dynFloatArray) = realloc((*dynFloatArray), sizeof(struct dynFloatArray) + sizeof(float) * (*dynFloatArray)->size);
   (*dynFloatArray)->items = realloc((*dynFloatArray)->items, sizeof(float) * (*dynFloatArray)->size);
   if((*dynFloatArray)->items == NULL)
   {
@@ -52,7 +51,6 @@ void dynFloatArray_AddBack(dynFloatArray** dynFloatArray, float item)
 void dynFloatArray_AddVec3Values(dynFloatArray** dynFloatArray, vec3 item)
 {
   (*dynFloatArray)->size += 3;
-  (*dynFloatArray) = realloc((*dynFloatArray), sizeof(struct dynFloatArray) + sizeof(float) * (*dynFloatArray)->size);
   (*dynFloatArray)->items = realloc((*dynFloatArray)->items, sizeof(float) * (*dynFloatArray)->size);
   if((*dynFloatArray)->items == NULL)
   {
@@ -233,7 +231,7 @@ void dynUByteArray_AddVec3Values(dynUByteArray** dynUByteArray, UByteVec3 item)
 dynFuncptrArray* new_dynFuncptrArray()
 {
   dynFuncptrArray* new_DynFuncptrArray = malloc(sizeof(struct dynFuncptrArray));
-  new_DynFuncptrArray->func_ptrs = calloc(0, 0);
+  new_DynFuncptrArray->funcs = calloc(0, 0);
   new_DynFuncptrArray->size = 0;
   return(new_DynFuncptrArray);
 }
@@ -242,13 +240,13 @@ void dynFuncptrArray_AddBack(dynFuncptrArray** dynFuncptrArray, void (*func_ptr)
 {
   (*dynFuncptrArray)->size += 1;
   (*dynFuncptrArray) = realloc((*dynFuncptrArray), sizeof(struct dynFuncptrArray) + sizeof(func_ptr) * (*dynFuncptrArray)->size);
-  (*dynFuncptrArray)->func_ptrs = realloc((*dynFuncptrArray)->func_ptrs, sizeof(func_ptr) * (*dynFuncptrArray)->size);
-  if((*dynFuncptrArray)->func_ptrs == NULL)
+  (*dynFuncptrArray)->funcs = realloc((*dynFuncptrArray)->funcs, sizeof(func_ptr) * (*dynFuncptrArray)->size);
+  if((*dynFuncptrArray)->funcs == NULL)
   {
     free((*dynFuncptrArray));
   }
 
-  (*dynFuncptrArray)->func_ptrs[(*dynFuncptrArray)->size - 1] = func_ptr;
+  (*dynFuncptrArray)->funcs[(*dynFuncptrArray)->size - 1] = func_ptr;
 }
 
 // end dynFuncptrArray

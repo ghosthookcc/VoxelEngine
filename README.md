@@ -10,6 +10,6 @@ A voxel engine made with gl.h and pure c-lang
 ---
 
 #### Engine Information
-**VERSION = __1.0.1.9__**
+**VERSION = __1.0.2.0__**
 <br/>
-**DEPENDENCIES = __[cmake, windows-10, c-lang, gl.h]__**
+**DEPENDENCIES = __[cmake, windows-10, c-lang, gl.h, visual studio]__**

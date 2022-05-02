@@ -11,10 +11,10 @@ char* concat_string(const char* str1, const char* str2)
     if(!result) return result;
     CopyMemory(result, str1, len1);
     CopyMemory(result + len1, str2, len2 + 1);
-    return result;
+    return(result);
 }
 
-int get_strlen(char* ptr)
+size_t get_strlen(char* ptr)
 {
     int len = 0;
     while(*ptr)
@@ -25,7 +25,7 @@ int get_strlen(char* ptr)
     return(len);
 }
 
-int get_cstrlen(const char* ptr)
+size_t get_cstrlen(const char* ptr)
 {
     int len = 0;
     while(*ptr)

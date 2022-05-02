@@ -17,7 +17,7 @@ float calcVec3DotProduct(vec3 vec3A, vec3 vec3B)
 
 float calcVec3length(vec3 vec3A)
 {
-    return((float)sqrt(vec3A.x * vec3A.x + vec3A.y * vec3A.y + vec3A.z * vec3A.z));
+    return(sqrtf(vec3A.x * vec3A.x + vec3A.y * vec3A.y + vec3A.z * vec3A.z));
 }
 
 vec3 calcVec3CrossProduct(vec3 vec3A, vec3 vec3B)
@@ -366,10 +366,10 @@ void quaternionToMat4Rotation(quaternion quaternionA, struct mat4x4* dst)
 
 float calcQuaternionlength(quaternion quaternionA)
 {
-  return((float)sqrt(quaternionA.x * quaternionA.x +
-                     quaternionA.y * quaternionA.y +
-                     quaternionA.z * quaternionA.z +
-                     quaternionA.angle * quaternionA.angle));
+  return(sqrtf(quaternionA.x * quaternionA.x +
+               quaternionA.y * quaternionA.y +
+               quaternionA.z * quaternionA.z +
+               quaternionA.angle * quaternionA.angle));
 }
 
 quaternion normalizeQuaternion(quaternion quaternionA)
@@ -404,4 +404,43 @@ double calcArrayByDoubleDot(int g[], double x, double y)
 int calcFastfloor(double x)
 {
   return(x > 0 ? (int)(x) : (int)(x - 1));
+}
+
+vec3 calcDistanceVec3(vec3 vec3A, vec3 vec3B)
+{
+    vec3 new_vec3A = subtractVec3ByVec3(vec3A, vec3B);
+    new_vec3A.x = (float)fabs(new_vec3A.x);
+    new_vec3A.y = (float)fabs(new_vec3A.y);
+    new_vec3A.z = (float)fabs(new_vec3A.z);
+    return(new_vec3A);
+}
+
+float calcDistanceSum(vec3 vec3A, vec3 vec3B)
+{
+    vec3 stg1 = calcDistanceVec3(vec3A, vec3B);
+    return(sqrtf(powf(stg1.x, 2) + powf(stg1.y, 2) + powf(stg1.z, 2)));
+}
+
+vec3 calcAccelerationVec3(vec3 vec3A, body target)
+{
+    float first_arg = (float)(GRAV_CONST * target.mass);
+
+    vec3 dist = subtractVec3ByVec3(target.position, vec3A);
+    vec3 unknown = calcDistanceVec3(vec3A, target.position);
+    float mag = powf(unknown.x + unknown.y + unknown.z, 3);
+
+    return(divideVec3(multiplyVec3ByFloat(dist, first_arg), mag));
+}
+
+vec3 calcAccelLoop(vec3 origin, unsigned int bid)
+{
+  vec3 accel_velocity = new_vec3(0.0f, 0.0f, 0.0f);
+  for(unsigned int i = 0; i < bodylist.size; i++)
+  {
+    if(bodylist.planets[i].bID == bid) { continue; }
+
+    accel_velocity = calcAccelerationVec3(origin, bodylist.planets[i]);
+  }
+
+  return(accel_velocity);
 }

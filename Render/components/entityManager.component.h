@@ -5,18 +5,16 @@
 
 #include <windows.h>
 #include <gl/gl.h>
-#include <stdio.h>
-
-#include "STD_IMAGE/stb_image.h"
 
 #include "staticRenderingVars.component.h"
 #include "staticShaderManager.component.h"
 
 #include "cameraManager.component.h"
 #include "mesh.component.h"
+#include "physics.component.h"
 #include "worldManager.component.h"
 
-#include "config.h"
+#include "configurations/config.h"
 
 #include "initGLFuncs.h"
 #include "ghostymath.h"
@@ -31,8 +29,10 @@ EntityStack* Entities;
 Entity SelectedEntity;
 int SelectedEntityIndex;
 
-void loadToVAO(Mesh new_EntityMesh);
+void loadToVAO(Mesh new_EntityMesh, vec3 start_pos);
 void loadModelToVAO(char* filename);
+
+void createVoxelMap();
 
 unsigned int createVAO();
 

@@ -43,3 +43,14 @@ UByteVec3 new_UByteVec3(unsigned char x, unsigned char y, unsigned char z)
 
   return construct;
 }
+
+dvec3 new_dvec3(double x, double y, double z)
+{
+  dvec3 construct;
+
+  construct.x = x;
+  construct.y = y;
+  construct.z = z;
+
+  return construct;
+}

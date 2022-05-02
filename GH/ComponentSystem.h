@@ -3,8 +3,6 @@
 
 #include <windows.h>
 
-#include "config.h"
-
 #include "ModuleSystem.h"
 
 #include "staticRenderingVars.component.h"
@@ -17,6 +15,8 @@
 #include "worldManager.component.h"
 
 #include "window.h"
+#include "generics.h"
+#include "vec3.h"
 #include "dynArray.h"
 #include "console.h"
 #include "perlin.h"
@@ -28,8 +28,6 @@ enum status
   SUSPENDED,
   STOPPED,
 };
-
-//static enum state start_state;
 
 enum status WindowStatus;
 

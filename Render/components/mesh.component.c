@@ -1,18 +1,17 @@
 #include "mesh.component.h"
 
-#include "perlin.h"
+#include "configurations/config.h"
 
-#include <stdio.h>
+#include "perlin.h"
 
 Mesh new_Mesh()
 {
   Mesh new_Mesh;
   new_Mesh.vertices = new_dynFloatArray();
   new_Mesh.edges    = new_dynUIntArray();
-  new_Mesh.texcoords = new_dynFloatArray();
-  new_Mesh.normals  = new_dynFloatArray();
-  new_Mesh.updateMesh_PerlinSmooth = updateMesh_PerlinSmooth;
-  new_Mesh.updateMesh_PerlinBlock = updateMesh_PerlinBlock;
+  //new_Mesh.texcoords = new_dynFloatArray();
+  //new_Mesh.normals  = new_dynFloatArray();
+  new_Mesh.functions = new_dynFuncptrArray();
   new_Mesh.getTriangleCount = getTriangleCount;
   return(new_Mesh);
 }
@@ -225,8 +224,8 @@ Mesh getMeshFace(BlockFace face)
 
   tmp_Mesh.vertices = new_DynFloatArrayFromFloatArray(faceVertices, 18);
   //tmp_Mesh.edges = new_DynUIntArrayFromUIntArray(faceEdges, 6);
-  tmp_Mesh.normals = new_DynFloatArrayFromFloatArray(faceNormals, 3);
-  tmp_Mesh.texcoords = new_DynFloatArrayFromFloatArray(faceTexs, 3);
+  //tmp_Mesh.normals = new_DynFloatArrayFromFloatArray(faceNormals, 3);
+  //tmp_Mesh.texcoords = new_DynFloatArrayFromFloatArray(faceTexs, 3);
 
   return(tmp_Mesh);
 }
@@ -248,7 +247,7 @@ void updateMesh_PerlinSmooth(Mesh* self, Mesh other, int x, int y, int z)
     noiseValue = GenerateFinalNoise3D(other.vertices->items[    i * 3] + tempX,
                                       other.vertices->items[1 + i * 3] + tempY,
                                       other.vertices->items[2 + i * 3] + tempZ,
-                                      8, 0.1f, 5.0f, 0);
+                                      8, 0.1f, 2.0f, 0);
 
     dynFloatArray_AddBack(&self->vertices, other.vertices->items[    i * 3] + tempX);
     dynFloatArray_AddBack(&self->vertices, other.vertices->items[1 + i * 3] + fabsf(noiseValue));
@@ -268,13 +267,13 @@ void updateMesh_PerlinBlock(Mesh* self, Mesh other, int x, int y, int z)
     tempY = y + 0.5f;
     tempZ = z + 0.5f;
 
-    noiseValue = GenerateFinalNoise3D(tempX,
-                                      tempY,
-                                      tempZ,
+    noiseValue = GenerateFinalNoise3D((float)x,
+                                      (float)y,
+                                      (float)z,
                                       8, 0.1f, 2.0f, 0);
 
     dynFloatArray_AddBack(&self->vertices, other.vertices->items[    i * 3] + tempX);
-    dynFloatArray_AddBack(&self->vertices, other.vertices->items[1 + i * 3] + tempY + fabsf(noiseValue));
+    dynFloatArray_AddBack(&self->vertices, other.vertices->items[1 + i * 3] + fabsf(tempY - noiseValue));
     dynFloatArray_AddBack(&self->vertices, other.vertices->items[2 + i * 3] + tempZ);
   }
 

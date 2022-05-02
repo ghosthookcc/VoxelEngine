@@ -6,6 +6,8 @@
 #include <gl/gl.h>
 #include <stdio.h>
 
+#include "configurations/bodies.h"
+
 #include "staticRenderingVars.component.h"
 
 #include "generics.h"
@@ -17,6 +19,7 @@
 
 #ifndef MATH_MACROS
 #define GHOSTYMATH_PI 3.14159265358979323846264338327950288
+#define GRAV_CONST 6.67408e-11
 #define degreesToRadians(angleInDegrees) ((angleInDegrees) * GHOSTYMATH_PI / 180.0)
 #define radiansToDegrees(angleInRadians) ((angleInRadians) * 180.0 / GHOSTYMATH_PI)
 #endif
@@ -107,5 +110,13 @@ quaternion getQuaternionConjugate(quaternion quaternionA);
 double calcArrayByDoubleDot(int g[], double x, double y);
 
 int calcFastfloor(double x);
+
+vec3 calcDistanceVec3(vec3 vec3A, vec3 vec3B);
+
+float calcDistanceSum(vec3 vec3A, vec3 vec3B);
+
+vec3 calcAccelerationVec3(vec3 vec3A, body target);
+
+vec3 calcAccelLoop(vec3 origin, unsigned int bid);
 
 #endif

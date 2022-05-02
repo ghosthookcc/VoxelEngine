@@ -1,5 +1,4 @@
 #include "ComponentSystem.h"
-#include <stdio.h>
 
 void init_ComponentSystem()
 {

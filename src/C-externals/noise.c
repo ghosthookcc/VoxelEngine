@@ -1,5 +1,7 @@
 #include "noise.h"
 
+#include "configurations/config.h"
+
 float random_range(int min_value, int max_value)
 {
   return((float)(rand() % max_value + min_value));
@@ -88,8 +90,8 @@ float GenerateNoise3D(float x, float y, float z)
 float GenerateFinalNoise3D(float x, float y, float z, int octaves, float frequency, float amplitude, unsigned int normalized)
 {
   float result = 0.0;
-  float amp = 1.0;
-  float freq = 1.0;
+  float amp = configurations.amplitude_noise;
+  float freq = configurations.frequency_noise;
   float max = 0.0;
 
   for(int i = 0; i < octaves; i++)

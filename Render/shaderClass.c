@@ -73,8 +73,6 @@ char* read_LineFromOffset(char** filename, int offset)
   }
   linecontent[i - 1] = '\0';
 
-  printf("RAN THIS!");
-
   CloseHandle(file_Handle);
   return(linecontent);
 }
@@ -83,7 +81,7 @@ GLuint set_Shader(GLuint ID, char* filename, enum shadertype shadertype)
 {
   char* shaderCode = read_File((char**)&filename);
   GLuint shader = glCreateShader(shadertype);
-  glShaderSource(shader, 1, (const char**)&shaderCode, NULL);
+  glShaderSource(shader, 1, (const char**)&shaderCode, (GLint*)0);
   glCompileShader(shader);
 
   glAttachShader(ID, shader);

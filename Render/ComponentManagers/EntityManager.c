@@ -4,6 +4,7 @@ void UpdateEntities(LONGLONG DeltaTime)
 {
   for(int i = 0; i < entityStack_Count(Entities); i++)
   {
+    ProcessPhysics(&Entities->entities[i]);
   }
 }
 

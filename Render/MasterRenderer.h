@@ -3,9 +3,8 @@
 
 #include <windows.h>
 #include <gl/gl.h>
-#include <stdio.h>
 
-#include "config.h"
+#include "configurations/config.h"
 
 #include "staticRenderingVars.component.h"
 #include "staticShaderManager.component.h"

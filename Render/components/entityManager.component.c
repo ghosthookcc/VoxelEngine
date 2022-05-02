@@ -1,38 +1,36 @@
-#ifndef STB_IMAGE_IMPLEMENTATION
-#define STB_IMAGE_IMPLEMENTATION
-#endif
-
 #include "entityManager.component.h"
 
-void loadToVAO(Mesh new_EntityMesh)
+void loadToVAO(Mesh new_EntityMesh, vec3 start_pos)
 {
   unsigned int vaoID = createVAO();
   bindIndices(new_EntityMesh.edges);
 
-  dynFloatArray* VerticesColors = new_dynFloatArray();
-
-  vec4 rgba = new_vec4(0.6f, 0.8f, 1.0f, 1.0f);
-
-  float rDecVal = (rgba.x / new_EntityMesh.vertices->size) * 5.0f;
-  float gDecVal = (rgba.y / new_EntityMesh.vertices->size) / 3.0f;
-  float bDecVal = (rgba.z / new_EntityMesh.vertices->size) * 2.0f;
-
-  for(int i = 0; i < new_EntityMesh.getTriangleCount(new_EntityMesh); i++)
+  if(configurations.efficient_render == 0)
   {
-    dynFloatArray_AddBack(&VerticesColors, rgba.x - (rDecVal * i));
-    dynFloatArray_AddBack(&VerticesColors, rgba.y - (gDecVal * i));
-    dynFloatArray_AddBack(&VerticesColors, rgba.z - (bDecVal * i));
-    dynFloatArray_AddBack(&VerticesColors, rgba.w);
+    dynFloatArray* VerticesColors = new_dynFloatArray(0);
+    vec4 rgba = new_vec4(0.6f, 0.8f, 1.0f, 1.0f);
+
+    float rDecVal = (rgba.x / new_EntityMesh.vertices->size) * 5.0f;
+    float gDecVal = (rgba.y / new_EntityMesh.vertices->size) / 3.0f;
+    float bDecVal = (rgba.z / new_EntityMesh.vertices->size) * 2.0f;
+
+    for(int i = 0; i < new_EntityMesh.getTriangleCount(new_EntityMesh); i++)
+    {
+      dynFloatArray_AddBack(&VerticesColors, rgba.x - (rDecVal * i));
+      dynFloatArray_AddBack(&VerticesColors, rgba.y - (gDecVal * i));
+      dynFloatArray_AddBack(&VerticesColors, rgba.z - (bDecVal * i));
+      dynFloatArray_AddBack(&VerticesColors, rgba.w);
+    }
+    storeDataInAttributeList(1, 4, VerticesColors);
   }
 
   storeDataInAttributeList(0, 3, new_EntityMesh.vertices);
-  storeDataInAttributeList(1, 4, VerticesColors);
-  storeDataInAttributeList(2, 3, new_EntityMesh.normals);
+  //storeDataInAttributeList(2, 3, new_EntityMesh.normals);
 
   Entity* entity = malloc(sizeof(struct Entity));
 
   entity->vaoID = vaoID; // THE MISSILE KNOWS WHERE IT IS AT ALL TIMES, IT KNOWS THIS BECAUSE IT KNOWS WHERE IT ISNT.
-  entity->position = new_vec3(0.0f, 0.0f, 0.0f);
+  entity->position = start_pos;
   entity->rotation = new_vec3(0.0f, 0.0f, 0.0f);
   entity->scale    = new_vec3(1.0f, 1.0f, 1.0f);
   entity->mesh     = new_EntityMesh;
@@ -47,7 +45,7 @@ void loadModelToVAO(char* filename)
   unsigned int vaoID = createVAO();
   bindIndices(new_EntityMesh.edges);
 
-  dynFloatArray* VerticesColors = new_dynFloatArray();
+  dynFloatArray* VerticesColors = new_dynFloatArray(0);
 
   vec4 rgba = new_vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -65,7 +63,7 @@ void loadModelToVAO(char* filename)
 
   storeDataInAttributeList(0, 3, new_EntityMesh.vertices);
   storeDataInAttributeList(1, 4, VerticesColors);
-  storeDataInAttributeList(2, 3, new_EntityMesh.normals);
+  //storeDataInAttributeList(2, 3, new_EntityMesh.normals);
 
   Entity* entity = malloc(sizeof(struct Entity));
 
@@ -77,6 +75,15 @@ void loadModelToVAO(char* filename)
   entity->triangleCount = new_EntityMesh.getTriangleCount(new_EntityMesh);
 
   entityStack_Push(&Entities, entity);
+}
+
+void createVoxelMap()
+{
+  unsigned int textureID = 0;
+  int voxelTextureSize = configurations.CHUNK_XYZ_SIZE;
+
+  //glGenTextures(1, &textureID);
+  //glBindTexture(GL_TEXTURE_3D, textureID);
 }
 
 unsigned int createVAO()
@@ -158,7 +165,7 @@ void transformation_SetScale(Entity* entity)
 
 Mesh readOBJFile(char* filename)
 {
-  Mesh object_Mesh = new_Mesh();
+  Mesh object_Mesh = new_Mesh(0);
 
   FILE* file = fopen(filename, "r");
 
@@ -174,12 +181,12 @@ Mesh readOBJFile(char* filename)
         sscanf(line, "%*s %f %f %f", &vertex.x, &vertex.y, &vertex.z);
         dynFloatArray_AddVec3Values(&object_Mesh.vertices, vertex);
       }
-      else if(line[0] == 'v' && line[1] == 'n')
+      /*else if(line[0] == 'v' && line[1] == 'n')
       {
         vec3 normal = new_vec3(0.0f, 0.0f, 0.0f);
         sscanf(line, "%*s %f %f %f", &normal.x, &normal.y, &normal.z);
         dynFloatArray_AddVec3Values(&object_Mesh.normals, normal);
-      }
+      }*/
       else if(line[0] == 'f')
       {
         uivec3 edgeIndex = new_uivec3(0, 0, 0);

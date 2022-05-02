@@ -6,7 +6,7 @@
 #include "staticRenderingVars.component.h"
 #include "staticShaderManager.component.h"
 
-#include "config.h"
+#include "configurations/config.h"
 
 #include "generics.h"
 #include "matrix.h"

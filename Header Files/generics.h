@@ -2,9 +2,10 @@
 #define GENERICS_H
 
 #include <malloc.h>
+#include <stdlib.h>
 #include <time.h>
 
-#include "staticChunkManager.component.h"
+#include "mesh.component.h"
 
 #include "ghostymath.h"
 #include "vec3.h"
@@ -12,8 +13,8 @@
 
 char* concat_string(const char* str1, const char* str2);
 
-int get_strlen(char* ptr);
-int get_cstrlen(const char* ptr);
+size_t get_strlen(char* ptr);
+size_t get_cstrlen(const char* ptr);
 
 typedef struct uIntStack
 {

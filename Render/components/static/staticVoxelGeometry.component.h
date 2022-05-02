@@ -1,7 +1,7 @@
 #ifndef STATIC_VOXEL_GEOMETRY_COMPONENT_H
 #define STATIC_VOXEL_GEOMETRY_COMPONENT_H
 
-#include "dynArray.h"
+#include "mesh.component.h"
 
 typedef struct PointVertex
 {
@@ -13,7 +13,7 @@ typedef struct PointVertex
 typedef struct VoxelSet
 {
     ivec3 size;
-    dynVec4Array* colors;
+    //dynVec4Array* colors;
 
     unsigned char (*IsValidFunc)(ivec3);
     unsigned char (*IsSolidFunc)(ivec3);
@@ -25,5 +25,7 @@ VoxelSet new_VoxelSet();
 unsigned char IsValid(ivec3 index, VoxelSet* voxelRef);
 unsigned char IsSolid(ivec3 index, VoxelSet* voxelRef);
 vec4 At(ivec3 index, VoxelSet* voxelRef);
+
+struct Mesh fast_sphere(float radius, int sectorCount, int stackCount);
 
 #endif

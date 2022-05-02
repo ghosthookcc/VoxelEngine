@@ -3,7 +3,7 @@
 
 #include "vector.h"
 #include "matrix.h"
-#include "config.h"
+#include "configurations/config.h"
 
 struct uintVector* programIDs;
 struct uintVector* vbosIDs;

@@ -1,10 +1,10 @@
 #ifndef MESH_COMPONENT_H
 #define MESH_COMPONENT_H
 
+#include "dynArray.h"
+
 #include "staticChunkManager.component.h"
 #include "staticVoxelGeometry.component.h"
-
-#include "dynArray.h"
 
 typedef struct Mesh Mesh;
 struct Mesh
@@ -12,10 +12,7 @@ struct Mesh
   dynFloatArray* vertices; // a vertex is a single point
   dynUIntArray* edges; // an edge is a straight line segment connecting two vertices
                        // also knows as a indice
-  dynFloatArray* texcoords;
-  dynFloatArray* normals;
-  void (*updateMesh_PerlinSmooth)(Mesh*, Mesh, int, int, int);
-  void (*updateMesh_PerlinBlock)(Mesh*, Mesh, int, int, int);
+  dynFuncptrArray* functions;
   int (*getTriangleCount)(Mesh);
 };
 

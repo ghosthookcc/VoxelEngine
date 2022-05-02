@@ -91,7 +91,7 @@ typedef void (*func_ptr)();
 typedef struct dynFuncptrArray
 {
   int size;
-  func_ptr* func_ptrs;
+  func_ptr* funcs;
 } dynFuncptrArray;
 
 dynFuncptrArray* new_dynFuncptrArray();
