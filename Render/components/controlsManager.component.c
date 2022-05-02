@@ -120,7 +120,10 @@ unsigned int check_RequestCommand(Entity* player, mat4x4* viewMatrix, LONGLONG D
         Entities->entities[i].scale.x = 0;
         continue;
       }
-      Entities->entities[i].scale.x -= scaleSpeed;
+      else
+      {
+        Entities->entities[i].scale.x -= scaleSpeed;
+      }
     }
     return(1);
   }
