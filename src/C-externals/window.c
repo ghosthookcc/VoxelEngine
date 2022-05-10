@@ -273,6 +273,7 @@ int WINAPI WinMain()
   WindowHandle = hwnd;
 
   uintVector_Push(&programIDs, glCreateProgram());
+  uintVector_Push(&programIDs, glCreateProgram());
 
   GLuint vertexShader = set_Shader(programIDs->values[0], "../Resource Files/shaders/voxelVertexShader.glsl", VERTEX);
   GLuint geometryShader = set_Shader(programIDs->values[0], "../Resource Files/shaders/voxelGeometryShader.glsl", GEOMETRY);
@@ -281,33 +282,55 @@ int WINAPI WinMain()
   glLinkProgram(programIDs->values[0]);
   glUseProgram(programIDs->values[0]);
 
-  GLuint* FBOs = NULL;
-  GLuint* DBOs = NULL;
+  GLuint vertexPostProcessShader = set_Shader(programIDs->values[1], "../Resource Files/shaders/vertexPostProcShader.glsl", VERTEX);
+  GLuint fragmentPostProcessShader = set_Shader(programIDs->values[1], "../Resource Files/shaders/fragmentPostProcShader.glsl", FRAGMENT);
 
-  /*
-  glGenFramebuffers(1, FBOs);
-  glGenRenderbuffers(1, DBOs);
+  glLinkProgram(programIDs->values[1]);
 
-  glBindRenderbuffer(GL_RENDERBUFFER, DBOs[0]);
-  glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 1920, 1080);
+  glActiveTexture(GL_TEXTURE0);
+  glGenTextures(1, &textures[0]);
+  glBindTexture(GL_TEXTURE_2D, textures[0]);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1920, 1080, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+  glBindTexture(GL_TEXTURE_2D, 0);
 
-  glBindFramebuffer(GL_FRAMEBUFFER, FBOs[0]);
-  glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, DBOs[0]);
-  glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+  glGenRenderbuffers(1, &dboIDs[0]);
+  glBindRenderbuffer(GL_RENDERBUFFER, dboIDs[0]);
+  glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, 1920, 1080);
+  glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
-  glBindFramebuffer(GL_FRAMEBUFFER, 0)
-  glBlitFramebuffer(640 - 256,
-                    360 - 144,
-                    640 + 256,
-                    360 + 144,
-                    0,
-                    0,
-                    640,
-                    360,
-                    GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT,
-                    GL_NEAREST)
+  glGenFramebuffers(1, &fboIDs[0]);
+  glBindFramebuffer(GL_FRAMEBUFFER, fboIDs[0]);
+  glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textures[0], 0);
+  glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, dboIDs[0]);
 
-  */
+  glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+  glBindTexture(GL_TEXTURE_2D, textures[0]);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1920, 1080, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+  glBindTexture(GL_TEXTURE_2D, 0);
+
+  glBindRenderbuffer(GL_RENDERBUFFER, dboIDs[0]);
+  glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, 1920, 1080);
+  glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+  //GLuint textureID;
+  //glGenTextures(1, &textureID);
+
+  // "Bind" the newly created texture : all future texture functions will modify this texture
+  //glBindTexture(GL_TEXTURE_2D, textureID);
+
+  // Give the image to OpenGL
+  //glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
+
+  //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+  /*const GLubyte* extensions = glGetString(GL_EXTENSIONS);
+  printf("%s", extensions);*/
 
   m4_projViewMatrix = make_projViewMatrix();
   m4_MVPMatrix = make_MVPMatrix();
@@ -401,4 +424,4 @@ void GH_InitWindow(int (*EntryPoint)())
     SetEvent(WriteEventSignal);
     WaitForMultipleObjects(ComponentsThreads->size, ComponentsThreads->handles, TRUE, INFINITE);
   }
-}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+}

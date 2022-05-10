@@ -26,8 +26,6 @@ void setup_world()
     }
   }
 
-  LoadPlanetData();
-
   QueryPerformanceCounter(&timePrev);
 
   diff.QuadPart = timePrev.QuadPart - timeNow.QuadPart;

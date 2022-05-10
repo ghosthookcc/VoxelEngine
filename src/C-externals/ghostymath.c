@@ -426,20 +426,19 @@ vec3 calcAccelerationVec3(vec3 vec3A, body target)
     float first_arg = (float)(GRAV_CONST * target.mass);
 
     vec3 dist = subtractVec3ByVec3(target.position, vec3A);
-    vec3 unknown = calcDistanceVec3(vec3A, target.position);
-    float mag = powf(unknown.x + unknown.y + unknown.z, 3);
+    float mag = powf(calcDistanceSum(vec3A, target.position), 3);
 
     return(divideVec3(multiplyVec3ByFloat(dist, first_arg), mag));
 }
 
-vec3 calcAccelLoop(vec3 origin, unsigned int bid)
+vec3 calcAccelLoop(vec3 origin, struct bodies *bodylist , unsigned int bid)
 {
   vec3 accel_velocity = new_vec3(0.0f, 0.0f, 0.0f);
-  for(unsigned int i = 0; i < bodylist.size; i++)
+  for(unsigned int i = 0; i < bodylist->size; i++)
   {
-    if(bodylist.planets[i].bID == bid) { continue; }
+    if(bodylist->planets[i].bID == bid) { continue; }
 
-    accel_velocity = calcAccelerationVec3(origin, bodylist.planets[i]);
+    accel_velocity = calcAccelerationVec3(origin, bodylist->planets[i]);
   }
 
   return(accel_velocity);

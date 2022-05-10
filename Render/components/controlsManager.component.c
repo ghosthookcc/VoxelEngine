@@ -118,7 +118,6 @@ unsigned int check_RequestCommand(Entity* player, mat4x4* viewMatrix, LONGLONG D
       if(Entities->entities[i].scale.x < 0)
       {
         Entities->entities[i].scale.x = 0;
-        continue;
       }
       else
       {

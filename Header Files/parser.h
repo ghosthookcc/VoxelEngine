@@ -13,7 +13,7 @@
 #include "dynArray.h"
 #include "vec3.h"
 
-void LoadPlanetData();
+void LoadPlanetData(struct bodies* bodylist);
 
 void parseFile();
 

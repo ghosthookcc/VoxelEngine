@@ -117,6 +117,6 @@ float calcDistanceSum(vec3 vec3A, vec3 vec3B);
 
 vec3 calcAccelerationVec3(vec3 vec3A, body target);
 
-vec3 calcAccelLoop(vec3 origin, unsigned int bid);
+vec3 calcAccelLoop(vec3 origin, struct bodies *bodylist, unsigned int bid);
 
 #endif

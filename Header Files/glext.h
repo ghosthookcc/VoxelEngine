@@ -1183,6 +1183,9 @@ typedef void (APIENTRYP PFNGLBINDVERTEXARRAYPROC) (GLuint array);
 typedef void (APIENTRYP PFNGLDELETEVERTEXARRAYSPROC) (GLsizei n, const GLuint *arrays);
 typedef void (APIENTRYP PFNGLGENVERTEXARRAYSPROC) (GLsizei n, GLuint *arrays);
 typedef GLboolean (APIENTRYP PFNGLISVERTEXARRAYPROC) (GLuint array);
+typedef void (APIENTRYP PFNGLPIXELSTOREIPROC) (GLenum pname, GLint param);
+
+
 #ifdef GL_GLEXT_PROTOTYPES
 GLAPI void APIENTRY glColorMaski (GLuint index, GLboolean r, GLboolean g, GLboolean b, GLboolean a);
 GLAPI void APIENTRY glGetBooleani_v (GLenum target, GLuint index, GLboolean *data);
@@ -1268,6 +1271,8 @@ GLAPI void APIENTRY glBindVertexArray (GLuint array);
 GLAPI void APIENTRY glDeleteVertexArrays (GLsizei n, const GLuint *arrays);
 GLAPI void APIENTRY glGenVertexArrays (GLsizei n, GLuint *arrays);
 GLAPI GLboolean APIENTRY glIsVertexArray (GLuint array);
+GLAPI void APIENTRY glPixelStorei(GLenum pname, GLint param);
+
 #endif
 #endif /* GL_VERSION_3_0 */
 

@@ -14,9 +14,8 @@ typedef struct body
 
 struct bodies
 {
-  body planets[6];
   unsigned int size;
+  body planets[6];
 };
-struct bodies bodylist;
 
 #endif

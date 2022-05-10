@@ -2,7 +2,7 @@
 
 GLvoid glInit(GLsizei WIDTH, GLsizei HEIGHT)
 {
-  programIDs = new_uintVector(1);
+  programIDs = new_uintVector(2);
   vbosIDs = new_uintVector(1);
   vaosIDs = new_uintVector(1);
   indexbuffersIDs = new_uintVector(1);
@@ -15,8 +15,11 @@ GLvoid glInit(GLsizei WIDTH, GLsizei HEIGHT)
   setup_Camera(new_vec3(0.0f, 1.0f, 2.5f));
 
   glEnable(GL_DEPTH_TEST);
+  glEnable(GL_TEXTURE_2D);
   //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   glCullFace(GL_BACK);
+
+  glViewport(0, 0, 1920, 1080);
 
   /*
   for(int StartFuncs_iterator = 0; StartFuncs_iterator < StartFuncs->size; StartFuncs_iterator++)
