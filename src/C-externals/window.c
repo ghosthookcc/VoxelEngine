@@ -276,35 +276,23 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 
   glLinkProgram(programIDs->values[1]);
 
-  glActiveTexture(GL_TEXTURE0);
-  glGenTextures(1, &textures[0]);
-  glBindTexture(GL_TEXTURE_2D, textures[0]);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1920, 1080, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-  glBindTexture(GL_TEXTURE_2D, 0);
+  glGenFramebuffers(2, fboIDs);
 
-  glGenRenderbuffers(1, &dboIDs[0]);
-  glBindRenderbuffer(GL_RENDERBUFFER, dboIDs[0]);
-  glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, 1920, 1080);
-  glBindRenderbuffer(GL_RENDERBUFFER, 0);
+  glBindFramebuffer(GL_READ_FRAMEBUFFER, fboIDs[0]);
+  glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+                         GL_TEXTURE_2D, textures[0], 0);
 
-  glGenFramebuffers(1, &fboIDs[0]);
-  glBindFramebuffer(GL_FRAMEBUFFER, fboIDs[0]);
-  glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textures[0], 0);
-  glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, dboIDs[0]);
-
+  glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fboIDs[1]);
+  glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+                         GL_TEXTURE_2D, textures[1], 0);
+                         
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-  glBindTexture(GL_TEXTURE_2D, textures[0]);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1920, 1080, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-  glBindTexture(GL_TEXTURE_2D, 0);
-
-  glBindRenderbuffer(GL_RENDERBUFFER, dboIDs[0]);
-  glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, 1920, 1080);
-  glBindRenderbuffer(GL_RENDERBUFFER, 0);
+  /*
+  glBlitFramebuffer(0, 0, width, height,
+                    0, 0, smallWidth, smallHeight,
+                    GL_COLOR_BUFFER_BIT, GL_LINEAR);
+  */
 
   //GLuint textureID;
   //glGenTextures(1, &textureID);

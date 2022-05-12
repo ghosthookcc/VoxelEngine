@@ -161,7 +161,7 @@ void transformation_SetScale(Entity* entity)
   new_ScaleMatrix.matrix[1][1] = entity->scale.y;
   new_ScaleMatrix.matrix[2][2] = entity->scale.z;
   new_ScaleMatrix.matrix[3][3] = 1.0f;
-
+  
   m4_scaleMatrix = new_ScaleMatrix;
 }
 

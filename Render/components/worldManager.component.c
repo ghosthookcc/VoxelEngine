@@ -6,12 +6,14 @@
 
 void LoadPlanetData()
 {
+  /*
   Mesh sphere = new_Mesh();
   for(unsigned int PlanetIterator = 0; PlanetIterator < bodylist.size; PlanetIterator++)
   {
     sphere = fast_sphere((float)bodylist.planets[PlanetIterator].radius, 100, 100);
     loadToVAO(sphere, dvec3ToVec3(bodylist.planets[PlanetIterator].position));
   }
+  */
 }
 
 void LoadPlanetProperties()

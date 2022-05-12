@@ -67,6 +67,7 @@ vec4 addVec3ByVec4(vec3 vec3A, vec4 vec4B);
 vec3 addVec3ByFloat(vec3 vec3A, float value);
 
 vec3 subtractVec3ByVec3(vec3 vec3A, vec3 vec3B);
+vec3 subtractVec3ByFloat(vec3 vec3A, float value);
 vec3 subtractVec3ByVec4(vec3 vec3A, vec4 vec4A);
 vec3 subtractVec4ByVec3(vec4 vec4B, vec3 vec3A);
 

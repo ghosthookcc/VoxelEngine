@@ -97,6 +97,15 @@ vec3 subtractVec3ByVec3(vec3 vec3A, vec3 vec3B)
   return(vec3A);
 }
 
+vec3 subtractVec3ByFloat(vec3 vec3A, float value)
+{
+  vec3A.x -= value;
+  vec3A.y -= value;
+  vec3A.z -= value;
+
+  return(vec3A);
+}
+
 vec3 subtractVec3ByVec4(vec3 vec3A, vec4 vec4A)
 {
   vec3 new_Vec3 = new_vec3(0.0f, 0.0f, 0.0f);

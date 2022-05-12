@@ -83,18 +83,11 @@ mat4x4 make_projViewMatrix()
 
 mat4x4 make_MVPMatrix()
 {
-  mat4x4 new_TranslationMatrix = m4_translationMatrix;
-  mat4x4 new_RotationMatrix = m4_rotationMatrix;
-  mat4x4 new_ScaleMatrix = m4_scaleMatrix;
-
-  mat4x4 scaleXrotationMatrix = Empty_mat4x4();
-  scaleXrotationMatrix = multiplyMat4ByMat4(new_ScaleMatrix, new_RotationMatrix);
-
-  mat4x4 new_TransformationMatrix = Empty_mat4x4();
-  new_TransformationMatrix = multiplyMat4ByMat4(scaleXrotationMatrix, new_TranslationMatrix);
-
   mat4x4 new_MVPMatrix = Empty_mat4x4();
-  new_MVPMatrix = multiplyMat4ByMat4(new_TransformationMatrix, m4_projViewMatrix);
+
+  new_MVPMatrix = multiplyMat4ByMat4(m4_scaleMatrix, m4_rotationMatrix);
+  new_MVPMatrix = multiplyMat4ByMat4(new_MVPMatrix, m4_translationMatrix);
+  new_MVPMatrix = multiplyMat4ByMat4(new_MVPMatrix, m4_projViewMatrix);
 
   return(new_MVPMatrix);
 }

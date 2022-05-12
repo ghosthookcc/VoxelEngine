@@ -65,7 +65,7 @@ unsigned int check_RequestMove(Entity* player, mat4x4* viewMatrix, LONGLONG Delt
 
 unsigned int check_RequestRotate(Entity* player, mat4x4* viewMatrix, LONGLONG DeltaTime)
 {
-  // Ghosthookcc - TODO: LIMIT PITCH- AND YAW ROTATION TO BETWEEN 80-90deg. . .
+  // Ghosthookcc - TODO: LIMIT PITCH- AND YAW ROTATION TO 89deg. . .
   if(GetKeyState(VK_UP) & 0x8000)
   {
     player->rotation.x -= rotSpeed * DeltaTime;
@@ -115,13 +115,15 @@ unsigned int check_RequestCommand(Entity* player, mat4x4* viewMatrix, LONGLONG D
   {
     for(int i = 0; i < entityStack_Count(Entities); i++)
     {
-      if(Entities->entities[i].scale.x < 0)
+      if(Entities->entities[i].scale.x < 0
+      || Entities->entities[i].scale.y < 0
+      || Entities->entities[i].scale.z < 0)
       {
-        Entities->entities[i].scale.x = 0;
+        ResetVec3(&Entities->entities[i].scale);
       }
       else
       {
-        Entities->entities[i].scale.x -= scaleSpeed;
+        Entities->entities[i].scale = subtractVec3ByFloat(Entities->entities[i].scale, scaleSpeed);
       }
     }
     return(1);
@@ -131,7 +133,7 @@ unsigned int check_RequestCommand(Entity* player, mat4x4* viewMatrix, LONGLONG D
   {
     for(int i = 0; i < entityStack_Count(Entities); i++)
     {
-      Entities->entities[i].scale.x += scaleSpeed;
+      Entities->entities[i].scale = addVec3ByFloat(Entities->entities[i].scale, scaleSpeed);
     }
     return(1);
   }
@@ -169,7 +171,7 @@ unsigned int check_RequestCommand(Entity* player, mat4x4* viewMatrix, LONGLONG D
   {
     if(SelectedEntity.vaoID != -1)
     {
-      Entities->entities[SelectedEntityIndex].scale.x += scaleSpeed;
+      Entities->entities[SelectedEntityIndex].scale = addVec3ByFloat(Entities->entities[SelectedEntityIndex].scale, scaleSpeed);
     }
     return(1);
   }
@@ -178,13 +180,15 @@ unsigned int check_RequestCommand(Entity* player, mat4x4* viewMatrix, LONGLONG D
   {
     if(SelectedEntity.vaoID != -1)
     {
-      if(Entities->entities[SelectedEntityIndex].scale.x < 0)
+      if(Entities->entities[SelectedEntityIndex].scale.x < 0
+      || Entities->entities[SelectedEntityIndex].scale.y < 0
+      || Entities->entities[SelectedEntityIndex].scale.z < 0)
       {
-        Entities->entities[SelectedEntityIndex].scale.x = 0;
+        ResetVec3(&Entities->entities[SelectedEntityIndex].scale);
       }
       else
       {
-        Entities->entities[SelectedEntityIndex].scale.x -= scaleSpeed;
+        Entities->entities[SelectedEntityIndex].scale = subtractVec3ByFloat(Entities->entities[SelectedEntityIndex].scale, scaleSpeed);
       }
     }
     return(1);
