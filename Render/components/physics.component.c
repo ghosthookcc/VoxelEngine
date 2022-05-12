@@ -29,16 +29,16 @@ struct bodies ProcessPhysics(struct bodies* bodylist)
   struct bodies new_blist = *bodylist;
   for(unsigned int i = 0; i < bodylist->size; i++)
   {
-    vec3 accel1 = calcAccelLoop(bodylist->planets[i].position, *bodylist , bodylist->planets[i].bID);
-    vec3 deltavel = multiplyVec3ByFloat(bodylist->planets[i].velocity, TIME_STEP);
-    vec3 deltaaccel1 = multiplyVec3ByFloat(accel1, powf(TIME_STEP, 2.0f));
-    vec3 new_pos_arg1 = addVec3ByVec3(bodylist->planets[i].position, deltavel);
-    vec3 new_pos_arg2 = divideVec3(deltaaccel1, 2.0f);
-    vec3 new_pos = addVec3ByVec3(new_pos_arg1, new_pos_arg2);
+    dvec3 accel1 = calcAccelLoop(bodylist->planets[i].position, *bodylist , bodylist->planets[i].bID);
+    dvec3 deltavel = multiplyDVec3ByDouble(bodylist->planets[i].velocity, TIME_STEP);
+    dvec3 deltaaccel1 = multiplyDVec3ByDouble(accel1, powf(TIME_STEP, 2.0));
+    dvec3 new_pos_arg1 = addDVec3ByDVec3(bodylist->planets[i].position, deltavel);
+    dvec3 new_pos_arg2 = divideDVec3ByDouble(deltaaccel1, 2.0);
+    dvec3 new_pos = addDVec3ByDVec3(new_pos_arg1, new_pos_arg2);
 
-    vec3 accel2 = calcAccelLoop(new_pos, *bodylist, bodylist->planets[i].bID);
-    vec3 accel12 = multiplyVec3ByFloat(divideVec3(addVec3ByVec3(accel1, accel2), 2.0f), TIME_STEP);
-    vec3 new_vel = addVec3ByVec3(bodylist->planets[i].velocity, accel12);
+    dvec3 accel2 = calcAccelLoop(new_pos, *bodylist, bodylist->planets[i].bID);
+    dvec3 accel12 = multiplyDVec3ByDouble(divideDVec3ByDouble(addDVec3ByDVec3(accel1, accel2), 2.0), TIME_STEP);
+    dvec3 new_vel = addDVec3ByDVec3(bodylist->planets[i].velocity, accel12);
 
     new_blist.planets[i].position = new_pos;
     new_blist.planets[i].velocity = new_vel;

@@ -8,8 +8,8 @@ typedef struct body
   unsigned int bID;
   double radius;
   double mass;
-  vec3 position;
-  vec3 velocity;
+  dvec3 position;
+  dvec3 velocity;
 } body;
 
 struct bodies

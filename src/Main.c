@@ -8,7 +8,7 @@ int physics_thread()
   while(1)
   {
     bodylist = ProcessPhysics(&bodylist);
-    printf("Planets position (x, y, z) :: (%f, %f, %f) ; Planets velocity (x, y, z) :: (%f, %f, %f)\n", bodylist.planets[3].position.x, bodylist.planets[3].position.y, bodylist.planets[3].position.z,
+    printf("    \r  Planets position (x, y, z) :: (%f, %f, %f) ; Planets velocity (x, y, z) :: (%f, %f, %f)", bodylist.planets[3].position.x, bodylist.planets[3].position.y, bodylist.planets[3].position.z,
                                                                                                         bodylist.planets[3].velocity.x, bodylist.planets[3].velocity.y, bodylist.planets[3].velocity.z);
   }
 

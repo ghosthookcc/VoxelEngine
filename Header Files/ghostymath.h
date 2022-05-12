@@ -112,12 +112,20 @@ double calcArrayByDoubleDot(int g[], double x, double y);
 
 int calcFastfloor(double x);
 
-vec3 calcDistanceVec3(vec3 vec3A, vec3 vec3B);
+dvec3 calcDistanceDVec3(dvec3 vec3A, dvec3 vec3B);
 
-float calcDistanceSum(vec3 vec3A, vec3 vec3B);
+double calcDistanceSum(dvec3 vec3A, dvec3 vec3B);
 
-vec3 calcAccelerationVec3(vec3 vec3A, body target);
+dvec3 calcAccelerationVec3(dvec3 vec3A, body target);
 
-vec3 calcAccelLoop(vec3 origin, struct bodies bodylist, unsigned int bid);
+dvec3 calcAccelLoop(dvec3 origin, struct bodies bodylist, unsigned int bid);
+
+dvec3 addDVec3ByDVec3(dvec3 vec3A, dvec3 vec3B);
+
+dvec3 subtractDVec3ByDVec3(dvec3 vec3A, dvec3 vec3B);
+
+dvec3 multiplyDVec3ByDouble(dvec3 vec3A, double value);
+
+dvec3 divideDVec3ByDouble(dvec3 vec3A, double value);
 
 #endif

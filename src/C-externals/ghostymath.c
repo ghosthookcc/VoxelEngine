@@ -415,37 +415,73 @@ int calcFastfloor(double x)
   return(x > 0 ? (int)(x) : (int)(x - 1));
 }
 
-vec3 calcDistanceVec3(vec3 vec3A, vec3 vec3B)
+dvec3 calcDistanceDVec3(dvec3 vec3A, dvec3 vec3B)
 {
-    vec3 new_vec3A = subtractVec3ByVec3(vec3A, vec3B);
+    dvec3 new_vec3A = subtractDVec3ByDVec3(vec3A, vec3B);
     return(new_vec3A);
 }
 
-float calcDistanceSum(vec3 vec3A, vec3 vec3B)
+double calcDistanceSum(dvec3 vec3A, dvec3 vec3B)
 {
-    vec3 stg1 = calcDistanceVec3(vec3A, vec3B);
-    return(sqrtf(powf(stg1.x, 2) + powf(stg1.y, 2) + powf(stg1.z, 2)));
+    dvec3 stg1 = calcDistanceDVec3(vec3A, vec3B);
+    return(sqrt(pow(stg1.x, 2) + pow(stg1.y, 2) + pow(stg1.z, 2)));
 }
 
-vec3 calcAccelerationVec3(vec3 vec3A, body target)
+dvec3 calcAccelerationVec3(dvec3 vec3A, body target)
 {
-    float first_arg = (float)(GRAV_CONST * target.mass);
+    double first_arg = GRAV_CONST * target.mass;
 
-    vec3 dist = subtractVec3ByVec3(target.position, vec3A);
-    float mag = powf(calcDistanceSum(vec3A, target.position), 3);
+    dvec3 dist = subtractDVec3ByDVec3(target.position, vec3A);
+    double mag = pow(calcDistanceSum(vec3A, target.position), 3);
 
-    return(divideVec3(multiplyVec3ByFloat(dist, first_arg), mag));
+    return(divideDVec3ByDouble(multiplyDVec3ByDouble(dist, first_arg), mag));
 }
 
-vec3 calcAccelLoop(vec3 origin, struct bodies bodylist, unsigned int bid)
+dvec3 calcAccelLoop(dvec3 origin, struct bodies bodylist, unsigned int bid)
 {
-  vec3 accel_velocity = new_vec3(0.0f, 0.0f, 0.0f);
+  dvec3 accel_velocity = new_dvec3(0.0, 0.0, 0.0);
   for(unsigned int i = 0; i < bodylist.size; i++)
   {
     if(bodylist.planets[i].bID == bid) { continue; }
 
-    accel_velocity = addVec3ByVec3(accel_velocity, calcAccelerationVec3(origin, bodylist.planets[i]));
+    accel_velocity = addDVec3ByDVec3(accel_velocity, calcAccelerationVec3(origin, bodylist.planets[i]));
   }
 
   return(accel_velocity);
+}
+
+dvec3 addDVec3ByDVec3(dvec3 vec3A, dvec3 vec3B)
+{
+  vec3A.x += vec3B.x;
+  vec3A.y += vec3B.y;
+  vec3A.z += vec3B.z;
+
+  return vec3A;
+}
+
+dvec3 subtractDVec3ByDVec3(dvec3 vec3A, dvec3 vec3B)
+{
+  vec3A.x -= vec3B.x;
+  vec3A.y -= vec3B.y;
+  vec3A.z -= vec3B.z;
+
+  return vec3A;
+}
+
+dvec3 multiplyDVec3ByDouble(dvec3 vec3A, double value)
+{
+  vec3A.x *= value;
+  vec3A.y *= value;
+  vec3A.z *= value;
+
+  return vec3A;
+}
+
+dvec3 divideDVec3ByDouble(dvec3 vec3A, double value)
+{
+  vec3A.x /= value;
+  vec3A.y /= value;
+  vec3A.z /= value;
+
+  return vec3A;
 }
