@@ -124,6 +124,42 @@ vec3 divideVec3(vec3 vec3A, float divideValue)
     return(vec3A);
 }
 
+dvec3 addDVec3ByDVec3(dvec3 vec3A, dvec3 vec3B)
+{
+  vec3A.x += vec3B.x;
+  vec3A.y += vec3B.y;
+  vec3A.z += vec3B.z;
+
+  return vec3A;
+}
+
+dvec3 subtractDVec3ByDVec3(dvec3 vec3A, dvec3 vec3B)
+{
+  vec3A.x -= vec3B.x;
+  vec3A.y -= vec3B.y;
+  vec3A.z -= vec3B.z;
+
+  return vec3A;
+}
+
+dvec3 multiplyDVec3ByDouble(dvec3 vec3A, double value)
+{
+  vec3A.x *= value;
+  vec3A.y *= value;
+  vec3A.z *= value;
+
+  return vec3A;
+}
+
+dvec3 divideDVec3ByDouble(dvec3 vec3A, double value)
+{
+  vec3A.x /= value;
+  vec3A.y /= value;
+  vec3A.z /= value;
+
+  return vec3A;
+}
+
 void ResetVec3(vec3* vec3A)
 {
   vec3A->x = 0.0f;
@@ -204,6 +240,11 @@ vec3 vec4ToVec3(vec4 vec4A)
 vec4 vec3ToVec4(vec3 vec3A)
 {
   return(new_vec4(vec3A.x, vec3A.y, vec3A.z, 0.0f));
+}
+
+vec3 dvec3ToVec3(dvec3 vec3A)
+{
+  return(new_vec3((float)vec3A.x, (float)vec3A.y, (float)vec3A.z));
 }
 
 struct mat4x4 multiplyVec4ByMat4(vec4 vec4A, struct mat4x4 mat4A)
@@ -448,40 +489,4 @@ dvec3 calcAccelLoop(dvec3 origin, struct bodies bodylist, unsigned int bid)
   }
 
   return(accel_velocity);
-}
-
-dvec3 addDVec3ByDVec3(dvec3 vec3A, dvec3 vec3B)
-{
-  vec3A.x += vec3B.x;
-  vec3A.y += vec3B.y;
-  vec3A.z += vec3B.z;
-
-  return vec3A;
-}
-
-dvec3 subtractDVec3ByDVec3(dvec3 vec3A, dvec3 vec3B)
-{
-  vec3A.x -= vec3B.x;
-  vec3A.y -= vec3B.y;
-  vec3A.z -= vec3B.z;
-
-  return vec3A;
-}
-
-dvec3 multiplyDVec3ByDouble(dvec3 vec3A, double value)
-{
-  vec3A.x *= value;
-  vec3A.y *= value;
-  vec3A.z *= value;
-
-  return vec3A;
-}
-
-dvec3 divideDVec3ByDouble(dvec3 vec3A, double value)
-{
-  vec3A.x /= value;
-  vec3A.y /= value;
-  vec3A.z /= value;
-
-  return vec3A;
 }

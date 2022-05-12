@@ -4,8 +4,6 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 
-#include <stdio.h>
-
 #include "ComponentSystem.h"
 #include "ModuleSystem.h"
 
@@ -33,7 +31,7 @@ LRESULT CALLBACK WndProc(HWND hwnd,
                          unsigned int message,
                          WPARAM wParam, LPARAM lParam);
 
-int WINAPI WinMain();
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow);
 
 void GH_InitWindow(int (*EntryPoint)());
 

@@ -45,24 +45,26 @@ void loadModelToVAO(char* filename)
   unsigned int vaoID = createVAO();
   bindIndices(new_EntityMesh.edges);
 
-  dynFloatArray* VerticesColors = new_dynFloatArray();
-
-  vec4 rgba = new_vec4(1.0f, 1.0f, 1.0f, 1.0f);
-
-  float rDecVal = (rgba.x / new_EntityMesh.vertices->size) * 2.0f;
-  float gDecVal = (rgba.y / new_EntityMesh.vertices->size) * 7.0f;
-  float bDecVal = (rgba.z / new_EntityMesh.vertices->size) * 15.0f;
-
-  for(int i = 0; i < new_EntityMesh.getTriangleCount(new_EntityMesh); i++)
+  if(configurations.efficient_render == 0)
   {
-    dynFloatArray_AddBack(&VerticesColors, rgba.x - (rDecVal * i));
-    dynFloatArray_AddBack(&VerticesColors, rgba.y - (gDecVal * i));
-    dynFloatArray_AddBack(&VerticesColors, rgba.z - (bDecVal * i));
-    dynFloatArray_AddBack(&VerticesColors, rgba.w);
+    dynFloatArray* VerticesColors = new_dynFloatArray();
+    vec4 rgba = new_vec4(1.0f, 1.0f, 1.0f, 1.0f);
+
+    float rDecVal = (rgba.x / new_EntityMesh.vertices->size) * 2.0f;
+    float gDecVal = (rgba.y / new_EntityMesh.vertices->size) * 7.0f;
+    float bDecVal = (rgba.z / new_EntityMesh.vertices->size) * 15.0f;
+
+    for(int i = 0; i < new_EntityMesh.getTriangleCount(new_EntityMesh); i++)
+    {
+      dynFloatArray_AddBack(&VerticesColors, rgba.x - (rDecVal * i));
+      dynFloatArray_AddBack(&VerticesColors, rgba.y - (gDecVal * i));
+      dynFloatArray_AddBack(&VerticesColors, rgba.z - (bDecVal * i));
+      dynFloatArray_AddBack(&VerticesColors, rgba.w);
+    }
+    storeDataInAttributeList(1, 4, VerticesColors);
   }
 
   storeDataInAttributeList(0, 3, new_EntityMesh.vertices);
-  storeDataInAttributeList(1, 4, VerticesColors);
   //storeDataInAttributeList(2, 3, new_EntityMesh.normals);
 
   Entity* entity = malloc(sizeof(struct Entity));

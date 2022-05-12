@@ -16,14 +16,10 @@ LRESULT CALLBACK WndProc(HWND hwnd,
     PFD_DOUBLEBUFFER,
     PFD_TYPE_RGBA,
     16,
-    0, 0, 0, 0, 0, 0,
-    0,
-    0,
-    0,
-    0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0,
     16,
-    0,
-    0,
+    0, 0,
     PFD_MAIN_PLANE,
     0,
     0, 0, 0
@@ -111,23 +107,17 @@ LRESULT CALLBACK WndProc(HWND hwnd,
   return 0;
 }
 
-int WINAPI WinMain()
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
-  HINSTANCE hInstance = GetModuleHandle(NULL);
-  HINSTANCE hPrevInstance = NULL;
-  LPSTR lpCmdLine = 0;
-  int nCmdShow = SW_SHOW;
-
   configurations.WIDTH = 1920.0f;
   configurations.HEIGHT = 1080.0f;
 
   char line[256];
-  //FILE* WorldSettingsFile = fopen("../Resource Files/configurations/CameraSettings.cfg", "r");
-  FILE* CameraSettingsFile = fopen("C:/Users/19kathor/Desktop/Important/CodingProjects/VoxelProject/VoxelEngineDev/Resource Files/configurations/CameraSettings.cfg", "r");
+  FILE* CameraSettingsFile = fopen("../Resource Files/configurations/CameraSettings.cfg", "r");
   if (CameraSettingsFile == NULL)
   {
     printf("The CameraSettings.cfg file did not open\n");
-    return;
+    return 16;
   }
 
   while (fgets(line, sizeof(line), CameraSettingsFile))
@@ -154,12 +144,11 @@ int WINAPI WinMain()
   }
   fclose(CameraSettingsFile);
 
-  //FILE* WorldSettingsFile = fopen("../Resource Files/configurations/WorldSettings.cfg", "r");
-  FILE* WorldSettingsFile = fopen("C:/Users/19kathor/Desktop/Important/CodingProjects/VoxelProject/VoxelEngineDev/Resource Files/configurations/WorldSettings.cfg", "r");
+  FILE* WorldSettingsFile = fopen("../Resource Files/configurations/WorldSettings.cfg", "r");
   if (WorldSettingsFile == NULL)
   {
     printf("The WorldSettings.cfg file did not open\n");
-    return;
+    return 16;
   }
 
   while (fgets(line, sizeof(line), WorldSettingsFile))
@@ -407,7 +396,7 @@ void GH_InitWindow(int (*EntryPoint)())
     Write_CommandLineHelpMenu();
     ComponentsThreads = new_dynHandleArray();
 
-    dynHandleArray_AddBack(&ComponentsThreads, CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)WinMain, NULL, 0, NULL));
+    dynHandleArray_AddBack(&ComponentsThreads, CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)wWinMain, NULL, 0, NULL));
     dynHandleArray_AddBack(&ComponentsThreads, CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)EntryPoint, NULL, 0, NULL));
 
     WriteEventSignal = CreateEvent(
