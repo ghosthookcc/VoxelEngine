@@ -9,6 +9,13 @@
 
 #include "parser.h"
 
+struct bodies bodylist;
+
+void LoadPlanetData();
+void LoadPlanetProperties();
+
+struct bodies* GetBodyList();
+
 void setup_world();
 
 #endif

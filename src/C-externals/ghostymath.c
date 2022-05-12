@@ -79,6 +79,15 @@ vec4 addVec3ByVec4(vec3 vec3A, vec4 vec4B)
   return new_Vec4;
 }
 
+vec3 addVec3ByFloat(vec3 vec3A, float value)
+{
+  vec3A.x += value;
+  vec3A.y += value;
+  vec3A.z += value;
+
+  return(vec3A);
+}
+
 vec3 subtractVec3ByVec3(vec3 vec3A, vec3 vec3B)
 {
   vec3A.x -= vec3B.x;
@@ -409,9 +418,6 @@ int calcFastfloor(double x)
 vec3 calcDistanceVec3(vec3 vec3A, vec3 vec3B)
 {
     vec3 new_vec3A = subtractVec3ByVec3(vec3A, vec3B);
-    new_vec3A.x = (float)fabs(new_vec3A.x);
-    new_vec3A.y = (float)fabs(new_vec3A.y);
-    new_vec3A.z = (float)fabs(new_vec3A.z);
     return(new_vec3A);
 }
 
@@ -431,14 +437,14 @@ vec3 calcAccelerationVec3(vec3 vec3A, body target)
     return(divideVec3(multiplyVec3ByFloat(dist, first_arg), mag));
 }
 
-vec3 calcAccelLoop(vec3 origin, struct bodies *bodylist , unsigned int bid)
+vec3 calcAccelLoop(vec3 origin, struct bodies bodylist, unsigned int bid)
 {
   vec3 accel_velocity = new_vec3(0.0f, 0.0f, 0.0f);
-  for(unsigned int i = 0; i < bodylist->size; i++)
+  for(unsigned int i = 0; i < bodylist.size; i++)
   {
-    if(bodylist->planets[i].bID == bid) { continue; }
+    if(bodylist.planets[i].bID == bid) { continue; }
 
-    accel_velocity = calcAccelerationVec3(origin, bodylist->planets[i]);
+    accel_velocity = addVec3ByVec3(accel_velocity, calcAccelerationVec3(origin, bodylist.planets[i]));
   }
 
   return(accel_velocity);

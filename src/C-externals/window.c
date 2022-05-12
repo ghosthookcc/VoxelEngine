@@ -405,8 +405,8 @@ void GH_InitWindow(int (*EntryPoint)())
   {
     init_ConsoleSystem();
     Write_CommandLineHelpMenu();
-
     ComponentsThreads = new_dynHandleArray();
+
     dynHandleArray_AddBack(&ComponentsThreads, CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)WinMain, NULL, 0, NULL));
     dynHandleArray_AddBack(&ComponentsThreads, CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)EntryPoint, NULL, 0, NULL));
 
@@ -418,8 +418,6 @@ void GH_InitWindow(int (*EntryPoint)())
     );
 
     WindowStatus = RUNNING;
-
-    parseFile();
 
     SetEvent(WriteEventSignal);
     WaitForMultipleObjects(ComponentsThreads->size, ComponentsThreads->handles, TRUE, INFINITE);

@@ -19,6 +19,6 @@ void CreateAndLoadCollider(vec3 negBl, vec3 posBl,
 
 unsigned int CheckForCollision(Entity* object);
 
-void ProcessPhysics(struct bodies* bodylist);
+struct bodies ProcessPhysics(struct bodies* bodylist);
 
 #endif
