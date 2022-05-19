@@ -1,6 +1,8 @@
 #include "window.h"
 #include "parser.h"
 
+volatile struct bodies *bodylist_mem;
+
 LRESULT CALLBACK WndProc(HWND hwnd,
                          unsigned int message,
                          WPARAM wParam, LPARAM lParam)
@@ -107,7 +109,7 @@ LRESULT CALLBACK WndProc(HWND hwnd,
   return 0;
 }
 
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow, struct bodies *shared_mem)
 {
   configurations.WIDTH = 1920.0f;
   configurations.HEIGHT = 1080.0f;
@@ -276,17 +278,22 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 
   glLinkProgram(programIDs->values[1]);
 
-  glGenFramebuffers(2, fboIDs);
+  glGenTextures(1, &textures[0]);
+  glBindTexture(GL_TEXTURE_2D, textures[0]);
 
-  glBindFramebuffer(GL_READ_FRAMEBUFFER, fboIDs[0]);
-  glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
-                         GL_TEXTURE_2D, textures[0], 0);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
-  glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fboIDs[1]);
-  glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
-                         GL_TEXTURE_2D, textures[1], 0);
-                         
-  glBindFramebuffer(GL_FRAMEBUFFER, 0);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 256, 256, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+  glGenerateMipmap(GL_TEXTURE_2D);
+
+    glActiveTexture(GL_TEXTURE_2D);
+
+  //glBindFramebuffer(GL_FRAMEBUFFER, 0);
+  //glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
   /*
   glBlitFramebuffer(0, 0, width, height,
@@ -384,8 +391,12 @@ void GH_InitWindow(int (*EntryPoint)())
     Write_CommandLineHelpMenu();
     ComponentsThreads = new_dynHandleArray();
 
-    dynHandleArray_AddBack(&ComponentsThreads, CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)wWinMain, NULL, 0, NULL));
-    dynHandleArray_AddBack(&ComponentsThreads, CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)EntryPoint, NULL, 0, NULL));
+    struct bodies bodylist = *GetBodyList();
+    bodylist_mem = malloc(sizeof(bodylist));
+    memcpy(bodylist_mem, &bodylist, sizeof(bodylist));
+
+    dynHandleArray_AddBack(&ComponentsThreads, CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)wWinMain, bodylist_mem, 0, NULL));
+    dynHandleArray_AddBack(&ComponentsThreads, CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)EntryPoint, (bodylist, bodylist_mem), 0, NULL));
 
     WriteEventSignal = CreateEvent(
         NULL,                // default security attributes

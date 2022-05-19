@@ -40,7 +40,7 @@ void bindIndices(dynUIntArray* indicesBuffer);
 
 void storeDataInAttributeList(int attribute, int coordinateSize, dynFloatArray* fbuffer);
 
-void transformation_SetPosition(Entity* entity);
+void transformation_SetPosition(vec3 new_pos);
 void transformation_SetRotation(Entity* entity);
 void transformation_SetScale(Entity* entity);
 

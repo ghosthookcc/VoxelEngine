@@ -12,6 +12,7 @@ struct Mesh
   dynFloatArray* vertices; // a vertex is a single point
   dynUIntArray* edges; // an edge is a straight line segment connecting two vertices
                        // also knows as a indice
+  dynFloatArray* texcoords;
   dynFuncptrArray* functions;
   int (*getTriangleCount)(Mesh);
 };

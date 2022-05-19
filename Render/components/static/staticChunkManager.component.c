@@ -15,7 +15,6 @@ void generateSmoothChunk()
   Mesh temp_block_mesh = new_Mesh();
 
   dynFuncptrArray_AddBack(&temp_block_mesh.functions, updateMesh_PerlinSmooth);
-
   for(int x = 0; x < configurations.CHUNK_XYZ_SIZE; x++)
   {
     for(int y = 0; y < configurations.CHUNK_XYZ_SIZE; y++)
@@ -39,9 +38,8 @@ void generateBlockChunk()
 {
   Mesh temp_block = getMeshBlock();
   Mesh temp_block_mesh = new_Mesh();
-  
-  dynFuncptrArray_AddBack(&temp_block_mesh.functions, updateMesh_PerlinBlock);
 
+  dynFuncptrArray_AddBack(&temp_block_mesh.functions, updateMesh_PerlinBlock);
   for(int x = 0; x < configurations.CHUNK_XYZ_SIZE; x++)
   {
     for(int y = 0; y < configurations.CHUNK_XYZ_SIZE; y++)

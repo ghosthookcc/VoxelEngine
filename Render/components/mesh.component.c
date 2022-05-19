@@ -9,7 +9,7 @@ Mesh new_Mesh()
   Mesh new_Mesh;
   new_Mesh.vertices = new_dynFloatArray();
   new_Mesh.edges    = new_dynUIntArray();
-  //new_Mesh.texcoords = new_dynFloatArray();
+  new_Mesh.texcoords = new_dynFloatArray();
   //new_Mesh.normals  = new_dynFloatArray();
   new_Mesh.functions = new_dynFuncptrArray();
   new_Mesh.getTriangleCount = getTriangleCount;
@@ -24,6 +24,14 @@ Mesh getMeshBlock()
     fillArray(&blockVertices,
     (float[])
     {
+      // Front face
+      -0.5f, -0.5f,  0.5f,
+       0.5f, -0.5f,  0.5f,
+       0.5f,  0.5f,  0.5f,
+       0.5f,  0.5f,  0.5f,
+      -0.5f,  0.5f,  0.5f,
+      -0.5f, -0.5f,  0.5f,
+
       // Back face
       -0.5f, -0.5f, -0.5f,
        0.5f, -0.5f, -0.5f,
@@ -40,13 +48,13 @@ Mesh getMeshBlock()
       -0.5f, -0.5f,  0.5f,
       -0.5f,  0.5f,  0.5f,
 
-      // Front face
-      -0.5f, -0.5f,  0.5f,
-       0.5f, -0.5f,  0.5f,
-       0.5f,  0.5f,  0.5f,
-       0.5f,  0.5f,  0.5f,
-      -0.5f,  0.5f,  0.5f,
-      -0.5f, -0.5f,  0.5f,
+      // Right face
+      0.5f,  0.5f,  0.5f,
+      0.5f,  0.5f, -0.5f,
+      0.5f, -0.5f, -0.5f,
+      0.5f, -0.5f, -0.5f,
+      0.5f, -0.5f,  0.5f,
+      0.5f,  0.5f,  0.5f,
 
       // Top face
       -0.5f,  0.5f, -0.5f,
@@ -56,14 +64,6 @@ Mesh getMeshBlock()
       -0.5f,  0.5f,  0.5f,
       -0.5f,  0.5f, -0.5f,
 
-      // Right face
-      0.5f,  0.5f,  0.5f,
-      0.5f,  0.5f, -0.5f,
-      0.5f, -0.5f, -0.5f,
-      0.5f, -0.5f, -0.5f,
-      0.5f, -0.5f,  0.5f,
-      0.5f,  0.5f,  0.5f,
-
       // Bottom face
       -0.5f, -0.5f, -0.5f,
       0.5f, -0.5f, -0.5f,
@@ -72,8 +72,18 @@ Mesh getMeshBlock()
       -0.5f, -0.5f,  0.5f,
       -0.5f, -0.5f, -0.5f
     });
-
     tmp_Mesh.vertices = new_DynFloatArrayFromFloatArray(blockVertices, 108);
+
+    float* blockTexs = malloc(sizeof(float) * 8);
+    fillArray(&blockTexs,
+    (float[])
+    {
+      0.0f, 0.0f,  // bottom left of texture
+      1.0f, 0.0f,  // bottom right
+      1.0f, 1.0f,  // top right
+      0.0f, 1.0f   // top left
+    });
+    tmp_Mesh.texcoords = new_DynFloatArrayFromFloatArray(blockTexs, 8);
 
     return(tmp_Mesh);
 }

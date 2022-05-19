@@ -3,10 +3,10 @@
 layout (location = 0) in vec3 in_v_Position;
 layout (location = 1) in vec4 in_v_Color;
 layout (location = 2) in vec3 in_v_Normal;
-layout (location = 3) in int in_v_EnabledFaces;
+layout (location = 3) in vec2 in_v_Uv;
 
-out vec4 out_g_Color;
-out int out_g_Enabled;
+out vec4 out_g_color;
+out vec2 out_g_uv;
 
 out vec2 screenPos;
 
@@ -24,6 +24,6 @@ void main()
 
 	gl_Position = MVP * vec4(in_v_Position + offset, 1.0f);
 
-	out_g_Color = (ambient + diffuse) * in_v_Color;
-	out_g_Enabled = in_v_EnabledFaces;
+	out_g_color = (ambient + diffuse) * in_v_Color;
+	out_g_uv = in_v_Uv;
 };

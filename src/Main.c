@@ -1,10 +1,10 @@
 #include "window.h"
 #include "worldManager.component.h"
 
-int physics_thread()
+int physics_thread(struct bodies bodylist, struct bodies *shared_mem)
 {
   LoadPlanetProperties();
-  struct bodies bodylist = *GetBodyList();
+
   while(1)
   {
     bodylist = ProcessPhysics(&bodylist);

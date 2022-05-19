@@ -23,9 +23,9 @@ void loadToVAO(Mesh new_EntityMesh, vec3 start_pos)
     }
     storeDataInAttributeList(1, 4, VerticesColors);
   }
-
   storeDataInAttributeList(0, 3, new_EntityMesh.vertices);
   //storeDataInAttributeList(2, 3, new_EntityMesh.normals);
+  storeDataInAttributeList(3, 2, new_EntityMesh.texcoords);
 
   Entity* entity = malloc(sizeof(struct Entity));
 
@@ -63,7 +63,6 @@ void loadModelToVAO(char* filename)
     }
     storeDataInAttributeList(1, 4, VerticesColors);
   }
-
   storeDataInAttributeList(0, 3, new_EntityMesh.vertices);
   //storeDataInAttributeList(2, 3, new_EntityMesh.normals);
 
@@ -121,18 +120,18 @@ void storeDataInAttributeList(int attribute, int coordinateSize, dynFloatArray* 
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void transformation_SetPosition(Entity* entity)
+void transformation_SetPosition(vec3 new_pos)
 {
-  set_Uniform3f(programIDs->values[0], "offset", entity->position.x,
-                                                 entity->position.y,
-                                                 entity->position.z);
+  set_Uniform3f(programIDs->values[0], "offset", new_pos.x,
+                                                 new_pos.y,
+                                                 new_pos.z);
 
   mat4x4 new_TranslationMatrix = Empty_mat4x4();
   Identity_existingMat4x4(&new_TranslationMatrix);
 
-  new_TranslationMatrix.matrix[3][0] = entity->position.x;
-  new_TranslationMatrix.matrix[3][1] = entity->position.y;
-  new_TranslationMatrix.matrix[3][2] = entity->position.z;
+  new_TranslationMatrix.matrix[3][0] = new_pos.x;
+  new_TranslationMatrix.matrix[3][1] = new_pos.y;
+  new_TranslationMatrix.matrix[3][2] = new_pos.z;
 
   m4_translationMatrix = new_TranslationMatrix;
 }
@@ -161,7 +160,7 @@ void transformation_SetScale(Entity* entity)
   new_ScaleMatrix.matrix[1][1] = entity->scale.y;
   new_ScaleMatrix.matrix[2][2] = entity->scale.z;
   new_ScaleMatrix.matrix[3][3] = 1.0f;
-  
+
   m4_scaleMatrix = new_ScaleMatrix;
 }
 

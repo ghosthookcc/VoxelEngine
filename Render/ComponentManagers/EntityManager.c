@@ -4,6 +4,7 @@ void UpdateEntities(LONGLONG DeltaTime)
 {
   for(int i = 0; i < entityStack_Count(Entities); i++)
   {
+    Entities->entities[i].rotation.y += 0.001f * DeltaTime;
   }
 }
 
@@ -17,7 +18,7 @@ void RenderEntities(LONGLONG DeltaTime)
    glEnableVertexAttribArray(1);
    glEnableVertexAttribArray(2);
 
-   transformation_SetPosition(&Entities->entities[i]);
+   transformation_SetPosition(getNegativeVec3(Entities->entities[i].position));
    transformation_SetRotation(&Entities->entities[i]);
    transformation_SetScale(&Entities->entities[i]);
 
@@ -27,9 +28,11 @@ void RenderEntities(LONGLONG DeltaTime)
    if(Entities->entities[i].mesh.edges->size == 0)
    {
      glDrawArrays(GL_TRIANGLES, 0, Entities->entities[i].triangleCount);
-     continue;
    }
-   glDrawElements(GL_TRIANGLES, Entities->entities[i].mesh.edges->size, GL_UNSIGNED_INT, (GLvoid*)0);
+   else
+   {
+     glDrawElements(GL_TRIANGLES, Entities->entities[i].mesh.edges->size, GL_UNSIGNED_INT, (GLvoid*)0);
+   }
  }
 
  glDisableVertexAttribArray(0);
