@@ -18,6 +18,7 @@
 #include "console.h"
 #include "noise.h"
 #include "perlin.h"
+#include "parse_json.h"
 
 HGLRC hRC; // Permanent Rendering Context
 HDC hDC; // Private GDI Device Context
@@ -27,13 +28,20 @@ typedef struct SetEntryPoint
   int (*EntryPoint)();
 } SetEntryPoint;
 
+typedef struct ENTRYPOINT_INPUT
+{
+    struct blist bodylist;
+    volatile struct blist* shared_mem;
+    LPCRITICAL_SECTION* crit_section;
+} ENTRYPOINT_INPUT;
+
 LRESULT CALLBACK WndProc(HWND hwnd,
                          unsigned int message,
                          WPARAM wParam, LPARAM lParam);
 
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow, struct bodies *shared_mem);
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow);
 
-void GH_InitWindow(int (*EntryPoint)());
+void GH_InitWindow(int (*EntryPoint)(), char* path);
 
 void intialize_EntryPoint(SetEntryPoint SetEntry);
 

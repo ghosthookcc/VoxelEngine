@@ -10,6 +10,7 @@
 
 #include "staticRenderingVars.component.h"
 
+#include "parse_json.h"
 #include "generics.h"
 #include "quaternion.h"
 #include "matrix.h"
@@ -128,6 +129,6 @@ double calcDistanceSum(dvec3 vec3A, dvec3 vec3B);
 
 dvec3 calcAccelerationVec3(dvec3 vec3A, body target);
 
-dvec3 calcAccelLoop(dvec3 origin, struct bodies bodylist, unsigned int bid);
+dvec3 calcAccelLoop(dvec3 origin, struct blist bodylist, unsigned int bid);
 
 #endif

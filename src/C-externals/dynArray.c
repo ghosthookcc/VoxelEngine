@@ -22,7 +22,6 @@ dynFloatArray* new_DynFloatArrayFromFloatArray(float fillData[], int size)
   dynFloatArray* new_DynFloatArray = malloc(sizeof(struct dynFloatArray) + sizeof(float) * size);
   new_DynFloatArray->size = size;
   new_DynFloatArray->items = (float*)calloc(size, sizeof(float));
-
   if(new_DynFloatArray->items == NULL)
   {
     free(new_DynFloatArray);
@@ -93,7 +92,6 @@ dynUIntArray* new_DynUIntArrayFromUIntArray(unsigned int fillData[], int size)
   dynUIntArray* new_DynUIntArray = malloc(sizeof(struct dynUIntArray) + sizeof(unsigned int) * size);
   new_DynUIntArray->size = size;
   new_DynUIntArray->items = (unsigned int*)calloc(size, sizeof(unsigned int));
-
   if(new_DynUIntArray->items == NULL)
   {
     free(new_DynUIntArray);
@@ -182,7 +180,6 @@ dynUByteArray* new_DynUByteArrayFromUByteArray(unsigned char fillData[], int siz
   dynUByteArray* new_DynUByteArray = malloc(sizeof(struct dynUByteArray) + sizeof(unsigned char) * size);
   new_DynUByteArray->size = size;
   new_DynUByteArray->items = (unsigned char*)calloc(size, sizeof(unsigned char));
-
   if(new_DynUByteArray->items == NULL)
   {
     free(new_DynUByteArray);
@@ -199,7 +196,7 @@ dynUByteArray* new_DynUByteArrayFromUByteArray(unsigned char fillData[], int siz
 void dynUByteArray_AddBack(dynUByteArray** dynUByteArray, unsigned char item)
 {
   (*dynUByteArray)->size += 1;
-  (*dynUByteArray) = realloc((*dynUByteArray), sizeof(struct dynUByteArray) + sizeof(unsigned char) * (*dynUByteArray)->size);
+  //(*dynUByteArray) = realloc((*dynUByteArray), sizeof(struct dynUByteArray) + sizeof(unsigned char) * (*dynUByteArray)->size);
   (*dynUByteArray)->items = realloc((*dynUByteArray)->items, sizeof(unsigned char) * (*dynUByteArray)->size);
   if((*dynUByteArray)->items == NULL)
   {
@@ -320,7 +317,7 @@ dynHandleArray* new_dynHandleArray()
 void dynHandleArray_AddBack(dynHandleArray** dynHandleArray, HANDLE item)
 {
   (*dynHandleArray)->size += 1;
-  (*dynHandleArray) = realloc((*dynHandleArray), sizeof(struct dynHandleArray) + sizeof(item) * (*dynHandleArray)->size);
+  //(*dynHandleArray) = realloc((*dynHandleArray), sizeof(struct dynHandleArray) + sizeof(item) * (*dynHandleArray)->size);
   (*dynHandleArray)->handles = realloc((*dynHandleArray)->handles, sizeof(item) * (*dynHandleArray)->size);
   if((*dynHandleArray)->handles == NULL)
   {
@@ -349,9 +346,8 @@ void dynVec4Array_AddBack(dynVec4Array** dynVec4Array, vec4 item)
   if((*dynVec4Array)->elemsSize == (*dynVec4Array)->size)
   {
     (*dynVec4Array)->size += 1;
-    (*dynVec4Array) = realloc((*dynVec4Array), sizeof(struct dynVec4Array) + sizeof(item) * (*dynVec4Array)->size);
+    //(*dynVec4Array) = realloc((*dynVec4Array), sizeof(struct dynVec4Array) + sizeof(item) * (*dynVec4Array)->size);
     (*dynVec4Array)->items = realloc((*dynVec4Array)->items, sizeof(item) * (*dynVec4Array)->size);
-
     if((*dynVec4Array)->items == NULL)
     {
       free((*dynVec4Array));

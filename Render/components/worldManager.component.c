@@ -4,22 +4,21 @@
 
 #include <inttypes.h>
 
+/*
 void LoadPlanetData()
 {
-  /*
   Mesh sphere = new_Mesh();
   for(unsigned int PlanetIterator = 0; PlanetIterator < bodylist.size; PlanetIterator++)
   {
     sphere = fast_sphere((float)bodylist.planets[PlanetIterator].radius, 100, 100);
     loadToVAO(sphere, dvec3ToVec3(bodylist.planets[PlanetIterator].position));
   }
-  */
 }
 
 void LoadPlanetProperties()
 {
   body Sol = { 0 };
-  Sol.bID = 1;
+  Sol.bid = 1;
   Sol.radius = 696342000;
   Sol.mass = 1988500e+24;
   Sol.position = new_dvec3(-1.068108951496322e+09,
@@ -30,7 +29,7 @@ void LoadPlanetProperties()
                           -1.631700118015769E-01);
 
   body Mercury = { 0 };
-  Mercury.bID = 2;
+  Mercury.bid = 2;
   Mercury.radius = 2439.5;
   Mercury.mass = 0.330e24;
   Mercury.position = new_dvec3(-2.212073002393702E+10,
@@ -41,7 +40,7 @@ void LoadPlanetProperties()
                               -4.368336206255391E+03);
 
   body Venus = { 0 };
-  Venus.bID = 3;
+  Venus.bid = 3;
   Venus.radius = 6051.84;
   Venus.mass = 4.8685e24;
   Venus.position = new_dvec3(-1.085736592234813E+11,
@@ -52,7 +51,7 @@ void LoadPlanetProperties()
                             -5.320225928762774E+02);
 
   body Earth = { 0 };
-  Earth.bID = 4;
+  Earth.bid = 4;
   Earth.radius = 6371.01;
   Earth.mass = 5.97219e24;
   Earth.position = new_dvec3(-2.627903751048988E+10,
@@ -63,7 +62,7 @@ void LoadPlanetProperties()
                             -1.014855999592612E-01);
 
   body Moon = { 0 };
-  Moon.bID = 5;
+  Moon.bid = 5;
   Moon.radius = 1737.53;
   Moon.mass = 7.349e22;
   Moon.position = new_dvec3(-2.659668775178492E+10,
@@ -74,7 +73,7 @@ void LoadPlanetProperties()
                            1.740818643718001E+00);
 
   body Mars = { 0 };
-  Mars.bID = 6;
+  Mars.bid = 6;
   Mars.radius = 3389.92;
   Mars.mass = 0.641e24;
   Mars.position = new_dvec3(2.069270543147017E+11,
@@ -97,6 +96,7 @@ struct bodies* GetBodyList()
 {
   return(&bodylist);
 }
+*/
 
 void setup_world()
 {
@@ -119,8 +119,7 @@ void setup_world()
       generateBlockChunk();
     }
   }
-
-  LoadPlanetData(GetBodyList());
+  //LoadPlanetData(GetBodyList());
 
   QueryPerformanceCounter(&timePrev);
 

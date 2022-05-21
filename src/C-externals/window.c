@@ -1,7 +1,8 @@
 #include "window.h"
 #include "parser.h"
 
-volatile struct bodies *bodylist_mem;
+volatile struct blist *bodylist_mem;
+LPCRITICAL_SECTION crit_section;
 
 LRESULT CALLBACK WndProc(HWND hwnd,
                          unsigned int message,
@@ -109,7 +110,7 @@ LRESULT CALLBACK WndProc(HWND hwnd,
   return 0;
 }
 
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow, struct bodies *shared_mem)
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
   configurations.WIDTH = 1920.0f;
   configurations.HEIGHT = 1080.0f;
@@ -383,7 +384,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
   return 0;
 }
 
-void GH_InitWindow(int (*EntryPoint)())
+void GH_InitWindow(int (*EntryPoint)(), char* path)
 {
   if(WindowStatus != RUNNING)
   {
@@ -391,12 +392,38 @@ void GH_InitWindow(int (*EntryPoint)())
     Write_CommandLineHelpMenu();
     ComponentsThreads = new_dynHandleArray();
 
-    struct bodies bodylist = *GetBodyList();
-    bodylist_mem = malloc(sizeof(bodylist));
-    memcpy(bodylist_mem, &bodylist, sizeof(bodylist));
+    struct blist bodylist = get_body_from_json(path);
+    //LoadPlanetProperties();
+    //struct bodies bodylist = *GetBodyList();
 
-    dynHandleArray_AddBack(&ComponentsThreads, CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)wWinMain, bodylist_mem, 0, NULL));
-    dynHandleArray_AddBack(&ComponentsThreads, CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)EntryPoint, (bodylist, bodylist_mem), 0, NULL));
+    if (!InitializeCriticalSectionAndSpinCount(&crit_section, 0x80000400))
+    {
+        printf("Critical section did not initialize!");
+        printf("%lu", GetLastError());
+    }
+
+    bodylist_mem = malloc(sizeof(bodylist));
+    if (bodylist_mem == NULL)
+    {
+      free((struct blist*)bodylist_mem);
+    }
+    memcpy((struct blist*)bodylist_mem, &bodylist, sizeof(bodylist));
+
+    struct ENTRYPOINT_INPUT* input = malloc(sizeof(struct ENTRYPOINT_INPUT));
+    if (input == NULL)
+    {
+      free(input);
+    }
+
+    input->bodylist = bodylist;
+    input->shared_mem = bodylist_mem;
+    input->crit_section = &crit_section;
+
+
+    HANDLE ENTRYPOINT = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)EntryPoint, input, 0, NULL);
+
+    dynHandleArray_AddBack(&ComponentsThreads, CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)wWinMain, NULL, 0, NULL));
+    dynHandleArray_AddBack(&ComponentsThreads, ENTRYPOINT);
 
     WriteEventSignal = CreateEvent(
         NULL,                // default security attributes

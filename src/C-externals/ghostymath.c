@@ -487,12 +487,12 @@ dvec3 calcAccelerationVec3(dvec3 vec3A, body target)
     return(divideDVec3ByDouble(multiplyDVec3ByDouble(dist, first_arg), mag));
 }
 
-dvec3 calcAccelLoop(dvec3 origin, struct bodies bodylist, unsigned int bid)
+dvec3 calcAccelLoop(dvec3 origin, struct blist bodylist, unsigned int bid)
 {
   dvec3 accel_velocity = new_dvec3(0.0, 0.0, 0.0);
   for(unsigned int i = 0; i < bodylist.size; i++)
   {
-    if(bodylist.planets[i].bID == bid) { continue; }
+    if(bodylist.planets[i].bid == bid) { continue; }
 
     accel_velocity = addDVec3ByDVec3(accel_velocity, calcAccelerationVec3(origin, bodylist.planets[i]));
   }

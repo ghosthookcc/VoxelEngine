@@ -34,6 +34,6 @@ void AcquireStdOutHandle();
 HANDLE GET_hStdOut();
 void Write_CommandLineHelpMenu();
 
-DWORD WriteToConsole(const void* buffer);
+DWORD WriteToConsole(const char* buffer);
 
 #endif

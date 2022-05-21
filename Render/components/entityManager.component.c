@@ -22,6 +22,7 @@ void loadToVAO(Mesh new_EntityMesh, vec3 start_pos)
       dynFloatArray_AddBack(&VerticesColors, rgba.w);
     }
     storeDataInAttributeList(1, 4, VerticesColors);
+    free(VerticesColors);
   }
   storeDataInAttributeList(0, 3, new_EntityMesh.vertices);
   //storeDataInAttributeList(2, 3, new_EntityMesh.normals);
@@ -62,6 +63,7 @@ void loadModelToVAO(char* filename)
       dynFloatArray_AddBack(&VerticesColors, rgba.w);
     }
     storeDataInAttributeList(1, 4, VerticesColors);
+    free(VerticesColors);
   }
   storeDataInAttributeList(0, 3, new_EntityMesh.vertices);
   //storeDataInAttributeList(2, 3, new_EntityMesh.normals);

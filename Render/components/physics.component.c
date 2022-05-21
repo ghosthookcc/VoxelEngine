@@ -24,19 +24,19 @@ posTl   posTr
 posBl   posBr
 */
 
-struct bodies ProcessPhysics(struct bodies* bodylist)
+struct blist ProcessPhysics(struct blist* bodylist)
 {
-  struct bodies new_blist = *bodylist;
+  struct blist new_blist = *bodylist;
   for(unsigned int i = 0; i < bodylist->size; i++)
   {
-    dvec3 accel1 = calcAccelLoop(bodylist->planets[i].position, *bodylist , bodylist->planets[i].bID);
+    dvec3 accel1 = calcAccelLoop(bodylist->planets[i].position, *bodylist , bodylist->planets[i].bid);
     dvec3 deltavel = multiplyDVec3ByDouble(bodylist->planets[i].velocity, TIME_STEP);
     dvec3 deltaaccel1 = multiplyDVec3ByDouble(accel1, powf(TIME_STEP, 2.0));
     dvec3 new_pos_arg1 = addDVec3ByDVec3(bodylist->planets[i].position, deltavel);
     dvec3 new_pos_arg2 = divideDVec3ByDouble(deltaaccel1, 2.0);
     dvec3 new_pos = addDVec3ByDVec3(new_pos_arg1, new_pos_arg2);
 
-    dvec3 accel2 = calcAccelLoop(new_pos, *bodylist, bodylist->planets[i].bID);
+    dvec3 accel2 = calcAccelLoop(new_pos, *bodylist, bodylist->planets[i].bid);
     dvec3 accel12 = multiplyDVec3ByDouble(divideDVec3ByDouble(addDVec3ByDVec3(accel1, accel2), 2.0), TIME_STEP);
     dvec3 new_vel = addDVec3ByDVec3(bodylist->planets[i].velocity, accel12);
 

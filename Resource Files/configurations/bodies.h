@@ -3,6 +3,7 @@
 
 #include "vec3.h"
 
+/*
 typedef struct body
 {
   unsigned int bID;
@@ -17,5 +18,6 @@ struct bodies
   unsigned int size;
   body planets[6];
 };
+*/
 
 #endif
