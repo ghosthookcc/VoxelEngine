@@ -35,7 +35,7 @@ int main(int argc, char** argv)
   }
   else
   {
-      path = "Sol_6_body.json";
+      path = "../../Sol_6_body.json";
   }
   //Build.exe = 9 char
   //This is horrible, but Windows has poor LPWSTR to char* conversation and its documentation leaves much to be desired.
@@ -43,7 +43,6 @@ int main(int argc, char** argv)
   abs_path[strlen(abs_path) - 9] = 0x00;
 
   char* f_path = concat_string(abs_path, path);
-  printf(f_path);
   GH_InitWindow(physics_thread, f_path);
 
   return 0;
