@@ -11,9 +11,11 @@ add_compile_options("/Z7")
 add_link_options("/DEFAULTLIB:ws2_32.lib")
 add_link_options("/DEFAULTLIB:Bcrypt.lib")
 add_link_options("/DEFAULTLIB:userenv.lib")
+#add_link_options("/VERBOSE")
 
 file(GLOB_RECURSE SOURCE_FILES
-    ${CMAKE_SOURCE_DIR}/src/*.c
+    ${CMAKE_SOURCE_DIR}/src/Main.c
+    ${CMAKE_SOURCE_DIR}/src/C-externals/*.c
     ${CMAKE_SOURCE_DIR}/Render/*.c
     ${CMAKE_SOURCE_DIR}/Render/components/*.c
     ${CMAKE_SOURCE_DIR}/Render/components/static/*.c
@@ -22,7 +24,6 @@ file(GLOB_RECURSE SOURCE_FILES
     ${CMAKE_SOURCE_DIR}/GHEnvironment/*.c)
 
 file(GLOB_RECURSE HEADER_FILES
-    ${CMAKE_SOURCE_DIR}/src/*.h
     ${CMAKE_SOURCE_DIR}/Render/*.h
     ${CMAKE_SOURCE_DIR}/Render/components/*.h
     ${CMAKE_SOURCE_DIR}/Render/components/static/*.h
@@ -34,9 +35,7 @@ file(GLOB_RECURSE HEADER_FILES
     ${CMAKE_SOURCE_DIR}/Resource Files/*.h)
 
 include_directories(
-    "${CMAKE_SOURCE_DIR}"
     "${CMAKE_SOURCE_DIR}/src"
-    "${CMAKE_SOURCE_DIR}/Dependencies/includes"
     "${CMAKE_SOURCE_DIR}/Resource Files"
     "${CMAKE_SOURCE_DIR}/Header Files"
     "${CMAKE_SOURCE_DIR}/Render"
@@ -47,13 +46,10 @@ include_directories(
     "${CMAKE_SOURCE_DIR}/GHEnvironment"
 )
 configure_file(src/helpers/RootDir.h.in src/helpers/RootDir.h)
-link_directories(${CMAKE_SOURCE_DIR}/Dependencies/libs LIBS)
 
 find_package(OpenGL REQUIRED)
 
 include(GenerateExportHeader)
-
-set(DLLS_PATH ${CMAKE_SOURCE_DIR}/Dependencies/dlls)
 
 file(COPY parse_json.lib DESTINATION ${CMAKE_SOURCE_DIR}/Debug/)
 file(COPY Sol_2_body.json DESTINATION ${CMAKE_SOURCE_DIR}/Debug/)
