@@ -9,16 +9,18 @@
 
 #include "parser.h"
 
+void LoadPlanetData(struct blist bodylist);
+
 /*
 struct blist bodylist;
 
-void LoadPlanetData();
+
 void LoadPlanetProperties();
 
-struct bodies* GetBodyList();
+struct body* GetBodyList();
+struct blist* GetWorld();
 */
 
-void LoadPlanetData(struct blist bodylist);
-void setup_world(struct blist bodylist);
+void setup_world();
 
 #endif

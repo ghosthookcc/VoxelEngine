@@ -507,7 +507,7 @@ double calcDVec3DotProduct(dvec3 vec3A, dvec3 vec3B)
 
 double calcDVec3length(dvec3 vec3A)
 {
-    return(sqrt(vec3A.x * vec3A.x + vec3A.y * vec3A.y + vec3A.z * vec3A.z));
+    return(sqrtf(vec3A.x * vec3A.x + vec3A.y * vec3A.y + vec3A.z * vec3A.z));
 }
 
 dvec3 calcDVec3CrossProduct(dvec3 vec3A, dvec3 vec3B)
@@ -530,3 +530,5 @@ double getGravParam(double mass)
 {
   return GRAV_CONST * mass;
 }
+
+

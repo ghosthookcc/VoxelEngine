@@ -7,14 +7,10 @@
 void LoadPlanetData(struct blist bodylist)
 {
   Mesh sphere = new_Mesh();
-
-  struct body farthest_object = bodylist.planets[bodylist.size - 1];
-
-  double dist_scalar = 1000 / calcDVec3length(farthest_object.position);
   for(unsigned int PlanetIterator = 0; PlanetIterator < bodylist.size; PlanetIterator++)
   {
-    sphere = fast_sphere((float)10.0f, 100, 100);
-    loadToVAO(sphere, dvec3ToVec3(multiplyDVec3ByDouble(bodylist.planets[PlanetIterator].position, dist_scalar)));
+    sphere = fast_sphere(5.0f, 100, 100);
+    loadToVAO(sphere, dvec3ToVec3(bodylist.planets[PlanetIterator].position));
   }
 }
 

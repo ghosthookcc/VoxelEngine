@@ -9,33 +9,17 @@ int physics_thread(struct ENTRYPOINT_INPUT* input)
 
   free(input);
 
-  int skipped = 0;
   while(1)
   {
     bodylist = ProcessPhysics(&bodylist);
-
-    if(skipped >= 10)
+    BOOL res = TryEnterCriticalSection(crit_section);
+    if (res == 0)
     {
-      EnterCriticalSection(crit_section);
-      skipped = 0; // LEMME IN
-      printf("ran this!\n");
-    }
-    else
-    {
-      BOOL res = TryEnterCriticalSection(crit_section);
-      if (res == 0)
-      {
-        skipped++;
         continue;
-      }
     }
-
     memcpy(shared_mem->planets, bodylist.planets, sizeof(struct body) * bodylist.size);
-
     LeaveCriticalSection(crit_section);
   }
-
-
 
   return 86; //haha yes
 }
@@ -53,12 +37,14 @@ int main(int argc, char** argv)
   {
       path = "../../Sol_6_body.json";
   }
+
   //Build.exe = 9 char
   //This is horrible, but Windows has poor LPWSTR to char* conversation and its documentation leaves much to be desired.
   char* abs_path = argv[0];
   abs_path[strlen(abs_path) - 9] = 0x00;
 
   char* f_path = concat_string(abs_path, path);
+  
   GH_InitWindow(physics_thread, f_path);
 
   return 0;

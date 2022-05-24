@@ -24,7 +24,7 @@ LARGE_INTEGER DeltaTime;
 GLvoid glInit(GLsizei WIDTH, GLsizei HEIGHT);
 void glClearScene();
 
-void Update(struct blist *local_list, struct blist *shared_mem , LPCRITICAL_SECTION *crit_section);
+void Update(struct blist *local_list, struct blist *shared_mem, LPCRITICAL_SECTION *crit_section);
 void Render();
 
 void CLEANUP();

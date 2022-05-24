@@ -1,12 +1,10 @@
 #ifndef PARSE_JSON_H
 #define PARSE_JSON_H
-
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
-
 #include "vec3.h"
 
 typedef struct body {
@@ -25,5 +23,4 @@ typedef struct blist {
 } blist;
 
 extern blist get_body_from_json(const char *json_path);
-
 #endif

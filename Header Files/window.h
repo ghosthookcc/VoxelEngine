@@ -6,10 +6,9 @@
 
 #include "ComponentSystem.h"
 #include "ModuleSystem.h"
+#include "parse_json.h"
 
 #include "staticRenderingVars.component.h"
-
-#include "externals/parse_json.h"
 
 #include "MasterRenderer.h"
 #include "shaderClass.h"
@@ -23,6 +22,8 @@
 
 HGLRC hRC; // Permanent Rendering Context
 HDC hDC; // Private GDI Device Context
+
+
 
 typedef struct SetEntryPoint
 {

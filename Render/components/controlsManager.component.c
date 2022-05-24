@@ -18,14 +18,14 @@ unsigned int check_RequestMove(Entity* player, mat4x4* viewMatrix, LONGLONG Delt
 
   if (GetAsyncKeyState(VK_SHIFT) < 0 && shiftstate.exists == 0)
   {
-    walkSpeed = 0.00003f;
+    walkSpeed = configurations.camera_velocity * 10;
     scaleSpeed = 0.01f;
     shiftstate.exists = 1;
   }
 
   if (GetAsyncKeyState(VK_SHIFT) == 0 && shiftstate.exists == 1)
   {
-    walkSpeed = 0.000003f;
+    walkSpeed = configurations.camera_velocity;
     scaleSpeed = 0.001f;
     shiftstate.exists = 0;
   }

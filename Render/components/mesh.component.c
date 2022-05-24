@@ -273,33 +273,35 @@ void updateMesh_PerlinSmooth(Mesh* self, Mesh other, int x, int y, int z)
 
 void updateMesh_PerlinBlock(Mesh* self, Mesh other, int x, int y, int z)
 {
+  float step_size = 0.5f;
+
+  float initX = x;
+  float initY = y;
+  float initZ = z;
+  int trianglecount = other.getTriangleCount(other);
+  float centerX = (x * (step_size * trianglecount) - initX) / 2;
+  float centerY = (y * (step_size * trianglecount) - initY) / 2;
+  float centerZ = (z * (step_size * trianglecount) - initZ) / 2;
+
   float tempX;
   float tempY;
   float tempZ;
 
-  for(int i = 0; i < other.getTriangleCount(other); i++)
+  for(int i = 0; i < trianglecount; i++)
   {
-    tempX = x + 0.5f;
-    tempY = y + 0.5f;
-    tempZ = z + 0.5f;
+    tempX = x + step_size;
+    tempY = y + step_size;
+    tempZ = z + step_size;
 
     noiseValue = GenerateFinalNoise3D((float)x,
                                       (float)y,
                                       (float)z,
                                       8, 0.1f, 2.0f, 0);
 
-    dynFloatArray_AddBack(&self->vertices, other.vertices->items[    i * 3] + tempX);
-    dynFloatArray_AddBack(&self->vertices, other.vertices->items[1 + i * 3] + fabsf(tempY - noiseValue));
-    dynFloatArray_AddBack(&self->vertices, other.vertices->items[2 + i * 3] + tempZ);
+    dynFloatArray_AddBack(&self->vertices, other.vertices->items[    i * 3] + tempX - centerX);
+    dynFloatArray_AddBack(&self->vertices, other.vertices->items[1 + i * 3] + fabsf(tempY - noiseValue) - centerY);
+    dynFloatArray_AddBack(&self->vertices, other.vertices->items[2 + i * 3] + tempZ - centerZ);
   }
-
-  /*
-  for(int i = 0; i < other.normals->size; i++)
-  {
-    dynFloatArray_AddBack(&self->normals, other.normals->items[i]);
-    dynFloatArray_AddBack(&self->texcoords, other.texcoords->items[i]);
-  }
-  */
 }
 
 int getTriangleCount(Mesh self)

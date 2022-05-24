@@ -10,11 +10,10 @@
 
 #include "staticRenderingVars.component.h"
 
-#include "externals/parse_json.h"
-
 #include "generics.h"
 #include "quaternion.h"
 #include "matrix.h"
+#include "parse_json.h"
 #include "vec4.h"
 #include "vec3.h"
 #include "vec2.h"

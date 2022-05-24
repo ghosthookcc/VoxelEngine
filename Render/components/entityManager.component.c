@@ -22,7 +22,6 @@ void loadToVAO(Mesh new_EntityMesh, vec3 start_pos)
       dynFloatArray_AddBack(&VerticesColors, rgba.w);
     }
     storeDataInAttributeList(1, 4, VerticesColors);
-    free(VerticesColors);
   }
   storeDataInAttributeList(0, 3, new_EntityMesh.vertices);
   //storeDataInAttributeList(2, 3, new_EntityMesh.normals);
@@ -63,7 +62,6 @@ void loadModelToVAO(char* filename)
       dynFloatArray_AddBack(&VerticesColors, rgba.w);
     }
     storeDataInAttributeList(1, 4, VerticesColors);
-    free(VerticesColors);
   }
   storeDataInAttributeList(0, 3, new_EntityMesh.vertices);
   //storeDataInAttributeList(2, 3, new_EntityMesh.normals);
@@ -147,8 +145,7 @@ void transformation_SetRotation(Entity* entity)
   getAxisAngle(&rotation_Yaw, new_vec3(0.0f, 1.0f, 0.0f), (float)degreesToRadians(entity->rotation.y));
   getAxisAngle(&rotation_Roll, new_vec3(0.0f, 0.0f, 1.0f), (float)degreesToRadians(entity->rotation.z));
 
-  quaternion result;
-  result = multiplyQuaternionByQuaternion(rotation_Pitch, rotation_Yaw);
+  quaternion result = multiplyQuaternionByQuaternion(rotation_Pitch, rotation_Yaw);
   result = multiplyQuaternionByQuaternion(result, rotation_Roll);
   quaternionToMat4Rotation(result, &new_RotationMatrix);
 

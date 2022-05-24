@@ -15,6 +15,8 @@ struct config
     float farthestZ;
     float scale;
 
+    float camera_velocity;
+
     int CHUNK_XYZ_SIZE;
     int CHUNK_AREA;
     int CHUNK_VOLUME;
@@ -28,6 +30,8 @@ struct config
     int blocky_render;
     int model_render;
     int efficient_render;
+
+    float timestep;
 };
 struct config configurations;
 

@@ -5,6 +5,8 @@ volatile struct blist* t_bodylist_mem;
 struct blist* local_mem;
 LPCRITICAL_SECTION CRIT_SECTION;
 
+
+
 LRESULT CALLBACK WndProc(HWND hwnd,
                          unsigned int message,
                          WPARAM wParam, LPARAM lParam)
@@ -113,6 +115,7 @@ LRESULT CALLBACK WndProc(HWND hwnd,
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
+  LPCRITICAL_SECTION critical_sec = &(LPCRITICAL_SECTION)hInstance;
   configurations.WIDTH = 1920.0f;
   configurations.HEIGHT = 1080.0f;
 
@@ -144,6 +147,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
         MoveMemory(line, line+14, (size_t)get_strlen(line) - 14 + 1);
         configurations.farthestZ = (float)atof(line);
         break;
+      case 'C':
+        MoveMemory(line, line+21, (size_t)get_strlen(line) - 21 + 1);
+        configurations.camera_velocity = (float)atof(line);
+        break;
     }
   }
   fclose(CameraSettingsFile);
@@ -160,46 +167,65 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
     switch(line[0])
     {
       case 'C':
-        MoveMemory(line, line+20, get_strlen(line) - 20 + 1);
+        MoveMemory(line, line+20, (size_t)get_strlen(line) - 20 + 1);
         configurations.CHUNK_XYZ_SIZE = atoi(line);
         configurations.CHUNK_AREA = configurations.CHUNK_XYZ_SIZE * configurations.CHUNK_XYZ_SIZE;
         configurations.CHUNK_VOLUME = configurations.CHUNK_XYZ_SIZE * configurations.CHUNK_XYZ_SIZE * configurations.CHUNK_XYZ_SIZE;
         break;
       case 'O':
-        MoveMemory(line, line+19, get_strlen(line) - 19 + 1);
+        MoveMemory(line, line+19, (size_t)get_strlen(line) - 19 + 1);
         configurations.octaves_noise = atoi(line);
         break;
       case 'A':
-        MoveMemory(line, line+21, get_strlen(line) - 21 + 1);
+        MoveMemory(line, line+21, (size_t)get_strlen(line) - 21 + 1);
         configurations.amplitude_noise = (float)atof(line);
         break;
       case 'F':
-        MoveMemory(line, line+21, get_strlen(line) - 21 + 1);
+        MoveMemory(line, line+21, (size_t)get_strlen(line) - 21 + 1);
         configurations.frequency_noise = (float)atof(line);
         break;
       case 'N':
-        MoveMemory(line, line+22, get_strlen(line) - 22 + 1);
+        MoveMemory(line, line+22, (size_t)get_strlen(line) - 22 + 1);
         configurations.normalized_noise = atoi(line);
         break;
       case 'T':
-        MoveMemory(line, line+20, get_strlen(line) - 20 + 1);
+        MoveMemory(line, line+20, (size_t)get_strlen(line) - 20 + 1);
         configurations.terrain_render = atoi(line);
         break;
       case 'B':
-        MoveMemory(line, line+19, get_strlen(line) - 19 + 1);
+        MoveMemory(line, line+19, (size_t)get_strlen(line) - 19 + 1);
         configurations.blocky_render = atoi(line);
         break;
       case 'M':
-        MoveMemory(line, line+18, get_strlen(line) - 18 + 1);
+        MoveMemory(line, line+18, (size_t)get_strlen(line) - 18 + 1);
         configurations.model_render = atoi(line);
         break;
       case 'E':
-        MoveMemory(line, line+22, get_strlen(line) - 22 + 1);
+        MoveMemory(line, line+22, (size_t)get_strlen(line) - 22 + 1);
         configurations.efficient_render = atoi(line);
         break;
     }
   }
   fclose(WorldSettingsFile);
+
+  FILE* PhysicsSettingsFile = fopen("../Resource Files/configurations/PhysicsSettings.cfg", "r");
+  if (PhysicsSettingsFile == NULL)
+  {
+    printf("The PhysicsSettings.cfg file did not open\n");
+    return 16;
+  }
+
+  while (fgets(line, sizeof(line), PhysicsSettingsFile))
+  {
+    switch(line[0])
+    {
+      case 'T':
+        MoveMemory(line, line+14, get_strlen(line) - 14 + 1);
+        configurations.timestep = (float)atof(line);
+        break;
+    }
+  }
+  fclose(PhysicsSettingsFile);
 
   configurations.tanHalfFOV = (float)tan(degreesToRadians(configurations.fov) / 2.0);
   configurations.aspectRatio = configurations.WIDTH / configurations.HEIGHT;
@@ -303,7 +329,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 
   QueryPerformanceFrequency(&Frequency);
 
-  setup_world((*local_mem));
+  setup_world(local_mem);
 
   MSG message = {0};
   int running = 1;
@@ -364,10 +390,11 @@ void GH_InitWindow(int (*EntryPoint)(), char* path)
     ComponentsThreads = new_dynHandleArray();
 
     struct blist bodylist = get_body_from_json(path);
+
     if (!InitializeCriticalSectionAndSpinCount(&CRIT_SECTION, 0x80000400))
     {
-        printf("Critical section did not initialize!");
-        printf("%lu", GetLastError());
+      printf(GetLastError());
+      exit(-1);
     }
 
     local_mem = malloc(sizeof(blist));
@@ -377,29 +404,18 @@ void GH_InitWindow(int (*EntryPoint)(), char* path)
     local_mem->size = bodylist.size;
 
     t_bodylist_mem = malloc(sizeof(bodylist));
-    if (t_bodylist_mem == NULL)
-    {
-        printf("Malloc for shared memory failed!");
-        exit(-1);
-    }
+    if (t_bodylist_mem == NULL) { exit(-1); }
 
     strncpy(&t_bodylist_mem->name[0], &bodylist.name[0], 32);
     t_bodylist_mem->size = bodylist.size;
 
     t_bodylist_mem->planets = malloc(sizeof(struct body) * bodylist.size);
-    if(t_bodylist_mem->planets == NULL)
-    {
-       printf("Malloc for planet list failed!");
-       exit(-2);
-    }
+    if(t_bodylist_mem->planets == NULL) { exit(-1); }
 
     memcpy(t_bodylist_mem->planets, bodylist.planets, sizeof(struct body) * bodylist.size);
 
     struct ENTRYPOINT_INPUT* input = malloc(sizeof(struct ENTRYPOINT_INPUT));
-    if (input == NULL)
-    {
-      free(input);
-    }
+    if (input == NULL) { exit(-1); }
 
     input->bodylist = bodylist;
     input->shared_mem = t_bodylist_mem;
