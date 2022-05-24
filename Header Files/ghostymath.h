@@ -132,4 +132,12 @@ dvec3 calcAccelerationVec3(dvec3 vec3A, body target);
 
 dvec3 calcAccelLoop(dvec3 origin, struct blist bodylist, unsigned int bid);
 
+dvec3 calcDVec3CrossProduct(dvec3 vec3A, dvec3 vec3B);
+
+dvec3 getDVec3SpecAngularMomentum(dvec3 position, dvec3 velocity);
+
+double calcDVec3length(dvec3 vec3A);
+
+double calcDVec3DotProduct(dvec3 vec3A, dvec3 vec3B);
+
 #endif

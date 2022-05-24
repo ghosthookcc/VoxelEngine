@@ -1,8 +1,9 @@
 #include "window.h"
 #include "parser.h"
 
-volatile struct blist *bodylist_mem;
-LPCRITICAL_SECTION crit_section;
+volatile struct blist* t_bodylist_mem;
+struct blist* local_mem;
+LPCRITICAL_SECTION CRIT_SECTION;
 
 LRESULT CALLBACK WndProc(HWND hwnd,
                          unsigned int message,
@@ -291,31 +292,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 256, 256, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
   glGenerateMipmap(GL_TEXTURE_2D);
 
-    glActiveTexture(GL_TEXTURE_2D);
-
-  //glBindFramebuffer(GL_FRAMEBUFFER, 0);
-  //glBindRenderbuffer(GL_RENDERBUFFER, 0);
-
-  /*
-  glBlitFramebuffer(0, 0, width, height,
-                    0, 0, smallWidth, smallHeight,
-                    GL_COLOR_BUFFER_BIT, GL_LINEAR);
-  */
-
-  //GLuint textureID;
-  //glGenTextures(1, &textureID);
-
-  // "Bind" the newly created texture : all future texture functions will modify this texture
-  //glBindTexture(GL_TEXTURE_2D, textureID);
-
-  // Give the image to OpenGL
-  //glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
-
-  //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-  //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-  /*const GLubyte* extensions = glGetString(GL_EXTENSIONS);
-  printf("%s", extensions);*/
+  glActiveTexture(GL_TEXTURE_2D);
 
   m4_projViewMatrix = make_projViewMatrix();
   m4_MVPMatrix = make_MVPMatrix();
@@ -326,13 +303,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 
   QueryPerformanceFrequency(&Frequency);
 
-  setup_world();
-  /*
-  CreateAndLoadCollider(new_vec3(16, 0, 0), new_vec3(16, 16, 0),
-                        new_vec3(0, 0, 0), new_vec3(0, 16, 0),
-                        new_vec3(16, 0, 16), new_vec3(16, 16, 16),
-                        new_vec3(0, 0, 16), new_vec3(0, 16, 16));
-  */
+  setup_world((*local_mem));
 
   MSG message = {0};
   int running = 1;
@@ -363,7 +334,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 
     QueryPerformanceCounter(&timeNow);
 
-    Update();
+    Update(local_mem, t_bodylist_mem, &CRIT_SECTION);
     Render();
 
     SwapBuffers(hDC);
@@ -393,21 +364,36 @@ void GH_InitWindow(int (*EntryPoint)(), char* path)
     ComponentsThreads = new_dynHandleArray();
 
     struct blist bodylist = get_body_from_json(path);
-    //LoadPlanetProperties();
-    //struct bodies bodylist = *GetBodyList();
-
-    if (!InitializeCriticalSectionAndSpinCount(&crit_section, 0x80000400))
+    if (!InitializeCriticalSectionAndSpinCount(&CRIT_SECTION, 0x80000400))
     {
         printf("Critical section did not initialize!");
         printf("%lu", GetLastError());
     }
 
-    bodylist_mem = malloc(sizeof(bodylist));
-    if (bodylist_mem == NULL)
+    local_mem = malloc(sizeof(blist));
+    local_mem->planets = malloc(sizeof(body) * bodylist.size);
+    strncpy(&local_mem->name[0], &bodylist.name[0], 32);
+    memcpy(local_mem->planets, bodylist.planets, sizeof(body) * bodylist.size);
+    local_mem->size = bodylist.size;
+
+    t_bodylist_mem = malloc(sizeof(bodylist));
+    if (t_bodylist_mem == NULL)
     {
-      free((struct blist*)bodylist_mem);
+        printf("Malloc for shared memory failed!");
+        exit(-1);
     }
-    memcpy((struct blist*)bodylist_mem, &bodylist, sizeof(bodylist));
+
+    strncpy(&t_bodylist_mem->name[0], &bodylist.name[0], 32);
+    t_bodylist_mem->size = bodylist.size;
+
+    t_bodylist_mem->planets = malloc(sizeof(struct body) * bodylist.size);
+    if(t_bodylist_mem->planets == NULL)
+    {
+       printf("Malloc for planet list failed!");
+       exit(-2);
+    }
+
+    memcpy(t_bodylist_mem->planets, bodylist.planets, sizeof(struct body) * bodylist.size);
 
     struct ENTRYPOINT_INPUT* input = malloc(sizeof(struct ENTRYPOINT_INPUT));
     if (input == NULL)
@@ -416,13 +402,12 @@ void GH_InitWindow(int (*EntryPoint)(), char* path)
     }
 
     input->bodylist = bodylist;
-    input->shared_mem = bodylist_mem;
-    input->crit_section = &crit_section;
-
+    input->shared_mem = t_bodylist_mem;
+    input->CRIT_SECTION = &CRIT_SECTION;
 
     HANDLE ENTRYPOINT = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)EntryPoint, input, 0, NULL);
 
-    dynHandleArray_AddBack(&ComponentsThreads, CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)wWinMain, NULL, 0, NULL));
+    dynHandleArray_AddBack(&ComponentsThreads, CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)wWinMain, &CRIT_SECTION, 0, NULL));
     dynHandleArray_AddBack(&ComponentsThreads, ENTRYPOINT);
 
     WriteEventSignal = CreateEvent(
@@ -436,5 +421,8 @@ void GH_InitWindow(int (*EntryPoint)(), char* path)
 
     SetEvent(WriteEventSignal);
     WaitForMultipleObjects(ComponentsThreads->size, ComponentsThreads->handles, TRUE, INFINITE);
+    free(t_bodylist_mem->planets);
+    free(t_bodylist_mem);
+    free(CRIT_SECTION);
   }
 }

@@ -33,7 +33,7 @@ typedef struct ENTRYPOINT_INPUT
 {
     struct blist bodylist;
     volatile struct blist* shared_mem;
-    LPCRITICAL_SECTION* crit_section;
+    LPCRITICAL_SECTION* CRIT_SECTION;
 } ENTRYPOINT_INPUT;
 
 LRESULT CALLBACK WndProc(HWND hwnd,

@@ -5,21 +5,37 @@ int physics_thread(struct ENTRYPOINT_INPUT* input)
 {
   volatile struct blist* shared_mem = input->shared_mem;
   struct blist bodylist = input->bodylist;
-  LPCRITICAL_SECTION* crit_section = input->crit_section;
+  LPCRITICAL_SECTION* crit_section = input->CRIT_SECTION;
 
   free(input);
 
+  int skipped = 0;
   while(1)
   {
     bodylist = ProcessPhysics(&bodylist);
-    BOOL res = TryEnterCriticalSection(crit_section);
-    if (res == 0)
+
+    if(skipped >= 10)
     {
-        continue;
+      EnterCriticalSection(crit_section);
+      skipped = 0; // LEMME IN
+      printf("ran this!\n");
     }
-    memcpy(shared_mem, &bodylist, sizeof(bodylist));
+    else
+    {
+      BOOL res = TryEnterCriticalSection(crit_section);
+      if (res == 0)
+      {
+        skipped++;
+        continue;
+      }
+    }
+
+    memcpy(shared_mem->planets, bodylist.planets, sizeof(struct body) * bodylist.size);
+
     LeaveCriticalSection(crit_section);
   }
+
+
 
   return 86; //haha yes
 }

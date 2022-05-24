@@ -499,3 +499,34 @@ dvec3 calcAccelLoop(dvec3 origin, struct blist bodylist, unsigned int bid)
 
   return(accel_velocity);
 }
+
+double calcDVec3DotProduct(dvec3 vec3A, dvec3 vec3B)
+{
+    return(vec3A.x * vec3B.x + vec3A.y * vec3B.y + vec3A.z * vec3B.z);
+}
+
+double calcDVec3length(dvec3 vec3A)
+{
+    return(sqrt(vec3A.x * vec3A.x + vec3A.y * vec3A.y + vec3A.z * vec3A.z));
+}
+
+dvec3 calcDVec3CrossProduct(dvec3 vec3A, dvec3 vec3B)
+{
+    dvec3 new_vec3;
+
+    new_vec3.x = vec3A.y * vec3B.z - vec3A.z * vec3B.y;
+    new_vec3.y = vec3A.z * vec3B.x - vec3A.x * vec3B.z;
+    new_vec3.z = vec3A.x * vec3B.y - vec3A.y * vec3B.x;
+
+    return(new_vec3);
+}
+
+dvec3 getDVec3SpecAngularMomentum(dvec3 position, dvec3 velocity)
+{
+  return calcDVec3CrossProduct(position, velocity);
+}
+
+double getGravParam(double mass)
+{
+  return GRAV_CONST * mass;
+}

@@ -147,7 +147,8 @@ void transformation_SetRotation(Entity* entity)
   getAxisAngle(&rotation_Yaw, new_vec3(0.0f, 1.0f, 0.0f), (float)degreesToRadians(entity->rotation.y));
   getAxisAngle(&rotation_Roll, new_vec3(0.0f, 0.0f, 1.0f), (float)degreesToRadians(entity->rotation.z));
 
-  quaternion result = multiplyQuaternionByQuaternion(rotation_Pitch, rotation_Yaw);
+  quaternion result;
+  result = multiplyQuaternionByQuaternion(rotation_Pitch, rotation_Yaw);
   result = multiplyQuaternionByQuaternion(result, rotation_Roll);
   quaternionToMat4Rotation(result, &new_RotationMatrix);
 

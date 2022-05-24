@@ -18,6 +18,7 @@ void LoadPlanetProperties();
 struct bodies* GetBodyList();
 */
 
-void setup_world();
+void LoadPlanetData(struct blist bodylist);
+void setup_world(struct blist bodylist);
 
 #endif
