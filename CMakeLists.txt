@@ -51,6 +51,11 @@ find_package(OpenGL REQUIRED)
 
 include(GenerateExportHeader)
 
+file(COPY parse_json.lib DESTINATION ${CMAKE_SOURCE_DIR}/Release/)
+file(COPY Sol_2_body.json DESTINATION ${CMAKE_SOURCE_DIR}/Release/)
+file(COPY Sol_6_body.json DESTINATION ${CMAKE_SOURCE_DIR}/Release/)
+file(COPY Sol_Full.json DESTINATION ${CMAKE_SOURCE_DIR}/Release/)
+
 file(COPY parse_json.lib DESTINATION ${CMAKE_SOURCE_DIR}/Debug/)
 file(COPY Sol_2_body.json DESTINATION ${CMAKE_SOURCE_DIR}/Debug/)
 file(COPY Sol_6_body.json DESTINATION ${CMAKE_SOURCE_DIR}/Debug/)

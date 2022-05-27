@@ -44,7 +44,7 @@ int main(int argc, char** argv)
   abs_path[strlen(abs_path) - 9] = 0x00;
 
   char* f_path = concat_string(abs_path, path);
-  
+
   GH_InitWindow(physics_thread, f_path);
 
   return 0;
