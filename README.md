@@ -4,7 +4,7 @@ A voxel engine made with gl.h and pure c-lang
 ---
 
 ### Build & Run example project
->compile.bat<br/>cd Debug<br/>.\build
+>compile-debug.bat<br/>cd Debug<br/>.\build
 
 
 ---
